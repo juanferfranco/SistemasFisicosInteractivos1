@@ -70,10 +70,10 @@ Cronograma
 Evaluación
 -----------
 
-* Evaluación 1: 25%. Semana del 9 de agosto. Plazo máximo 13 de agosto.
-* Evaluación 2: 25%. Semana del 6 de septiembre. Plazo máximo 10 de septiembre.
-* Evaluación 3: 25%. Semana del 4 de octubre. Plazo máximo 8 de octubre.
-* Evaluación 4: 25%. Semana del 1 de noviembre. Plazo máximo 5 de noviembre.
+* Evaluación 1: 25%. Semana del 9 de agosto. Plazo máximo 15 de agosto.
+* Evaluación 2: 25%. Semana del 6 de septiembre. Plazo máximo 12 de septiembre.
+* Evaluación 3: 25%. Semana del 4 de octubre. Plazo máximo 10 de octubre.
+* Evaluación 4: 25%. Semana del 1 de noviembre. Plazo máximo 7 de noviembre.
 
 
 Dedicación
