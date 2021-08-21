@@ -1434,5 +1434,209 @@ Para este ejercicio debes:
 PROYECTO EVALUATIVO
 ^^^^^^^^^^^^^^^^^^^^^
 
-El proyecto se publicará en la semana de evaluación. Por tanto, te recomiendo que termines 
-la mayor cantidad de ejercicios que puedas, ojalá todos, antes de la semana de evaluación.
+Solución al ejercicio 30
+############################
+
+Antes de comenzar a realizar la evaluación te recomiendo que revises una posible 
+solución a uno de los ejercicios anteriores.
+
+Solución al ejercicio 30:
+
+Te muestro un posible montaje en el protoboard para solucionar el ejercicio 30. 
+Para este montaje elegí como puerto de entrada el número 19. Tu debes seleccionar 
+el puerto que más te convenga en un tu microcontrolador. 
+
+.. image:: ../_static/debounceCircuit.png
+  :alt: circuito
+
+Mira un posible diagrama de estados y un video corto 
+donde te explico el diagrama:
+
+.. image:: ../_static/debounceStateDiagram.png
+  :alt: state machine
+
+
+.. raw:: html
+
+  <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/DTSqhBkYbJQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+Definición de los escenarios de prueba:
+
+.. image:: ../_static/debounceEscenarios.png
+  :alt: Escenarios de prueba
+
+
+.. raw:: html
+  
+    <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/FSfR9sLR3v4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+
+El código de la solución será este:
+
+.. code-block:: cpp
+
+    void setup() {
+      Serial.begin(115200);
+    }
+
+    void task() {
+      enum class DebounceStates {INIT, WAITING_CHANGE, WAITING_STABLE};
+      static DebounceStates debounceState =  DebounceStates::INIT;
+      static uint8_t inputPinStableValue;
+      static uint32_t referenceTime;
+      const uint8_t INPUTPIN = 19;
+      const uint32_t STABLETIMEOUT = 100;
+
+      switch (debounceState) {
+
+        case DebounceStates::INIT: {
+            pinMode(INPUTPIN, INPUT_PULLUP);
+            inputPinStableValue = digitalRead(INPUTPIN);
+            debounceState = DebounceStates::WAITING_CHANGE;
+            Serial.println("DebounceStates::INIT");
+            break;
+          }
+        case DebounceStates::WAITING_CHANGE: {
+            if (digitalRead(INPUTPIN) != inputPinStableValue) {
+              referenceTime = millis();
+              debounceState = DebounceStates::WAITING_STABLE;
+              Serial.println("pin changes");
+            }
+
+            break;
+          }
+        case DebounceStates::WAITING_STABLE: {
+            uint8_t pinState = digitalRead(INPUTPIN);
+            if ( pinState == inputPinStableValue) {
+              debounceState = DebounceStates::WAITING_CHANGE;
+            }
+            else if ( (millis() - referenceTime) >= STABLETIMEOUT) {
+              inputPinStableValue = pinState;
+              debounceState = DebounceStates::WAITING_CHANGE;
+              Serial.print("pinState:");
+              Serial.println(inputPinStableValue);
+            }
+            break;
+          }
+
+        default:
+          Serial.println("Error");
+          break;
+      }
+    }
+
+
+    void loop() {
+      task();
+    }
+
+
+Explicación del código:
+
+.. raw:: html
+
+  <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/Gdc2VvRwwBM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+Verificación de los escenarios de prueba:
+
+  .. raw:: html
+  
+    <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/dyONJlylaBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+
+Enunciado de la evaluación
+############################
+
+En un escape room se requiere construir una aplicación para controlar una bomba temporizada.
+La siguiente figura ilustra la interfaz de la bomba. El circuito de control
+de la bomba está compuesto por tres sensores digitales,
+en este caso pulsadores, denominados UP, DOWN, ARM (los simularemos con el PC),
+un display (LCD) y una salida digital para activar la bomba
+(simularemos la salida y el display con el PC).
+
+El controlador funciona así:
+
+.. image:: ../_static/bomb.png
+  :alt: bomba
+
+* Inicia en modo de configuración, es decir, sin hacer cuenta regresiva aún, la bomba está
+  ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
+* En el modo de configuración, los pulsadores UP y DOWN permiten
+  aumentar o disminuir el tiempo inicial de la bomba.
+* El tiempo se puede programar entre 10 y 60 segundos con cambios de 1 segundo.
+* El tiempo de configuración se debe visualizar en el LCD (enviamos el
+  valor al PC).
+* El pulsador ARM arma la bomba.
+* Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
+  en el LCD en por medio de una cuenta regresiva en segundos.
+* La bomba explotará (se activa la salida de activación de la bomba) cuando
+  el tiempo llegue a cero. En este punto el control regresará al modo de
+  configuración.
+* Una vez la bomba esté armada es posible desactivarla ingresando un código
+  de seguridad. El código será la siguiente secuencia de pulsadores
+  presionados uno después de otro:  DOWN, UP, DOWN, DOWN, UP, ARM.
+* Si la secuencia se ingresa correctamente el controlador pasará de nuevo
+  al modo de configuración de lo contrario continuará la fatal cuenta
+  regresiva.
+
+Requisitos
+############################
+
+* R01: la solución debe tener dos tareas concurrentes. La Tarea 1 se debe encargar 
+  del control de la bomba. La Tarea 2 debe generar una señal digital periódica con una frecuencia 
+  de 1 Hz. La señal debe permanecer en alto 500 ms y en bajo 500 ms.
+* R02: debes almacenar la clave de desarmado de la bomba en una arreglo.
+* R03: debes definir una función a la cual le pasarás la dirección en memoria 
+  de dos arreglos: uno con la clave recibida y otro con la clave correcta. La función 
+  deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
+  así: true si la clave recibida es igual a la clave almacenada o false si las claves no coinciden.
+* R04: realiza un diagrama con el modelo en máquina de estados para tu solución.
+* R05: define varios escenarios de prueba que permitan recoger la funcionalidad descrita 
+  del controlador.
+* R06: implementa el modelo de máquina de estados considerando todas las tareas solicitadas.
+* R07: verifica todos los escenarios de prueba definidos.
+
+Entregables
+############################
+
+* Sube a `este <https://upbeduco-my.sharepoint.com/:f:/g/personal/juanf_franco_upb_edu_co/EseuV-kFgTVEg8JJnjsuxG8ByVRdOqQmogDJVlhodmnyaA>`__ 
+  enlace un archivo pdf nombrado con los nueve dígitos que componen tu ID. Por ejemplo: 000008716.pdf. El archivo 
+  debe tener lo siguiente:
+
+  * Tu nombre completo.
+  * Evaluación de la unidad 1 y la fecha en la cual vas subir el archivo.
+  * Sección 1: imagen con el diagrama de estados.
+  * Sección 2: enlace a un video donde expliques el diagrama de estados.
+  * Sección 3: Definición de los escenarios de prueba (diagrama de secuencias)
+  * Sección 4: enlace a un video donde expliques los escenarios.
+  * Sección 5: enlace a GitHub a un repositorio PÚBLICO donde estará el código de la evaluación. 
+    NO OLVIDES que debes evidenciar el proceso de desarrollo mediante el historial de commits en 
+    el repositorio.
+  * Sección 6: enlace a un video donde expliques el código.
+  * Sección 7: enlace a un video donde muestres la verificación de cada escenario de prueba.
+  
+Criterios de evaluación
+############################
+
+* Solución del problema: (2 unidades):
+  
+  * Sección 1 (0.5).
+  * Sección 3 (0.5)  
+  * Sección 5 (1).
+
+* Explicación de la solución (3 unidades)
+  
+  * Sección 2 (1).
+  * Sección 4 (0.5).
+  * Sección 6 (1).
+  * Sección 7 (0.5).
