@@ -128,4 +128,4 @@ Control de versión
 
 * Crea una cuenta en GitHub con tu correo institucional de la UPB. Si
   tienes la cuenta, tanto mejor.
-* Explora los tutoriales de `este <https://www.gitkraken.com/learn/git/tutorials>`__.
+* Explora los tutoriales de `este <https://www.gitkraken.com/learn/git/tutorials>`__ enlace.
