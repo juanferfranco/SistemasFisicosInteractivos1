@@ -78,7 +78,7 @@ Evaluación
 Dedicación
 -----------
 
-Este curso es de 2 créditos y se ofrecerá en 2020-20 en modalidad proyecto. Por tanto, 
+Este curso es de 2 créditos y se ofrecerá en 2021-20 en modalidad proyecto. Por tanto, 
 tendremos encuentros sincrónicos semanales de 1 hora 40 minutos y 4 horas de trabajo autónomo.
 
 Actividades de cada unidad
