@@ -1609,7 +1609,7 @@ Requisitos
 Entregables
 ############################
 
-* Sube a `este <https://upbeduco-my.sharepoint.com/:f:/g/personal/juanf_franco_upb_edu_co/EseuV-kFgTVEg8JJnjsuxG8ByVRdOqQmogDJVlhodmnyaA>`__ 
+* Sube a `este <https://www.dropbox.com/request/DsHQVud5H3oKFDwL10Ye>`__ 
   enlace un archivo pdf nombrado con los nueve dígitos que componen tu ID. Por ejemplo: 000008716.pdf. El archivo 
   debe tener lo siguiente:
 
