@@ -351,34 +351,10 @@ comunicaciones seriales.
         }
     }
 
-Ejercicio 4: comunicación entre hilos
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Ejercicio 5: reto protocolo ascii
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. note:: MATERIAL EN CONSTRUCCIÓN.
-
-    Vuelve a unos días a este ejercicio y presiona F5 para que sea cargado.
-
-
-RETO 2: comunicación entre hilos
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. note:: MATERIAL EN CONSTRUCCIÓN.
-
-    Vuelve a unos días a este RETO y presiona F5 para que sea cargado.
-
-Lectura 4: protocolos ASCII
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. note:: MATERIAL EN CONSTRUCCIÓN.
-
-    Vuelve a unos días a este aquí y presiona F5 para que sea cargado.
-
-Ejercicio 5: protocolos ASCII
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
-.. note:: MATERIAL EN CONSTRUCCIÓN.
-
-    Vuelve a unos días a este aquí y presiona F5 para que sea cargado.
+Sesión de clase destinada a elaborar en tiempo real un reto.
 
 Proyecto evaluativo de la unidad 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
