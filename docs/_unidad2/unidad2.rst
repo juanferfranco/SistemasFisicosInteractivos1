@@ -351,10 +351,39 @@ comunicaciones seriales.
         }
     }
 
-Ejercicio 5: reto protocolo ascii
+Ejercicio 4: reto protocolo ascii
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Sesión de clase destinada a elaborar en tiempo real un reto.
+Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
+el microcontrolador.
+
+Aplicación para el PC:
+
+* Debe tener dos hilos. Uno de los hilos se debe ejecutar a 10 frames por segundo imprimiendo 
+  el valor de un contador de frames. El otro hilo se debe encargar de las comunicaciones seriales.
+
+Aplicación para el microcontrolador:
+
+La aplicación del microcontrolador debe tener dos tareas. La tarea uno debe encender 
+y apagar un LED a una frecuencia de 1Hz. La segunda tarea debe enviar al PC el estado 
+de un sensor digital, un sensor analógico y el estado de una de sus salidas.
+
+Protocolo de comunicación:
+
+* El PC SIEMPRE inicia la comunicación solicitando información al microcontrolador.
+* Desde el PC se enviarán tres posible comandos: ``"read"``, ``"outON"``, ``"outOFF"``.
+* Para enviar los comandos anteriores se presionará en el PC las teclas r,i,o respectivamente.
+* El framerate NO DEBE CAERSE al leer las teclas por tanto debes usar la técnica no 
+  bloqueante de lectura del teclado usada en el ejercicio anterior.
+* El microcontrolador enviará los siguientes mensajes de respuesta a cada comando:
+  
+  * Respuesta a ``"read"``: ``"valorSensorDigital,valorSensorAnalógico,estadoSalida"``
+  * Respuesta a ``"outON"`` y ``"outOFF"``: ``estadoSalida``. Es decir, el microcontrolador recibe el 
+    el comando, realiza la orden solicitada y devuelve el estado en el cual quedó la salida 
+    luego de la orden.
+    
+* No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
+  ambas partes sepan que el mensaje está completo.
 
 Proyecto evaluativo de la unidad 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
