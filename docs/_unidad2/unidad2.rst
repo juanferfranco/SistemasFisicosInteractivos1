@@ -351,7 +351,7 @@ comunicaciones seriales.
         }
     }
 
-Ejercicio 4: reto protocolo ascii
+RETO 2: protocolo ascii
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
