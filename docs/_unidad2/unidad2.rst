@@ -385,76 +385,194 @@ Protocolo de comunicación:
 * No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
   ambas partes sepan que el mensaje está completo.
 
+.. warning:: ALERTA DE SPOILER
+
+  Te dejo aquí una posible solución al problema.
+
+El código del PC:
+
+.. code-block:: csharp
+
+    using System;
+    using System.IO.Ports;
+    using System.Threading;
+
+    namespace un2_reto_ej4_2021_20
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                int counter = 0;
+
+                Thread t = new Thread(serialCom);
+                t.Start();
+
+                while (true)
+                {
+                    Console.WriteLine(counter);
+                    counter = (counter + 1);
+                    Thread.Sleep(100);
+                }
+            }
+
+            static void serialCom()
+            {
+                SerialPort _serialPort = new SerialPort(); ;
+                _serialPort.PortName = "/dev/ttyUSB0";
+                _serialPort.BaudRate = 115200;
+                _serialPort.DtrEnable = true;
+                _serialPort.Open();
+
+                while (true)
+                {
+                    if (Console.KeyAvailable == true)
+                    {
+                        ConsoleKeyInfo key;
+                        key = Console.ReadKey(true);
+
+                        if (key.Key == ConsoleKey.R)
+                        {
+                            _serialPort.WriteLine("read");
+                            string message = _serialPort.ReadLine();
+                            Console.WriteLine(message);
+                            
+                        }else if (key.Key == ConsoleKey.I)
+                        {
+                            _serialPort.WriteLine("outON");
+                            string message = _serialPort.ReadLine();
+                            Console.WriteLine(message);
+                            
+                        }else if (key.Key == ConsoleKey.O)
+                        {
+                            _serialPort.WriteLine("outOFF");
+                            string message = _serialPort.ReadLine();
+                            Console.WriteLine(message);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+El código del microcontrolar:
+
+.. code-block:: cpp
+
+  #define DIGITAL_IN 19
+  #define ANALOG_IN 34
+  #define DIGITAL_OUT 5
+  #define LED 18
+
+  void setup() {
+
+    Serial.begin(115200);
+    pinMode(DIGITAL_IN, INPUT_PULLUP);
+    digitalWrite(DIGITAL_OUT, true);
+    pinMode(DIGITAL_OUT, OUTPUT);
+    
+    pinMode(LED, OUTPUT);
+    analogReadResolution(10);
+  }
+
+
+  void Task1() {
+    static uint32_t previousMillis = 0;
+    const uint32_t interval = 500;
+    static bool ledState = false;
+
+    uint32_t currentMillis = millis();
+
+    if ( (currentMillis - previousMillis) >= interval) {
+      previousMillis = currentMillis;
+
+      if (ledState == false) {
+        ledState = true;
+      } else {
+        ledState = false;
+      }
+      digitalWrite(LED, ledState);
+    }
+  }
+
+  void Task2() {
+    static bool outState = false;
+
+    
+    if (Serial.available() > 0) {
+      String dato = Serial.readStringUntil('\n');
+      if(dato == "read"){
+        Serial.print(digitalRead(DIGITAL_IN)); // se envía un 0 o un 1
+        Serial.print(',');
+        Serial.print(analogRead(ANALOG_IN));
+        Serial.print(',');
+        Serial.print(outState);
+        Serial.print('\n');
+              
+      }else if(dato == "outOFF"){
+        outState = false;
+        digitalWrite(DIGITAL_OUT,!outState);
+        Serial.print(outState);
+        Serial.print('\n');
+      }else if(dato == "outON"){
+        outState = true;
+        digitalWrite(DIGITAL_OUT,!outState);
+        Serial.print(outState);
+        Serial.print('\n');
+      }
+    }
+  }
+
+  void loop() {
+    Task1();
+    Task2();
+  }
+
 Proyecto evaluativo de la unidad 2
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------
 
-.. warning:: REGRESA AQUÍ EN LA SEMANA DE EVALUACIÓN
+Esta evaluación la puedes realizar con otro compañero o de manera individual si no 
+encuentras con quién trabajar.
 
-    No olvides presionar F5 para cargar de nuevo la paǵina con la evaluación 
-    en la semana correspondiente.
+¿Qué debes hacer?
+^^^^^^^^^^^^^^^^^^
 
-..
-    Debes realizar un sistema interactivo compuesto por una aplicación en el PC y
-    un controlador al cual se conectan varios sensores y actuadores.
+Para esta evaluación te voy a proponer que realices una modificación a una aplicación 
+interactiva desarrollada por Zachary Patten a la cual le hice unas pequeñas modificación.
 
-    Para el controlador tienes:
+El reto consiste en controlar el personaje de la aplicación usando 4 sensores digitales.
 
-    * Dos sensores digitales
-    * Dos sensores analógicos: valores de 0 a 1023
-    * Dos actuadores digitales.
-    * Dos actuadores analógicos (pwm)
+* En `este <https://github.com/juanferfranco/dotnet-console-games/tree/main/Projects/Snake>`__ 
+  enlace vas a encontrar dos archivos: Program.cs y arduinoKeyboard.ino que serán los archivos 
+  sobre los cuales realizarás tu trabajo, uno para el PC y el otro para el arduino respectivamente.
+* Vas a definir un protocolo ASCII con el cual ambas aplicaciones se comunicarán.
+* La aplicación del PC SIEMPRE deberá solicitar primero la información que necesite del microcontrolador.
+* El microcontrolador tendrá conectados los 4 sensores digitales (pulsadores), leerá su estado 
+  y reportará dicho estado a la aplicación del PC una vez este se lo solicite.
 
-    El controlador se conecta a un computador a través del puerto USB y se comunica 
-    utilizando la interfaz Serial.
+Al final se verá algo como `esto <https://youtu.be/hR9nPCNaFIk>`__.
 
-    Realiza un programa, para le controlador, que haga las siguientes tareas 
-    concurrentes:
+¿Cómo vas a entregar la evaluación?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    * Recibir comandos a través de la interfaz Serial
-    * Enciende y apaga un LED a una frecuencia de 10 Hz
-    * Enciende y apaga un LED a una frecuencia de 5 Hz.
+La evaluación consta de dos partes:
 
-    Los comandos recibidos por el puerto serial serán los siguientes:
+#. Vas a explicar con tus propias palabras cómo funciona el ejercicios 4: RETO protocolos ASCII. 
+   Debes grabar un video con una duración máxima de 5 minutos. 
+#. Vas a realizar el RETO propuesto. Debes grabar un video con una duración máxima de 5 minutos, donde 
+   expliques cómo solucionaste la aplicación del PC y la del microcontrolador. Finalmente, 
+   `muestra las aplicaciones funcionando <https://youtu.be/hR9nPCNaFIk>`__ 
+   de manera conjunta, es decir, en la misma pantalla, la aplicación interactiva y el accionamiento 
+   de los sensores. 
 
-    * read D1. Este comando hace que se envíe al PC el valor del sensor digital 1. 
-      El controlador devuelve la cadena:  D1 estado. Donde estado puede ser 1 o 0.
+Sube a `este <https://www.dropbox.com/request/MpzVuXWbHnH0ecJPWO11>`__ enlace un .pdf con 
+los nombres y ID de los miembros del equipo de trabajo y las dos URLs de los videos de youtube 
+solicitados. NO OLVIDES, POR FAVOR, 5 minutos MÁXIMO cada video. Recuerda que puedes trabajar 
+solo si así lo deseas
 
-    * read D2: enviar al PC el valor del sensor digital 2.  
-      El controlador devuelve la cadena: D2 estado. Donde estado puede ser 1 o 0.
+Criterios de evaluación
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    * read A1: enviar el PC el valor del sensor analógico 1.  
-      El controlador devuelve la cadena A1 valor. Donde valor está entre 0 y 1023.
-
-    * read A2: enviar el PC el valor del sensor analógico 2. 
-      El controlador devuelve la cadena A2 valor. Donde valor está entre 0 y 1023.
-
-    * write O1 estado: donde estado puede ser 1 o 0. 
-      Activa o desactiva la salida digital 1 
-
-    * write O2 estado: donde estado puede ser 1 o 0. 
-      Activa o desactiva la salida digital 2 
-
-    * write P1 valor: donde valor puede ser de 0 a 255. 
-      Escribir un valor de PWM igual a valor en el actuador analógico 1. 
-
-    * write P2 valor: donde valor puede ser de 0 a 255. 
-      Escribir un valor de PWM igual a valor en el actuador analógico 2.
-
-    La aplicación interactiva en el PC es tipo consola en C# y debe tener:
-
-    * Dos hilos.
-    * Un hilo debe imprimir cada 100 ms el valor de un contador.
-    * El otro hilo estará atento a los eventos del teclado producidos por el usuario.
-    * Asigne una tecla a cada comando que será enviado al controlador.
-    * Indicar si el controlador entendió o no entendió el comando, es decir,
-      mostrar el NACK o el ACK (abajo la explicación de esto)
-
-    .. note::
-
-      Para cualquiera de los comandos tipo write el controlador debe devolver los caraceres
-      ACK si reconoce el comando y NACK si no los reconoce. 
-
-      Debes decidir, dados los requisitos
-      de la aplicación, si requieres introducir caracteres de nueva línea y/o retorno de carro. 
-      TEN PRESENTE que LOS LEDs deben funcionar SIEMPRE a 5 Hz y 10 HZ como se declaró previamente, 
-      ese decir, su funcionamiento no puede ser interrumpido por las operaciones del puerto serial
+#. Parte 1: 2 unidades.
+#. Parte 2: 3 unidades.
