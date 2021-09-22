@@ -558,7 +558,7 @@ Al final se verá algo como `esto <https://youtu.be/hR9nPCNaFIk>`__.
 
 La evaluación consta de dos partes:
 
-#. Vas a explicar con tus propias palabras cómo funciona el ejercicios 4: RETO protocolos ASCII. 
+#. Vas a explicar con tus propias palabras cómo funciona el RETO 2: protocolo ASCII. 
    Debes grabar un video con una duración máxima de 5 minutos. 
 #. Vas a realizar el RETO propuesto. Debes grabar un video con una duración máxima de 5 minutos, donde 
    expliques cómo solucionaste la aplicación del PC y la del microcontrolador. Finalmente, 
