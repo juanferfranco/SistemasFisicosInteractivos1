@@ -63,17 +63,17 @@ Cronograma
 -----------
 
 * Unidad 1: semanas 1 a 6
-* Unidad 2: semanas 7 a 9
-* Unidad 3: semanas 10 a 12
-* Unidad 4: semanas 13 a 16
+* Unidad 2: semanas 7 a 10
+* Unidad 3: semanas 11 a 13
+* Unidad 4: semanas 14 a 16
 
 Evaluación
 -----------
 
 * Evaluación 1: 25%. Semana del 23 de agosto. Plazo máximo 29 de agosto.
-* Evaluación 2: 25%. Semana del 13 de septiembre. Plazo máximo 19 de septiembre.
-* Evaluación 3: 25%. Semana del 4 de octubre. Plazo máximo 10 de octubre.
-* Evaluación 4: 25%. Semana del 1 de noviembre. Plazo máximo 7 de noviembre.
+* Evaluación 2: 25%. Semana del 20 de septiembre. Plazo máximo 26 de septiembre.
+* Evaluación 3: 25%. Semana del 11 de octubre. Plazo máximo 17 de octubre.
+* Evaluación 4: 25%. Semana del 1 de noviembre. Plazo máximo 7 de noviembre
 
 Dedicación
 -----------
