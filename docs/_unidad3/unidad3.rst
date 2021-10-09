@@ -574,6 +574,80 @@ interactiva (tipo consola aún) que realicen el siguiente protocolo:
   que la aplicación interactiva tendrá que renunciar al paquete y pedir uno nuevo.
 
 Evaluación de la Unidad 3
+----------------------------
+(Tiempo total estimado: 6 horas).
+
+Enunciado
+*************
+Te voy a proponer un RETO interesante para esta evaluación que podrás 
+resolver en un equipo máximo de 3 personas.
+
+Vas a realizar dos aplicaciones interactivas. Una para el PC tipo consola 
+y la otra para el microcontrolador. Las aplicaciones deben intercambiar 
+información usando únicamente un protocolo binario. Vas a implementar una calculadora.
+En la aplicación del PC ingresas la operación a realizar, transmitirás toda 
+la información al microcontrolador, este realizará el cálculo y retornará 
+al PC el resultado para su visualización.
+
+El flujo de la aplicación será así:
+
+* El usuario debe ingresar en el PC la operación a realizar así: 
+ 
+  numero_punto_flotante1 operación numero_punto_flotante2 = 
+
+* Luego del igual presionará ENTER.
+* El PC enviará la información así: 8 bytes con los números + 1 byte con la operación + checksum.
+* El microcontrolador recibirá los datos, realizará la operación y devolverá 
+  el resultado así: 4 bytes con el resultado + checksum.
+* El checksum se calculará como en el ejercicio 5.
+* El PC mostrará el resultado luego del igual.
+* El flujo comenzará de nuevo.
+
+.. warning:: MUY IMPORTANTE
+
+    La aplicación del PC no debe solicitar información al usuario, solo debe esperar 
+    la operación y mostrar el resultado e inmediatamente esperar una nueva entrada por 
+    parte del usuario. Así se quedará hasta que ingreses la palabra exit.
+
+    Te recomiendo `este <https://docs.microsoft.com/en-us/dotnet/csharp/how-to/parse-strings-using-split#code-try-2>`__ 
+    enlace para aprender a separar una cadena en partes.
+
+Las posibles operaciones son: suma, resta, multiplicación y división. 
+
+
+¿Qué debes entregar?
 ***************************
 
-.. note:: Regresa aquí en la semana de evaluación. No olvides presionar F5.
+Diligencia y entrega en este `enlace <https://forms.office.com/r/PZaj7up505>`__.
+
+Te pediré que subas a Github el código con tu solución usando SOLO dos archivos:
+Program.cs y sensor.ino, pero el archivo sensor.ino deberá estar en una carpeta llamada
+sensor.
+
+También tendrás que subir un video donde demuestres funcionando tus aplicaciones y sustentes
+su funcionamiento.
+
+Consideraciones para el video:
+
+#. El video DEBE TENER una duración ``MÁXIMA`` de 10 minutos.
+#. El video debe tener los siguientes capítulos en este mismo orden:
+   
+   * Demostración de la solución.
+   * Explicación del código con la implementación.
+
+#. En `este video <https://youtu.be/6-0cERIVsFg>`__ puedes aprender a adicionar 
+   capítulos a tu video.
+
+Criterios de evaluación
+****************************
+
+* Cumplimiento de todos los requisitos de forma solicitados: 0.5
+* Calidad y duración máxima del video y repositorio en Github: 0.5
+* Solución al problema: 2
+* Explicación de la solución: 2
+
+.. note:: Sobre las personas reportadas
+
+    Las personas que aparezcan reportadas indicando que no trabajaron obtendrán automáticamente 
+    una calificación de 0.
+
