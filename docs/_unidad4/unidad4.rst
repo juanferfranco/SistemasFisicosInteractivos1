@@ -627,7 +627,85 @@ RETO: integración con un protocolo binario
    RECUERDA: una interfaz de usuario, no la consola de Unity.
 
 Evaluación de la Unidad 4
+---------------------------
+
+Enunciado
+*************
+
+Vas a realizar este reto en equipo, máximo de 3 personas. Debes construir 
+una aplicación interactiva usando Unity que cumpla con las siguientes 
+restricciones:
+
+#. Usarás solo aquellas partes de Ardity que sean necesarias como te solicitaré 
+   más adelante.
+#. Implementa una escena en Unity que tenga al menos los siguientes GameObjects: 
+   Un SerialControllerASCII y un SerialControllerBinario. Ambos GameObjects   
+   permitirán atender a dos controladores externos que se conectarán al computador 
+   por medio de dos puertos seriales diferentes. Uno de los 
+   controladores implementará un protocolo ASCII y el un protocolo binario.
+#. Ambos controladores tendrán un sensor digital y un actuador digital. 
+   Podrías usar, si gustas, un pulsador y un LED.
+#. Construye una interfaz de usuario con los elementos mínimos que se muestran en la siguiente 
+   figura:
+
+   .. image:: ../_static/ui.svg
+      :alt: UI mínima
+
+#. La aplicación debe detectar automáticamente los puertos seriales disponibles y 
+   el usuario solo tendrá que seleccionar el deseado.
+#. La interfaz debe tener un botón que permita seleccionar un modo de lectura de 
+   entradas manual y otro automático. En el manual, las entradas digitales se leen 
+   usando los botones ``Read``. En el modo automático, la propia aplicación interactiva 
+   realiza las lecturas.
+#. Los protocolos ASCII y Binario los debes proponer tu mismo en base a los que 
+   aprendiste en las unidades anteriores del curso.
+#. En cuanto a la arquitectura de software debes:
+
+   * Implementar controladores para cada tipo de protocolo similares a ``SerialController.cs`` 
+     y ``SerialControllerCustomDelimiter.cs``.
+   * Crear una clase que herede de la clase abstracta ``AbstractSerialThread.cs`` 
+     para cada protocolo implementado.
+
+#. Elimina del proyecto todos los archivos de Ardity que no sean necesarios.
+
+¿Qué debes entregar?
+***************************
+
+Diligencia y entrega en este `enlace <https://forms.office.com/r/6qf2hiBxNU>`__.
+
+Te pediré que subas a Github el código del proyecto en Unity y el de los controladores.
+
+También tendrás que compartir la URL de un video en youtube donde demuestres funcionando 
+la aplicación.
+
+Consideraciones para el video:
+
+#. El video DEBE TENER una duración ``MÁXIMA`` de 15 minutos.
+#. El video debe tener los siguientes capítulos en este mismo orden:
+   
+   * Demostración de la solución: muestra al mismo tiempo la interfaz de usuario y 
+     los controladores para que se pueda ver la interacción con las entradas y salidas 
+     digitales.
+   * Explicación de los protocolos de comunicación: te recomiendo usar draw.io.  
+   * Explicación del proyecto en Unity: estructura de clases e implementación.
+   * Explicación del código de los controladores
+
+
+Criterios de evaluación
 ****************************
 
-Regresa la semana de evaluación para ver el enunciado. NO OLVIDES presionar F5 para 
-actualizar la página.
+* Funcionamiento Protocolo ASCII: 0.25
+* Funcionamiento Protocolo Binario: 0.25
+* Selección de puerto serial y velocidad: 0.25
+* Visualización de tramas enviadas y recibidas: 0.25
+* Lectura de entradas en modo manual: 0.25
+* Lectura de entradas en modo automático: 0.5
+* Escritura de salidas: 0.25
+* Explicación del protocolo ASCII: 0.5
+* Explicación del protocolo BINARIO: 0.5
+* Explicación del Código en Unity y estructura del proyecto: 1
+* Explicación del código de los controladores: 1
+* No cumplir con las consideraciones para el video: -0.5
+* No subir el proyecto a Github: -1
+* La aplicación tiene bugs o funciona de manera inestable algunas veces: -0.5
+
