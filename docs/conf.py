@@ -20,13 +20,13 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Sistemas Físicos Interactivos 1'
-copyright = '2021, Juan Franco'
+copyright = '2022, Juan Franco'
 author = 'Juan Franco'
 
 # The short X.Y version
-version = '2021.20.0'
+version = '2022.1.0'
 # The full version, including alpha/beta/rc tags
-release = 'beta'
+release = 'rc'
 
 # -- General configuration ---------------------------------------------------
 

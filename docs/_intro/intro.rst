@@ -51,43 +51,34 @@ El curso está divido en 4 unidades:
 #. Unidad 3: Protocolos binarios
 #. Unidad 4: Plataformas de software interactivas de tiempo real
 
-Cada unidad estará constituida por tres fases:
-
-#. Fase 1: fundamentación. En esta fase estudiarás los conceptos teóricos más relevantes de
-   cada unidad. Así mismo complementarás con lecturas. En esta fase debes repasar 
-   los conceptos olvidados de los semestres anteriores.
-#. Fase 2: proyecto. En esta fase se realizarán uno o más proyecto.
-#. Fase 3: evaluación. En esta fase se discute el resultado de los proyectos de la unidad.
 
 Cronograma
 -----------
 
-* Unidad 1: semanas 1 a 6
-* Unidad 2: semanas 7 a 10
-* Unidad 3: semanas 11 a 13
-* Unidad 4: semanas 14 a 16
+* Unidad 1: semanas 1 a 4
+* Unidad 2: semanas 5 a 8
+* Unidad 3: semanas 9 a 12
+* Unidad 4: semanas 13 a 16
 
 Evaluación
 -----------
 
-* Evaluación 1: 25%. Semana del 23 de agosto. Plazo máximo 29 de agosto.
-* Evaluación 2: 25%. Semana del 20 de septiembre. Plazo máximo 26 de septiembre.
-* Evaluación 3: 25%. Semana del 11 de octubre. Plazo máximo 17 de octubre.
-* Evaluación 4: 25%. Semana del 1 de noviembre. Plazo máximo 7 de noviembre
+* Evaluación 1: 25%.
+* Evaluación 2: 25%.
+* Evaluación 3: 25%.
+* Evaluación 4: 25%.
 
 Dedicación
 -----------
 
-Este curso es de 2 créditos y se ofrecerá en 2021-20 en modalidad proyecto. Por tanto, 
-tendremos encuentros sincrónicos semanales de 1 hora 40 minutos y 4 horas de trabajo autónomo.
+Este curso es de 2 créditos con encuentros presenciales semanales de 3 hora 20 minutos y 
+2 hora 40 minutos de trabajo autónomo.
 
 Actividades de cada unidad
 ----------------------------
 
-Cada semana nos reuniremos para discutir los conceptos y resolver las inquietudes. Debes 
-dedicar 4 horas de trabajo autónomo para trabajar en las lecturas, ejercicios y en la evaluación 
+Cada semana nos reuniremos para discutir los conceptos, resolver dudas y trabajar en el proyecto 
 de cada unidad.
-
 
 Evidencias de evaluación
 -------------------------
@@ -126,6 +117,4 @@ En Notion llevarás tu bitácora electrónica.
 Control de versión
 --------------------
 
-* Crea una cuenta en GitHub con tu correo institucional de la UPB. Si
-  tienes la cuenta, tanto mejor.
-* Explora los tutoriales de `este <https://www.gitkraken.com/learn/git/tutorials>`__ enlace.
+* Crea una cuenta en GitHub a menos que ya la tengas.
