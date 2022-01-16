@@ -55,7 +55,8 @@ El curso está divido en 4 unidades:
 Cronograma
 -----------
 
-* Unidad 1: semanas 1 a 4
+* Introducción al curso: semana 1
+* Unidad 1: semanas 2 a 4
 * Unidad 2: semanas 5 a 8
 * Unidad 3: semanas 9 a 12
 * Unidad 4: semanas 13 a 16
@@ -63,10 +64,10 @@ Cronograma
 Evaluación
 -----------
 
-* Evaluación 1: 25%.
-* Evaluación 2: 25%.
-* Evaluación 3: 25%.
-* Evaluación 4: 25%.
+* Evaluación 1: 25%. Semana 4.
+* Evaluación 2: 25%. Semana 8.
+* Evaluación 3: 25%. Semana 12.
+* Evaluación 4: 25%. Semana 16.
 
 Dedicación
 -----------
