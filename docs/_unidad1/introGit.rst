@@ -899,7 +899,7 @@ Sigue estos pasos:
 
 * Abre un browser e ingresa a tu cuenta de GitHub. ASEGÚRATE POR FAVOR que estás 
   en tu cuenta.
-* Abre una nueva pestaña e ingresa a `este <https://classroom.github.com/a/CbKKrXPN>`__ sitio.
+* Abre una nueva pestaña e ingresa a `este <https://classroom.github.com/a/wPdRgW7m>`__ sitio.
 * Busca y selecciona tu nombre y ID. Esta operación ENLAZARÁ tu cuenta de GitHub con tu nombre 
   y ID.
 * Por último acepta la tarea.
