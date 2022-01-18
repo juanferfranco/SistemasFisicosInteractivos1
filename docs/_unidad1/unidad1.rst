@@ -41,11 +41,16 @@ Temas
 * Manejo del puerto serial, medidas de tiempo y retardos
   utilizando técnicas de programación no bloqueantes.
 
-Introducción a Git y GitHub 
-------------------------------
+Trayecto de actividades
+---------------------------
+
 
 Sesión 1
 *************
+
+Ejercicio 1: Introducción a Git y GitHub 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 (Tiempo estimado: 1 hora 40 minutos)
 
 .. toctree::
@@ -53,9 +58,13 @@ Sesión 1
 
     Introducción a Git y GitHub <./introGit>
 
-Trabajo autónomo 1: terminar la sesión 1
-*******************************************
+
+Trabajo autónomo 1
+*********************
 (Tiempo estima: 1 horas 20 minutos)
+
+Ejercicio 2: terminar sesión 1 y conseguir materiales 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Termina la sesión 1 y trae para la próxima sesión presencial dudas, si es del caso.
 * Consigue algunos materiales para el curso.
