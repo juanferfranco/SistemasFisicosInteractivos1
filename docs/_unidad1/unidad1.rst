@@ -81,6 +81,11 @@ Los materiales los puedes conseguir en `didácticas electrónicas <https://www.d
    de patas largas para introducir en el protobard.
 #. `Display tipo OLED <https://www.didacticaselectronicas.com/index.php/optoelectronica/display-oled/shield-oled-64x48-pixeles-para-wemos-d1-mini-wemos-sh-oled-pantallas-displays-oled-screen-oled-64x48-para-wemos-detail>`__.
 
+Ejercicio 3: test
+^^^^^^^^^^^^^^^^^^^^
+
+Esto es una prueba
+
 ..
   Lecturas, ejercicios y proyecto
   ---------------------------------
