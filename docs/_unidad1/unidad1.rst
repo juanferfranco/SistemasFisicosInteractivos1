@@ -91,260 +91,145 @@ Trabajo Autónomo 2
 
 Terminar la guía
 
+Sesión 3
+*************
+
+Ejercicio 3: introducción y ambiente de trabajo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Vamos a revisar entre todos este `material introductorio <https://docs.google.com/presentation/d/1lx-4htbKwA1fpIUZ6SpGnAnS5YY3VExF1jMdmARkGYk/edit?usp=sharing>`__.
+
+El material anterior cubre los pasos necesarios para instalar y configurar el entorno de
+desarrollo de software bajo el framework de arduino. En este escenario se utilizan los 
+lenguajes C y C++.
+
+Ejercicio 4: flujo de trabajo 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+El flujo de trabajo para realizar aplicaciones con arduino será:
+
+* Crear un archivo nuevo. Este archivo inicia con dos funciones: ``setup()`` y ``loop()``.
+* La función setup se ejecuta solo una vez al momento de energizar el ESP32 o cuando se presiona el botón de reset.
+* La función loop será llamada constantemente por el framework de arduino.
+* Una vez escrita la parte de la aplicación que se desea probar, se debe compilar. El proceso de compilación verifica que 
+  el programa no tenga errores sintácticos y genera el código de máquina que posteriormente se cargará en la memoria de
+  programa del ESP32. Para realizar la verificación y compilación se selecciona el primer ícono en la parte superior izquierda.
+* Una vez compilada la aplicación se procede a grabar la memoria del microcontrolador. Esto se realiza con el segundo ícono
+  de la parte superior izquierda.
+* Finalmente se selecciona el ícono del monitor serial en la esquina superior derecha. Este ícono permite abrir la terminal
+  serial por medio la cual se podrán visualizar los mensajes que el ESP32 le enviará al computador utilizando el 
+  objeto ``Serial``.
+
+Vamos a probar todos los pasos anteriores con este programa:
+
+.. code-block:: cpp
+
+    void setup() {
+      Serial.begin(115200);
+    }
+
+    void loop() {
+      Serial.print("Hello from ESP32\n");  
+      delay(1000);  
+    }
+
+Ejercicio 5: API de arduino 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+En `este enlace <https://www.arduino.cc/reference/en/>`__ se pueden consultar muchas de las funciones disponibles para
+realizar programas usando el API de Arduino.
+
+El siguiente programa permite encender y apagar un LED conectado a un puerto de entrada salida:
+
+.. code-block:: cpp
+
+    void setup()
+    {
+      pinMode(2, OUTPUT);
+    }
+    
+    void loop()
+    {
+      digitalWrite(2, HIGH);
+      delay(1000); // Wait for 1000 millisecond(s)
+      digitalWrite(2, LOW);
+      delay(1000); // Wait for 1000 millisecond(s)
+    }
+
+El siguiente programa permite leer un puerto digital y encender y apagar un LED:
+
+.. code-block:: cpp
+
+    void setup()
+    {
+      pinMode(2, OUTPUT);
+      pinMode(3,INPUT);
+      
+    }
+    
+    void loop()
+    {
+      if(digitalRead(3) == HIGH){
+        digitalWrite(2, HIGH);  
+      }
+      else{
+        digitalWrite(2, LOW);
+      }
+    }
+
+Ejercicio 6: RETO
+^^^^^^^^^^^^^^^^^^^^^
+
+Realiza un programa que lea el estado de dos switches y encienda solo
+uno de 4 LEDs (un LED para cada combinación posible de los suiches).
+
+Ejercicio 7: puerto serial
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+En el siguiente ejercicio vas a explorar, de manera básica el puerto 
+serial del microcontrolador. Lee el programa, entiéndelo, realiza 
+el montaje de hardware necesario y verifica su funcionamiento. 
+
+.. code-block:: cpp
+
+    void setup()
+    {
+      pinMode(2, OUTPUT);
+      pinMode(3,INPUT);
+      Serial.begin(115200);
+      
+    }
+    
+    void loop()
+    {
+      if(digitalRead(3) == HIGH){
+        digitalWrite(2, HIGH);  
+        Serial.println("LED ON");
+      }
+      else{
+        digitalWrite(2, LOW);
+        Serial.println("LED OFF");
+      }
+    }
+
+Ejercicio 8: RETO 
+^^^^^^^^^^^^^^^^^^^^
+
+Modifica el código del reto anterior para indicar, SOLO UNA VEZ, por el puerto serial
+cuál de los 4 LEDs está encendido.
+
+
+Trabajo Autónomo 3
+*********************
+
+Vas a terminar los retos del a sesión 3.
+
+
+
 ..
   Lecturas, ejercicios y proyecto
   ---------------------------------
 
-  Ejercicio 1: introducción y ambiente de trabajo
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Vamos a revisar entre todos este `material introductorio <https://docs.google.com/presentation/d/1lx-4htbKwA1fpIUZ6SpGnAnS5YY3VExF1jMdmARkGYk/edit?usp=sharing>`__.
-
-  El material anterior cubre los pasos necesarios para instalar y configurar el entorno de
-  desarrollo de software bajo el framework de arduino. En este escenario se utilizan los 
-  lenguajes C y C++.
-
-  Ejercicio 2: flujo de trabajo 
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  El flujo de trabajo para realizar aplicaciones con arduino será:
-
-  * Crear un archivo nuevo. Este archivo inicia con dos funciones: ``setup()`` y ``loop()``.
-  * La función setup se ejecuta solo una vez al momentos de energizar el ESP32 o cuando se presiona el botón de reset.
-  * La función loop será llamada constantemente por el framework de arduino.
-  * Una vez escrita la parte de la aplicación que se desea probar, se debe compilar. El proceso de compilación verifica que 
-    el programa no tenga errores sintácticos y genera el código de máquina que posteriormente se cargará en la memoria de
-    programa del ESP32. Para realizar la verificación y compilación se selecciona el primer ícono en la parte superior izquierda.
-  * Una vez compilada la aplicación se procede a grabar la memoria del microcontrolador. Esto se realiza con el segundo ícono
-    de la parte superior izquierda.
-  * Finalmente se selecciona el ícono del monitor serial en la esquina superior derecha. Este ícono permite abrir la terminal
-    serial por medio la cual se podrán visualizar los mensajes que el ESP32 le enviará al computador utilizando el 
-    objeto ``Serial``.
-
-  Vamos a probar todos los pasos anteriores con este programa:
-
-  .. code-block:: cpp
-
-      void setup() {
-        Serial.begin(115200);
-      }
-
-      void loop() {
-        Serial.print("Hello from ESP32\n");  
-        delay(1000);  
-      }
-
-
-  Ejercicio 3: hardware de prueba
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Inicialmente vas a simular todo los dispositivos de hardware tanto el microcontrolador como 
-  los periféricos que le conectarás a este. Harás mientras te tomas confianza y tienes tiempo de 
-  ir consiguiendo algunas partes para el curso.
-
-  Este ejercicio lo realizaremos juntos. Consiste en explorar la plataforma 
-  de simulación `tinkercad <https://www.tinkercad.com>`__.
-
-  Ejercicio 4: API de arduino 
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  En `este enlace <https://www.arduino.cc/reference/en/>`__ se pueden consultar muchas de las funciones disponibles para
-  realizar programas usando el API de Arduino.
-
-  El siguiente programa permite encender y apagar un LED conectado a un puerto de entrada salida:
-
-  .. code-block:: cpp
-
-      void setup()
-      {
-        pinMode(2, OUTPUT);
-      }
-      
-      void loop()
-      {
-        digitalWrite(2, HIGH);
-        delay(1000); // Wait for 1000 millisecond(s)
-        digitalWrite(2, LOW);
-        delay(1000); // Wait for 1000 millisecond(s)
-      }
-
-  El siguiente programa permite leer un puerto digital y encender y apagar un LED:
-
-  .. code-block:: cpp
-
-      void setup()
-      {
-        pinMode(2, OUTPUT);
-        pinMode(3,INPUT);
-        
-      }
-      
-      void loop()
-      {
-        if(digitalRead(3) == HIGH){
-          digitalWrite(2, HIGH);  
-        }
-        else{
-          digitalWrite(2, LOW);
-        }
-      }
-
-  Ejercicio 5: RETO
-  ^^^^^^^^^^^^^^^^^^^^^
-
-  Realiza un programa que lea el estado de dos switches y encienda solo
-  uno de 4 LEDs (un LED para cada combinación posible de los suiches).
-
-  No olvides realizar el montaje en tinkercad.
-
-
-  Ejercicio 6: puerto serial
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  En el siguiente ejercicio vas a explorar, de manera básica el puerto 
-  serial del microcontrolador. Lee el programa, entiéndelo, realiza 
-  el montaje de hardware necesario y verifica su funcionamiento. Tinkercad 
-  te permite también simular el puerto serial.
-
-  .. code-block:: cpp
-
-      void setup()
-      {
-        pinMode(2, OUTPUT);
-        pinMode(3,INPUT);
-        Serial.begin(115200);
-        
-      }
-      
-      void loop()
-      {
-        if(digitalRead(3) == HIGH){
-          digitalWrite(2, HIGH);  
-          Serial.println("LED ON");
-        }
-        else{
-          digitalWrite(2, LOW);
-          Serial.println("LED OFF");
-        }
-      }
-
-  Ejercicio 7: RETO 
-  ^^^^^^^^^^^^^^^^^^^^
-
-  Modifique el código del reto anterior para indicar por el puerto serial
-  cuál de los 4 LEDs está encendido.
-
-  Ejercicio 8: Convertidor análogo a digital
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  El siguiente programa lee una señal análoga y la convierte a digital.
-
-  .. code-block:: cpp
-
-      void setup()
-      {
-        pinMode(2, OUTPUT);
-        pinMode(3,INPUT);
-        Serial.begin(115200);
-      }
-      
-      void loop()
-      {
-          
-          Serial.println(analogRead(A0));
-          delay(1000);
-      }
-
-  Realiza un montaje en tinkercad que te permita simular la señal analógica. Puedes 
-  usar un potenciómetro.
-
-  Ejercicio 9: RETO
-  ^^^^^^^^^^^^^^^^^^^^
-
-  Realiza el montaje en tinkercad y un programa para el microcontrolador que 
-  lea el valor de una entrada analógica. Si la entrada es menor
-  a 340 enciende un led verde y envía por el puerto serial solo una
-  vez LED_VERDE. Si es mayor a 340 pero menor a 700 enciende solo 
-  el LED amarillo y envía por el puerto serial solo una vez LED_AMARILLO.
-  Finalmente, si es mayor a 700 enciende solo el LED rojo y envía por
-  el puerto serial solo una vez LED_ROJO. Ten en cuenta que al entrar
-  a cada rango se debe enviar solo una vez el mensaje por el puerto
-  serial.
-
-  Ejercicio 10: salidas analógicas
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Hasta ahora hemos explorado varias maneras de interactuar con
-  dispositivos externos por medio de puertos de entrada salida usando:
-
-  * Salidas digitales
-  * Entradas digitales
-  * Entradas analógicas
-
-  Ahora en este ejercicio vamos a explorar las salida analógicas. Dichas
-  salidas, en principio son digitales pero moduladas en ancho de pulso
-  o de PWM. Para ello usamos esta función:
-
-  .. code-block:: cpp
-
-      analogWrite(pin, value)
-
-  ``analogWrite`` produce una señal cuadra con un duty cycle dado por ``value``,
-  como se muestra en la figura de `este <https://www.arduino.cc/en/tutorial/PWM>`__
-  sitio. 
-
-
-  Analiza el siguiente ejemplo:
-
-  .. code-block:: cpp
-
-      #define ledPin 3
-      #define analogPin 0
-
-      uint16_t counter = 0;
-      int8_t direction = 1;
-
-      void setup() {
-          Serial.begin(115200);
-          pinMode(ledPin, OUTPUT);
-      }
-
-
-      void loop() {
-          analogWrite(ledPin, counter); 
-          counter = (counter + direction);
-          if(counter == 0) direction = 1;
-          if(counter == 129) direction = -1;
-
-          Serial.println(counter);
-          delay(20);
-
-      }
-
-  Ejercicio 11: RETO 
-  ^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Monta un circuito (en tinkercad) o tanto mejor si tienes hardware real 
-  y realiza un programa que permita controlar el brillo de un LED mediante un potenciómetro.
-
-  Ten en presente que el valor del potenciómetro va de 0 hasta 5V, en tinkercad, 
-  o 0 a 3.3V si tienes hardware real, y este se convierte a un valor entre 0 y 1023, es decir, 
-  la conversión se realiza en 10 bits.
-
-  Considera que el valor del PWM puede ir de 0 a 255. Para garantizar que
-  ``value`` estará en ese rango podemos emplear una de las funciones matemáticas
-  que ofrece el API de arduino:
-
-  .. code-block:: cpp
-
-      map(value, fromLow, fromHigh, toLow, toHigh)
-
-  En este caso map toma ``fromLow`` y lo convierte a ``toLow`` y
-  ``fromHigh`` y lo convierte a ``toHigh``. Los valores intermedios son mapeados de
-  manera lineal.
-
-  NOTA: para el ESP32 se debe usar una función diferente para el PWM. Ver
-  `este <https://techexplorations.com/guides/esp32/begin/pwm/>`__ enlace.
 
   Ejercicio 12: variables static
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
