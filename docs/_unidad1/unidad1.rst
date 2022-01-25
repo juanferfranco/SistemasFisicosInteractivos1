@@ -222,9 +222,9 @@ cuál de los 4 LEDs está encendido.
 Trabajo Autónomo 3
 *********************
 
-Vas a terminar los retos del a sesión 3.
-
-
+* Vas a terminar los retos del a sesión 3.
+* Si ya terminaste los retos y te queda tiempo, por favor, repasa todo 
+  el material de la sesión 3.
 
 ..
   Lecturas, ejercicios y proyecto
