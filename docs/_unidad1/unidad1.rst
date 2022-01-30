@@ -621,7 +621,7 @@ Trabajo Autónomo 5
 *********************
 
 Termina de realizar todos los ejercicios pendientes. Si vas 
-al día por favor, dale una nueva revisión al material.
+al día, dale una nueva revisión al material.
 
 Sesión 6
 *************
