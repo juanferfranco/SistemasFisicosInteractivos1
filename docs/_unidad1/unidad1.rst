@@ -620,9 +620,8 @@ Piensa en las siguientes cuestiones:
 Trabajo Autónomo 5
 *********************
 
-Revisa de nuevo toda la unidad hasta este punto. He realizado algunas 
-actualizaciones al material para que complementes y SOBRE TODO 
-repases y PUEDAS RECORDAR lo que ya has practicado.
+Termina de realizar todos los ejercicios pendientes. Si vas 
+al día por favor, dale una nueva revisión al material.
 
 Sesión 6
 *************
