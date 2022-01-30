@@ -133,6 +133,16 @@ Vamos a probar todos los pasos anteriores con este programa:
       delay(1000);  
     }
 
+Trabajo Autónomo 3
+*********************
+
+* Vas a terminar los retos del a sesión 3.
+* Si ya terminaste los retos y te queda tiempo, por favor, repasa todo 
+  el material de la sesión 3.
+
+Sesión 4
+*************
+
 Ejercicio 5: API de arduino 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -240,14 +250,15 @@ Ejercicio 8: RETO
 Modifica el código del reto anterior (ejercicio 6) para indicar, SOLO UNA VEZ, por 
 el puerto serial cuál de los 4 LEDs está encendido.
 
-Trabajo Autónomo 3
+
+Trabajo Autónomo 4
 *********************
 
-* Vas a terminar los retos del a sesión 3.
-* Si ya terminaste los retos y te queda tiempo, por favor, repasa todo 
-  el material de la sesión 3.
+Revisa de nuevo toda la unidad hasta este punto. He realizado algunas 
+actualizaciones al material para que complementes y SOBRE TODO 
+repases y PUEDAS RECORDAR lo que ya has practicado.
 
-Sesión 4
+Sesión 5
 *************
 
 Ejercicio 9: variables static
@@ -606,14 +617,14 @@ Piensa en las siguientes cuestiones:
   0x30 obtendrás el número 1.
 
 
-Trabajo Autónomo 4
+Trabajo Autónomo 5
 *********************
 
 Revisa de nuevo toda la unidad hasta este punto. He realizado algunas 
 actualizaciones al material para que complementes y SOBRE TODO 
 repases y PUEDAS RECORDAR lo que ya has practicado.
 
-Sesión 5
+Sesión 6
 *************
 
 Ejercicio 18: comunicaciones seriales
@@ -925,7 +936,7 @@ Verificación de los escenarios de prueba:
           <iframe width="100%" height="315" src="https://www.youtube.com/embed/dyONJlylaBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-Trabajo Autónomo 5
+Trabajo Autónomo 6
 *********************
 
 Revisa el material de la unidad hasta este punto. RECUERDA que la próxima 
