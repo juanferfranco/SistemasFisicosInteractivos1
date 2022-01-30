@@ -38,5 +38,6 @@
         "sincronización",
         "sumativas",
         "sumativo"
-    ]
+    ],
+    "restructuredtext.languageServer.disabled": true
 }

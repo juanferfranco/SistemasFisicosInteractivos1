@@ -143,42 +143,61 @@ El siguiente programa permite encender y apagar un LED conectado a un puerto de 
 
 .. code-block:: cpp
 
+    #define LED_PIN 5
+
     void setup()
     {
-      pinMode(2, OUTPUT);
+      pinMode(LED_PIN, OUTPUT);
     }
     
     void loop()
     {
-      digitalWrite(2, HIGH);
+      digitalWrite(LED_PIN, HIGH);
       delay(1000); // Wait for 1000 millisecond(s)
-      digitalWrite(2, LOW);
+      digitalWrite(LED_PIN, LOW);
       delay(1000); // Wait for 1000 millisecond(s)
     }
+
+Para probar el siguiente programa, vas a necesitar utilizar 
+el protoboard. Te voy a dejar un par de recursos para que 
+ves cómo es por dentro un protoboard y cómo se usa:
+
+* Un video `aquí <https://youtu.be/6WReFkfrUIk>`__.
+* Una lectura con imágenes `aquí <https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard>`__.
 
 El siguiente programa permite leer un puerto digital y encender y apagar un LED:
 
 .. code-block:: cpp
+    
+    #define LED_PIN 5
+    #define PUSHBUTTON_PIN 32 
 
     void setup()
     {
-      pinMode(2, OUTPUT);
-      pinMode(3,INPUT);
-      
+      pinMode(LED_PIN, OUTPUT);
+      pinMode(PUSHBUTTON_PIN,INPUT_PULLUP);
     }
     
     void loop()
     {
-      if(digitalRead(3) == HIGH){
-        digitalWrite(2, HIGH);  
+      if(digitalRead(PUSHBUTTON_PIN) == HIGH){
+        digitalWrite(LED_PIN, HIGH);  
       }
       else{
-        digitalWrite(2, LOW);
+        digitalWrite(LED_PIN, LOW);
       }
     }
 
 Ejercicio 6: RETO
 ^^^^^^^^^^^^^^^^^^^^^
+
+Antes de este reto monta el siguiente circuito en el protobard:
+
+.. image:: ../_static/montaje.jpg
+  :alt: montaje
+
+Este montaje no solo te permitirá abordar este reto, sino otros 
+que vendrán.
 
 Realiza un programa que lea el estado de dos switches y encienda solo
 uno de 4 LEDs (un LED para cada combinación posible de los suiches).
@@ -192,22 +211,25 @@ el montaje de hardware necesario y verifica su funcionamiento.
 
 .. code-block:: cpp
 
+    #define LED_PIN 5
+    #define PUSHBUTTON_PIN 32 
+
     void setup()
     {
-      pinMode(2, OUTPUT);
-      pinMode(3,INPUT);
+      pinMode(LED_PIN, OUTPUT);
+      pinMode(PUSHBUTTON_PIN,INPUT_PULLUP);
       Serial.begin(115200);
       
     }
     
     void loop()
     {
-      if(digitalRead(3) == HIGH){
-        digitalWrite(2, HIGH);  
+      if(digitalRead(PUSHBUTTON_PIN) == HIGH){
+        digitalWrite(LED_PIN, HIGH);  
         Serial.println("LED ON");
       }
       else{
-        digitalWrite(2, LOW);
+        digitalWrite(LED_PIN, LOW);
         Serial.println("LED OFF");
       }
     }
@@ -215,9 +237,8 @@ el montaje de hardware necesario y verifica su funcionamiento.
 Ejercicio 8: RETO 
 ^^^^^^^^^^^^^^^^^^^^
 
-Modifica el código del reto anterior para indicar, SOLO UNA VEZ, por el puerto serial
-cuál de los 4 LEDs está encendido.
-
+Modifica el código del reto anterior (ejercicio 6) para indicar, SOLO UNA VEZ, por 
+el puerto serial cuál de los 4 LEDs está encendido.
 
 Trabajo Autónomo 3
 *********************
@@ -226,340 +247,167 @@ Trabajo Autónomo 3
 * Si ya terminaste los retos y te queda tiempo, por favor, repasa todo 
   el material de la sesión 3.
 
-..
-  Lecturas, ejercicios y proyecto
-  ---------------------------------
+Sesión 4
+*************
 
+Ejercicio 9: variables static
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Ejercicio 12: variables static
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Vamos a explorar un poco más el lenguaje de programación.
 
-  Vamos a explorar un poco más el lenguaje de programación.
+Analiza el siguiente código:
 
-  Analiza el siguiente código:
+.. code-block:: cpp
 
-  .. code-block:: cpp
+    void setup() {
+      Serial.begin(115200);
+    }
 
-      void setup() {
-        Serial.begin(115200);
+    void loop() {
+      uint8_t counter = 20;
+      counter++;
+      Serial.println(counter);
+      delay(100);
+    }
 
-      }
+Compara el código anterior con este:
 
+.. code-block:: cpp
 
-      void loop() {
+    void setup() {
+      Serial.begin(115200);
+    }
 
-        uint8_t counter = 20;
+    void loop() {
+      static uint8_t counter = 20;
+      counter++;
+      Serial.println(counter);
+      delay(100);
+    }
 
-        counter++;
+* ¿Qué puedes concluir? 
+* ¿Para qué sirve la palabra reservada static? 
+* ¿Cuándo es necesario declarar una variable static?
 
-        Serial.println(counter);
+Ejercicio 10: introducción al código no bloqueante
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-        delay(100);
+Analiza el siguiente ejemplo:
 
-      }
+.. code-block:: cpp
 
-  Compara el código anterior con este:
+    #define LED_PIN 5
+    const uint32_t interval = 1000;
 
-  .. code-block:: cpp
+    void setup() {
+      // set the digital pin as output:
+      pinMode(LED_PIN, OUTPUT);
+    }
+    
+    void loop() {
+      static uint32_t previousMillis = 0;
+      static uint8_t ledState = LOW;
+    
+      uint32_t currentMillis = millis();
 
-      void setup() {
-        Serial.begin(115200);
-
-      }
-
-
-      void loop() {
-
-        static uint8_t counter = 20;
-
-        counter++;
-
-        Serial.println(counter);
-
-        delay(100);
-
-      }
-
-  Ahora compara con este otro código:
-
-  .. code-block:: cpp
-
-    uint8_t counter = 5;
-
-      void setup() {
-        Serial.begin(115200);
-
-      }
-
-
-      void incCounter() {
-        static uint8_t counter = 10;
-        counter++;
-        Serial.print("Counter in incCounter: ");
-        Serial.println(counter);
-
-      }
-
-      void loop() {
-        static uint8_t counter = 20;
-        counter++;
-        Serial.print("Counter in loop: ");
-        Serial.println(counter);
-        incCounter();
-        Serial.print("Counter outside loop: ");
-        Serial.println(::counter);
-        ::counter++;
-        delay(500);
-      }
-
-  ¿Qué puedes concluir?
-
-  Ejercicio 13: introducción al código no bloqueante
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Analiza el siguiente ejemplo:
-
-  .. code-block:: cpp
-
-      const uint8_t ledPin =  3;
-      uint8_t ledState = LOW;
-      uint32_t previousMillis = 0;
-      const uint32_t interval = 1000;
-
-      void setup() {
-        // set the digital pin as output:
-        pinMode(ledPin, OUTPUT);
-      }
-      
-      void loop() {
-        uint32_t currentMillis = millis();
-      
-        if (currentMillis - previousMillis >= interval) {
-          previousMillis = currentMillis;
-          if (ledState == LOW) {
-            ledState = HIGH;
-          } else {
-            ledState = LOW;
-          }
-      }
-
-  ¿Qué hace este programa?
-
-  Ejercicio 14: RETO 
-  ^^^^^^^^^^^^^^^^^^^^^^
-
-  Realice un programa que encienda y apague tres LEDs a
-  1 Hz, 5 Hz y 7 Hz respectivamente utilizando la técnica vista en
-  el ejercicio anterior.
-
-  Ejercicio 15: arreglos
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Vamos a analizar uno de los ejemplos que vienen con el
-  SDK de arduino. Este ejemplo nos permite ver cómo podemos
-  hacer uso de los arreglos para manipular varios LEDs:
-
-  .. code-block:: cpp
-      
-      int timer = 100;           // The higher the number, the slower the timing.
-      int ledPins[] = {
-        2, 7, 4, 6, 5, 3
-      };       // an array of pin numbers to which LEDs are attached
-      int pinCount = 6;           // the number of pins (i.e. the length of the array)
-      
-      void setup() {
-        // the array elements are numbered from 0 to (pinCount - 1).
-        // use a for loop to initialize each pin as an output:
-        for (int thisPin = 0; thisPin < pinCount; thisPin++) {
-          pinMode(ledPins[thisPin], OUTPUT);
-        }
-      }
-      
-      void loop() {
-        // loop from the lowest pin to the highest:
-        for (int thisPin = 0; thisPin < pinCount; thisPin++) {
-          // turn the pin on:
-          digitalWrite(ledPins[thisPin], HIGH);
-          delay(timer);
-          // turn the pin off:
-          digitalWrite(ledPins[thisPin], LOW);
-      
-        }
-      
-        // loop from the highest pin to the lowest:
-        for (int thisPin = pinCount - 1; thisPin >= 0; thisPin--) {
-          // turn the pin on:
-          digitalWrite(ledPins[thisPin], HIGH);
-          delay(timer);
-          // turn the pin off:
-          digitalWrite(ledPins[thisPin], LOW);
-        }
-      }
-
-
-  Ejercicio 16: encapsulamiento en tareas
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  El siguiente código muestra cómo podemos encapsular completamente
-  el código del RETO anterior en tareas.
-
-  .. code-block:: cpp
-
-      void setup() {
-        task1();
-        task2();
-      }
-
-      void task1(){
-        static uint32_t previousMillis = 0;
-        static const uint32_t interval = 1250;
-        static bool taskInit = false;
-        static const uint8_t ledPin =  3;
-        static uint8_t ledState = LOW;
-        
-        if(taskInit == false){
-          pinMode(ledPin, OUTPUT);	
-          taskInit = true;
-        }
-        
-        uint32_t currentMillis = millis();	
-        if ( (currentMillis - previousMillis) >= interval) {
-          previousMillis = currentMillis;
-          if (ledState == LOW) {
-            ledState = HIGH;
-          } else {
-            ledState = LOW;
-          }
-          digitalWrite(ledPin, ledState);
-        }
-      }
-
-      void task2(){
-        static uint32_t previousMillis = 0;
-        static const uint32_t interval = 370;
-        static bool taskInit = false;
-        static const uint8_t ledPin =  5;
-        static uint8_t ledState = LOW;
-        
-        if(taskInit == false){
-          pinMode(ledPin, OUTPUT);	
-          taskInit = true;
-        }
-        
-        uint32_t currentMillis = millis();	
-        if ( (currentMillis - previousMillis) >= interval) {
-          previousMillis = currentMillis;
-          if (ledState == LOW) {
-            ledState = HIGH;
-          } else {
-            ledState = LOW;
-          }
-          digitalWrite(ledPin, ledState);
-        }
-      }
-
-      void loop() {
-        task1();
-        task2();
-      }
-
-  Una de las ventajas del código anterior es que favorece el trabajo
-  en equipo. Nota que se puede entregar a cada persona del equipo una
-  tarea. Finalmente, uno de los miembros del equipo podrá integrar
-  todas las tareas así:
-
-  .. code-block:: cpp
-
-      void task1(){
-      .
-      .
-      .
-      }
-      
-      void task2(){
-      .
-      .
-      .
-      }
-
-      void task3(){
-      .
-      .
-      .
-      }
-
-      void setup() {
-        task1();
-        task2();
-        task3();
-      }
-
-      void loop() {
-        task1();
-        task2();
-        task3();
-      }
-
-
-  Ejercicio 17: introducción a las clases
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Observa detenidamente el código de ambas tareas. Verás que es muy similar.
-  En este ejercicio veremos una construcción interesante de
-  C++ que favorece el reuso de código. Nota que el código de las tareas
-  1 y 2 es prácticamente el mismo, solo que está actuando sobre diferentes datos. 
-
-  ¿Cómo así?
-
-  Analicemos por partes. Primero, la inicialización de la tarea:
-
-  Para la tarea 1 (task1):
-
-  .. code-block:: cpp
-
-      if(taskInit == false){
-        pinMode(ledPin, OUTPUT);	
-        taskInit = true;
-      }
-
-  Para la tarea 2 (task2):
-
-  .. code-block:: cpp
-
-      if(taskInit == false){
-        pinMode(ledPin, OUTPUT);	
-        taskInit = true;
-      }
-
-
-  En el código anterior cada tarea tiene una variable que permite
-  activar el código solo un vez, es decir, cuando taskInit es false.
-  Esto se hace así para poder inicializar el puerto de salida donde
-  estará el led conectado. Recuerde que esto se haga solo una vez.
-  ¿Cuándo ocurrirá? Cuando llamemos taskX() (X es 1 o 2) en la función
-  setup().
-
-  Segundo, el código que se llamará repetidamente en la función loop:
-
-  Para la tarea 1:
-
-  .. code-block:: cpp
-
-      if ( (currentMillis - previousMillis) >= interval) {
+      if (currentMillis - previousMillis >= interval) {
         previousMillis = currentMillis;
         if (ledState == LOW) {
           ledState = HIGH;
         } else {
           ledState = LOW;
         }
-        digitalWrite(ledPin, ledState);
+        digitalWrite(LED_PIN,ledState);
+    }
+
+* ¿Qué hace este programa?
+* ¿Cómo funciona?
+
+Ejercicio 11: RETO 
+^^^^^^^^^^^^^^^^^^^^^^
+
+Realice un programa que encienda y apague 4 LEDs a
+1 Hz, 5 Hz, 7 Hz y 9 Hz respectivamente utilizando la técnica vista en
+el ejercicio anterior.
+
+Ejercicio 12: arreglos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Analiza uno de los ejemplos que vienen con el
+SDK de arduino (modificado). Este ejemplo nos permite ver cómo podemos
+hacer uso de los arreglos para manipular varios LEDs:
+
+.. code-block:: cpp
+    
+    int timer = 100;           // The higher the number, the slower the timing.
+    int ledPins[] = {
+      25, 26, 27,14
+    };       // an array of pin numbers to which LEDs are attached
+    int pinCount = 4;           // the number of pins (i.e. the length of the array)
+    
+    void setup() {
+      // the array elements are numbered from 0 to (pinCount - 1).
+      // use a for loop to initialize each pin as an output:
+      for (int thisPin = 0; thisPin < pinCount; thisPin++) {
+        pinMode(ledPins[thisPin], OUTPUT);
       }
+    }
+    
+    void loop() {
+      // loop from the lowest pin to the highest:
+      for (int thisPin = 0; thisPin < pinCount; thisPin++) {
+        // turn the pin on:
+        digitalWrite(ledPins[thisPin], HIGH);
+        delay(timer);
+        // turn the pin off:
+        digitalWrite(ledPins[thisPin], LOW);
+    
+      }
+    
+      // loop from the highest pin to the lowest:
+      for (int thisPin = pinCount - 1; thisPin >= 0; thisPin--) {
+        // turn the pin on:
+        digitalWrite(ledPins[thisPin], HIGH);
+        delay(timer);
+        // turn the pin off:
+        digitalWrite(ledPins[thisPin], LOW);
+      }
+    }
 
 
-  Para la tarea 2:
+Ejercicio 13: encapsulamiento en tareas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  .. code-block:: cpp
+Analiza la estructura del siguiente código. Esta estructura 
+te permitirá trabajar fácilmente en equipo porque puedes 
+delegar las diferentes partes de la aplicación a varias personas.
+La idea es que cada persona pueda realizar una tarea.
 
+Un pedido especial para ti. Recuerda:
+
+* ¿Para qué se usa la palabra reservada static en este caso?
+* PREGUNTA DE INVESTIGACIÓN: ¿Qué ocurre con el programa si 
+  le quitas el static a las variables?
+
+.. code-block:: cpp
+
+    void setup() {
+      task1();
+      task2();
+    }
+
+    void task1(){
+      static uint32_t previousMillis = 0;
+      static const uint32_t interval = 1250;
+      static bool taskInit = false;
+      static const uint8_t ledPin =  25;
+      static uint8_t ledState = LOW;
+      
+      if(taskInit == false){
+        pinMode(ledPin, OUTPUT);	
+        taskInit = true;
+      }
+      
       uint32_t currentMillis = millis();	
       if ( (currentMillis - previousMillis) >= interval) {
         previousMillis = currentMillis;
@@ -570,1002 +418,518 @@ Trabajo Autónomo 3
         }
         digitalWrite(ledPin, ledState);
       }
+    }
 
-  Nota que los datos sobre los que actúa cada código, aunque
-  tienen el mismo nombre son datos distintos:
-
-  Para la tarea 1:
-
-  .. code-block:: cpp
-
-      static uint32_t previousMillis = 0;
-      static const uint32_t interval = 1250;
-      static bool taskInit = false;
-      static const uint8_t ledPin =  3;
-      static uint8_t ledState = LOW;
-
-  Para la tarea 2:
-
-  .. code-block:: cpp
-
+    void task2(){
       static uint32_t previousMillis = 0;
       static const uint32_t interval = 370;
       static bool taskInit = false;
-      static const uint8_t ledPin =  5;
+      static const uint8_t ledPin =  26;
       static uint8_t ledState = LOW;
-
-  Pero ¿Por qué son distintos? porque estamos declarando las variables
-  como estáticas dentro de cada tarea.
-  Esto implica que las variables son privadas a cada función pero
-  viven en memoria como si se tratara de variables globales.
-
-  Esto introduce la siguiente pregunta: ¿Qué tal si pudiéramos tener
-  el mismo código, pero cada vez que lo llamemos indicarle sobre
-  que datos debe actuar? Pues lo anterior es posible en C++ usando
-  una construcción conocida como clase.
-
-  La clase nos permite definir un nuevo tipo dato y los algoritmos
-  que se pueden aplicar a ese nuevo tipo de dato. En este caso,
-  necesitamos que cada tarea pueda tener sus propias variables para
-  previousMillis, interval, ledPin, ledState.
-
-  .. code-block:: cpp
-
-      class LED{
-          private:
-              uint32_t previousMillis;
-              const uint32_t interval;
-              const uint8_t ledPin;
-              uint8_t ledState = LOW;
-      };
-
-  De esta manera en cada tarea podremos crear un nuevo LED así:
-
-  .. code-block:: cpp
-
-      void task1(){
-          static LED led;
-      }
-
-  .. code-block:: cpp
-
-      void task2(){
-          static LED led;
-      }
-
-  A cada nuevo LED se le conoce como un objeto. led es
-  la variable por medio de las cuales podremos acceder a cada
-  uno de los objetos creados en task1 y task2.
-
-  Notas:
-
-  * Cada objeto es independiente, es decir, cada objeto tiene su propia
-    copia de cada variable definida en la clase.
-    ¿Cuál es el contenido de cada objetos? el contenido es un uint32_t,
-    un const uint32_t, un const uint8_t y uint8_t a los cuales les
-    hemos dado nombres: previousMillis, interval, ledPin y ledState
-    respectivamente.
-  * Las variables led definidas en task1 y task2 NO SON OBJETOS,
-    son variables de tipo LED que permiten acceder al contenido de cada objeto. 
-  * led es una variable propia de cada tarea.
-  * Nota que las variables definidas en LED son privadas (private). Esto
-    quiere decir que no vamos a acceder a ellas directamente. Ya veremos
-    más abajo cómo modificar sus valores.
-
-  Nuestro nuevo tipo LED tiene un problema y es que no permite definir para cada
-  LED creado el intervalo y el puerto donde se conectará. Para resolver lo anterior
-  se introduce el concepto de constructor de la clase. El constructor,
-  permite definir los valores iniciales de cada objeto.
-
-  .. code-block:: cpp
-    
-
-      class LED{
-          private:
-              uint32_t previousMillis;
-              const uint32_t interval;
-              const uint8_t ledPin;
-              uint8_t ledState = LOW;
-
-          public:
-              LED(uint8_t _ledpin, uint32_t _interval): ledPin(_ledpin), interval(_interval) {
-                  pinMode(_ledpin, OUTPUT);
-                  previousMillis = 0;
-              }
-      };
-
-  El constructor de la clase es un método que recibe los valores
-  iniciales del objeto y no devuelve nada.
-
-  Ahora si podemos definir cada objeto:
-
-  .. code-block:: cpp
-
-      void task1(){
-          static LED led(3,725);
-      }
-
-  .. code-block:: cpp
-
-      void task2(){
-          static LED led(5, 1360);
-
-  .. code-block:: cpp
-
-      class LED{
-
-      private:
-        uint32_t previousMillis;
-        const uint32_t interval;
-        const uint8_t ledPin;
-        uint8_t ledState = LOW;
-
-      public:
-        LED(uint8_t _ledpin, uint32_t _interval): ledPin(_ledpin), interval(_interval) {
-        pinMode(_ledpin, OUTPUT);
-        previousMillis = 0;
-        }
-
-        void toggleLED(){
-        uint32_t currentMillis = millis();	
-        if ( (currentMillis - previousMillis) >= interval) {
-          previousMillis = currentMillis;
-          if (ledState == LOW) {
-            ledState = HIGH;
-          } else {
-            ledState = LOW;
-          }
-          digitalWrite(ledPin, ledState);
-        }
-        }
-      };   
-
-
-  Finalmente, al llamar toggleLED debemos indicar sobre qué objeto
-  deberá actuar:
-
-  .. code-block:: cpp
-
-      void task1(){
-          static LED led(3,725);
-
-          led.toggleLED();
-      }
-
-  .. code-block:: cpp
-
-      void task2(){
-          static LED led(5, 1360);
-          led.toggleLED();
-      }
-
-  La versión final del código será:
-
-  .. code-block:: cpp
-
-      class LED{
-
-        private:
-          uint32_t previousMillis;
-          const uint32_t interval;
-          const uint8_t ledPin;
-          uint8_t ledState;
-
-        public:
-          LED(uint8_t _ledpin, uint32_t _interval): ledPin(_ledpin), interval(_interval) {
-            pinMode(_ledpin, OUTPUT);
-            previousMillis = 0;
-            ledState = LOW;
-          }
-
-          void toggleLED(){
-            
-            uint32_t currentMillis = millis();	
-            if ( (currentMillis - previousMillis) >= interval) {
-              previousMillis = currentMillis;
-              if (ledState == LOW) {
-                ledState = HIGH;
-              } else {
-                ledState = LOW;
-              }
-              digitalWrite(ledPin, ledState);
-            }
-          }
-      };
-
-      void task1(){
-        static LED led(3,1250);
-        led.toggleLED();
-      }
-
-      void task2(){
-        static LED led(5,375);
-        led.toggleLED();
-      }
-
-      void setup() {
-        task1();
-        task2();
-      }
-
-      void loop() {
-        task1();
-        task2();
-      }
-
-  Ejercicio 18: de nuevo arreglos
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Podemos llevar un paso más allá el ejercicio anterior si añadimos
-  el concepto de arreglo. ¿Para qué? Observa que el código de
-  task1 y task2 es muy similar. Tal vez podamos resolver el problema
-  usando únicamente una tarea:
-
-  .. code-block:: cpp
-
-      class LED{
-
-        private:
-          uint32_t previousMillis;
-          const uint32_t interval;
-          const uint8_t ledPin;
-          uint8_t ledState = LOW;
-
-        public:
-          LED(uint8_t _ledpin, uint32_t _interval): ledPin(_ledpin), interval(_interval) {
-          pinMode(_ledpin, OUTPUT);
-          previousMillis = 0;
-        }
-
-        void toggleLED(){
-        uint32_t currentMillis = millis();	
-        if ( (currentMillis - previousMillis) >= interval) {
-          previousMillis = currentMillis;
-          if (ledState == LOW) {
-            ledState = HIGH;
-          } else {
-            ledState = LOW;
-          }
-          digitalWrite(ledPin, ledState);
-        }
-        }
-      };
-
-      void setup() {
-        task();
-      }
-
-      void task(){
-        static LED leds[2] = {{3,725},{5,1300}};
-
-        for(int i= 0; i < 2; i++){
-          leds[i].toggleLED();
-        }
-
-      }
-
-      void loop() {
-          task();
-      }
-
-
-  Ejercicio 19: punteros
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  Ahora vamos a explorar un concepto fundamental en C y C++: los punteros.
-
-  ¿Qué son los punteros? para entenderlos vamos a dar un salto mortal
-  en complejidad analizando este ejemplo:
-
-  .. code-block:: cpp
-
-      void setup(){
-          Serial.begin(115200);
-      }
-
-
-      void processData(uint8_t *pData, uint8_t size, uint8_t *res){
-        uint8_t sum = 0;
-
-        for(int i= 0; i< size; i++){
-          sum = sum + *(pData+i) - 0x30;
-        }
-        *res =  sum;
-      }
-
-      void loop(void){
-        static uint8_t rxData[10];
-        static uint8_t dataCounter = 0;  
-
-        if(Serial.available() > 0){
-            rxData[dataCounter] = Serial.read();
-            dataCounter++;
-          if(dataCounter == 5){
-            uint8_t result = 0;
-            processData(rxData, dataCounter, &result);
-            dataCounter = 0;
-            Serial.println(result);
-          }
-        }
-      }
-
-
-  Ejercicio 20: comunicaciones seriales
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
-
-  Observa `este <https://www.youtube.com/embed/nm0EdjXEBGQ>`__ video corto que introducirá como
-  funcionan las comunicaciones seriales entre un sistema embebidos y una
-  plataforma de cómputo interactiva.
-
-  .. raw:: html
-
-      <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/nm0EdjXEBGQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-
-
-  Ejercicio 21: un poco más sobre el serial 
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Ahora lee el material de `este <https://learn.sparkfun.com/tutorials/serial-communication/all>`__
-  sitio y responde las siguientes preguntas:
-
-  * ¿Cuál es la diferencia entre una interfaz de comunicación paralela y una serial?
-  * ¿Cuál es la diferencia entre un protocolo serial sincrónico y asincrónico?
-  * En el caso de arduino ¿Qué tipo de protocolo usamos?
-  * Si el protocolo serial asíncrono que usaremos es de 8 bits, un bit de arranque,
-    un bit de parada, sin bit de paridad y a 9600 bps dibuja los diagramas de tiempo cuando
-    se transmite el byte 0x01 y el carácter '1'
-  * ¿Es lo mismo transmitir el byte 0x01 que el byte '1'?
-
-
-  Ejercicio 22: api serial de arduino
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  ¿Dónde encuentro el API de arduino para el manejo del serial?
-
-  `Aquí <https://www.arduino.cc/reference/en/language/functions/communication/serial/>`__
-
-  Las siguientes preguntas las responderemos en los próximos ejercicios, pero por ahora
-  lee algunas de las funciones del API del serial y responde:
-
-  * ¿Cual es la diferencia entre print y println?
-  * ¿Cuál es la diferencia entre print y write?
-  * ¿Qué pasa si utilizas read() cuando available() te devuelva cero?
-  * ¿Cuál es la diferencia entre readBytes? y readBytesUntil()?
-  * ¿Qué pasa si quieres leer 10 bytes con readBytes pero solo se han recibido 3?
-
-  Ejercicio 23: análisis del api serial (investigación: hipótesis-pruebas)
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Qué crees que ocurre cuando:
-
-  * ¿Qué pasa cuando hago un Serial.available()?
-  * ¿Qué pasa cuando hago un Serial.read()?
-  * ¿Qué pasa cuando hago un Serial.read() y no hay nada en el buffer de
-    recepción?
-  * Un patrón común al trabajar con el puerto serial es este:
-
-  .. code-block:: cpp
-
-      if(Serial.available() > 0){
-          int dataRx = Serial.read() 
-      }
-
-  * ¿Cuántos datos lee Serial.read()?
-  * ¿Y si quiero leer más de un dato? No olvides que no se pueden leer más datos
-    de los disponibles en el buffer de recepción, claramente porque no hay
-    más datos que los que tenga allí.
-
-  Ejercicio 24: buffer de recepción
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Vamos a leer 3 datos del puerto serial:
-
-  .. code-block:: cpp
-
-      if(Serial.available() >= 3){
-          int dataRx1 = Serial.read()
-          int dataRx2 = Serial.read() 
-          int dataRx3 = Serial.read() 
-      }
-
-  Vas a comparar el programa anterior con el que sigue: 
-
-
-  Ejercicio 25: análisis, hipótesis, pruebas
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  ¿Qué escenarios podría tener en este caso?
-
-  .. code-block:: cpp
-
-      if(Serial.available() >= 2){
-          int dataRx1 = Serial.read()
-          int dataRx2 = Serial.read() 
-          int dataRx3 = Serial.read() 
-      }
-
-  Compara el este ejercicio con el anterior. Realiza pruebas, experimenta. 
-  ¿Qué puedes concluir? discute tus resultados con el profesor.
-
-
-  Ejercicio 26: miniRETO
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  Piense cómo podrías hacer lo siguiente:
-
-  .. code-block:: cpp
-
-      void taskSerial(){
-          // Esta tarea tiene su propio buffer de recepción,
-          // es decir, su propio vector. Nadie más tiene acceso
-      }
-      void loop(){
-          taskSerial();
-      }
-
-  * Almacenar los datos en su propio buffer de recepción
-    (el buffer será un arreglo).
-  * El buffer debe estar encapsulado en la tarea
-  * Los datos almacenados en el buffer no se pueden perder
-    entre llamados a taskSerial(). La función taskSerial() se llama
-    en la función loop.  
-  * ¿Qué debes hacer para saber, en cualquier parte del código de taskSerial(),
-    cuántos datos tienes guardados en el buffer de recepción?
-
-
-  Ejercicio 27: terminal serial
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Vamos a detenernos un momento en el software del lado del
-  computador: el terminal. Veamos dos de ellas, la terminal
-  de arduino y `esta <https://sourceforge.net/projects/scriptcommunicator/>`__
-  otra (scriptcommunicator)
-
-  * ¿Qué es un programa terminal? 
-  * ¿Para qué sirve?
-
-  Discute tus resultados con el profesor y tus compañeros.
-
-  Ejercicio 28: enviar datos por el puerto serial 
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Considera el siguiente programa
-
-  .. code-block:: cpp
-
-      void setup()
-      {
-        Serial.begin(9600);
-      }
-      void loop()
-      {
-        if(Serial.available() > 0){
-          Serial.read();
-          int8_t var = -1;
-          Serial.println("Inicio de la prueba");
-          Serial.write(var);
-          Serial.print("\n");
-          Serial.print(var);
-          Serial.print('\n');
-          Serial.println("Fin de la prueba"); 
-        }
-      }
-
-  Ejecuta el programa
-
-  ¿Qué observas en la terminal de arduino justo en estas dos líneas?
-
-  .. code-block:: cpp
-
-      Serial.write(var);
-      Serial.print(var);
-
-  ¿Qué observas en Scriptcommunicator para las dos líneas anteriores?
-
-  En la siguiente parte del código:
-
-  .. code-block:: cpp
-
-      if(Serial.available() > 0){
-          Serial.read();
-
-  Comenta la línea Serial.read() en esta parte del código:
-
-  .. code-block:: cpp
-
-      if(Serial.available() > 0){
-          //Serial.read();
-
-  ¿Qué ocurre? ¿Por qué ocurre esto?
-
-  En la siguiente parte del código:
-
-  .. code-block:: cpp
-
-      Serial.println("Inicio de la prueba");
-      Serial.write(var);
-      Serial.print("\n");
-      Serial.print(var);
-      Serial.print('\n');
-      Serial.println("Fin de la prueba"); 
-
-  ¿Cuál es la diferencia entre estas dos líneas de código?
-
-  .. code-block:: cpp
-
-    Serial.print("\n");
-    Serial.print('\n');
-
-  Ejercicio 29: miniRETO
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  Considera el siguiente código para analizar en Scriptcommunicator:
-
-  .. code-block:: cpp
-
-      void setup()
-      {
-        Serial.begin(9600);
-      }
-
-      void loop()
-      {
-        if(Serial.available() > 0){
-          Serial.read();
-          int8_t var = 255;
-          int8_t var2 = 0xFF;
-          Serial.write(var);
-          Serial.print(var);
-          Serial.write(var2);
-          Serial.print(var2);
-        }
-      }
-
-  Explica qué está ocurriendo en cada caso.
-
-  Ejercicio 30: máquinas de estado
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Este ejercicio lo vamos a realizar todos juntos:
-
-  Una aplicación interactiva posee un sensor que produce ruido eléctrico al
-  cambiar de estado. La siguiente figura, capturada con un osciloscopio
-  muestra la señal del sensor.
-
-  .. image:: ../_static/bounce.jpg
-    :alt: bounce
-
-  En la figura se observa el ruido generado en la transición de la señal
-  al pasar del estado alto al estado bajo; sin embargo, el
-  mismo fenómeno ocurre al cambiar del estado bajo al alto. Nota que
-  además pueden ocurrir falsos positivos en la señal, que se manifiestan
-  como pulsos de muy corta duración.
-  Un ingeniero electrónica experto nos indica que podemos considerar un
-  cambio de estado en el sensor siempre que la señal esté estable por
-  lo menos durante 100 ms, es decir, sin ruido y sin falsos positivos.
-  Se debe realizar una aplicación que filtre el comportamiento ruidoso
-  del sensor y reporte por un puerto serial únicamente los valores
-  estables de la señal.
-
-  Para este ejercicio debes:
-
-  * Realizar un diagrama con el modelo en máquinas de estado para la aplicación
-  * Definir escenarios de prueba usando diagramas de secuencias.
-  * Implementar el modelo.
-  * Verificar los escenarios definidos
-
-  Ejercicio 31: miniRETO
-  ^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  En un escape room se requiere construir una aplicación para controlar una bomba temporizada.
-  La siguiente figura ilustra la interfaz de la bomba. El circuito de control
-  de la bomba está compuesto por tres sensores digitales,
-  en este caso pulsadores, denominados UP, DOWN, ARM (los simularemos con el PC),
-  un display (LCD) y una salida digital para activar la bomba
-  (simularemos la salida y el display con el PC).
-
-  .. note:: NO ES NECESARIO SIMULAR EL HARDWARE 
       
-      Te propongo que hagas simulaciones del hardware por costos, pero si quieres realizar 
-      el montaje real sería GENIAL! Habla con el profesor para que te recomiende qué 
-      materiales puedes usar. 
+      if(taskInit == false){
+        pinMode(ledPin, OUTPUT);	
+        taskInit = true;
+      }
+      
+      uint32_t currentMillis = millis();	
+      if ( (currentMillis - previousMillis) >= interval) {
+        previousMillis = currentMillis;
+        if (ledState == LOW) {
+          ledState = HIGH;
+        } else {
+          ledState = LOW;
+        }
+        digitalWrite(ledPin, ledState);
+      }
+    }
 
-  El controlador funciona así:
+    void loop() {
+      task1();
+      task2();
+    }
 
-  .. image:: ../_static/bomb.png
-    :alt: bomba
+Ejercicio 14: punteros
+^^^^^^^^^^^^^^^^^^^^^^^
 
-  * Inicia en modo de configuración, es decir, no cuenta aún, la bomba está
-    ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
-  * En el modo de configuración, los pulsadores UP y DOWN permiten
-    aumentar o disminuir el tiempo inicial de la bomba.
-  * El tiempo se puede programar entre 10 y 60 segundos con cambios de 1 segundo.
-  * El tiempo de configuración se debe visualizar en el LCD (enviamos el
-    valor al PC).
-  * El pulsador ARM arma la bomba.
-  * Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
-    en el LCD en por medio de una cuenta regresiva en segundos.
-  * La bomba explotará (se activa la salida de activación de la bomba) cuando
-    el tiempo llegue a cero. En este punto el control regresará al modo de
-    configuración.
-  * Una vez la bomba esté armada es posible desactivarla ingresando un código
-    de seguridad. El código será la siguiente secuencia de pulsadores
-    presionados uno después de otro:  UP, DOWN, DOWN, UP, UP, ARM.
-  * Si la secuencia se ingresa correctamente el controlador pasará de nuevo
-    al modo de configuración de lo contrario continuará la fatal cuenta
-    regresiva.
+Vas a explorar un concepto fundamental de los lenguajes de programación 
+C y C++. Se trata de los punteros. Para ello, te voy a proponer que 
+escribas el siguiente programa. Para probarlo, debes abrir el monitor 
+serial y enviar un carácter. Asegúrate que en las configuraciones 
+del monitor serial tengas seleccionado ``No line ending`` y ``115200``. 
 
+.. code-block:: cpp
 
-  Para este ejercicio debes:
+  void setup() {
+    Serial.begin(115200);
+  }
 
-  * Realizar un diagrama con el modelo en máquinas de estado para la aplicación
-  * Definir escenarios de prueba usando diagramas de secuencias.
-  * Implementar el modelo.
-  * Verificar los escenarios definidos
+  void loop() {
 
-  .. Solución a ejercicios
-    
-    `Aquí <https://github.com/juanferfranco/sensores1/tree/master/docs/_semana5/bomb.ino>`__ una solución de 2020-10 al problema:
+    if(Serial.available()>0){ // Ha llegado al menos un dato por el puerto serial?
+      Serial.read(); // DEBO leer ese dato, sino se acumula y el buffer de recepción
+                    // del serial se llenará. 
+      uint32_t var= 0;
+      uint32_t *pvar = &var; // Almaceno en pvar la dirección de var.
+      Serial.print("var content: "); // Envía por el puerto serial el arreglo de caracteres 
+                                  // "var content"
+      Serial.print(*pvar);         // LEE el valor de var por medio de pvar
+      Serial.print('\n');          // Envía solo un carácter usas comillas sencillas.
+      *pvar = 10;                  // ESCRIBE el valor de var por medio de pvar
 
-    .. code-block:: cpp 
-      :lineno-start: 1
+      Serial.print("var content: ");
+      Serial.print(*pvar);
+      Serial.print('\n');
+    }
+  }
 
-      uint32_t Timer = 20;
+La variable ``pvar`` se conoce como puntero. Simplemente es una variable 
+en la cual se almacenan direcciones de otras variables. En este caso 
+en pvar se almacena la dirección de ``var``. Nota que debes decirle al 
+compilador cuál es el tipo de la variable (uint32_t en este caso) 
+cuya dirección será almacenada en pvar. 
 
-      enum class BOMBEVS {UP, DOWN, EVTIMER, ARM};
-      BOMBEVS bombEvs;
-      bool bombEvsFlag = false;
+Ahora responde las siguientes preguntas:
 
+* ¿Cómo se declara un puntero?
+* ¿Cómo se define un puntero? (cómo se inicializa)
+* ¿Cómo se obtiene la dirección de una variable?
+* ¿Cómo se puede leer el contenido de una variable por medio de un 
+  puntero?
+* ¿Cómo se puede escribir el contenido de una variable por medio 
+  de un puntero?
 
-      bool timerInitCount = false;
-      uint32_t timeOld = 0;
+.. warning:: IMPORTANTE
 
-      void setup() {
+  No avances hasta que este ejercicio no lo tengas claro.
+
+Ejercicio 15: punteros y funciones 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ahora analiza este programa:
+
+.. code-block:: cpp
+
+  void setup() {
+    Serial.begin(115200);
+  }
+
+  void changeVar(uint32_t *pdata) {
+    *pdata = 10;
+  }
+
+  void printVar(uint32_t value) {
+    Serial.print("var content: ");
+    Serial.print(value);
+    Serial.print('\n');
+  }
+
+  void loop() {
+
+    if (Serial.available() > 0) {
+      Serial.read();
+      uint32_t var = 0;
+      uint32_t *pvar = &var;
+      printVar(*pvar);
+      changeVar(pvar);
+      printVar(var);
+    }
+  }
+
+Nota entonces como pdata recibe el valor de la dirección 
+de var que está almacenada en pvar.
+
+Ejercicio 16: RETO
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Realiza un programa que intercambie mediante una función 
+el valor de dos variables definidas en la función loop. 
+
+Ejercicio 17: punteros y arreglos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Realiza el siguiente programa. Luego abre el monitor serial. Verifica 
+que en las configuración indique ``No line ending`` y la velocidad sea 
+``115200``. Envía 5 número de un solo dígito. ¿Qué hace el programa? 
+
+.. code-block:: cpp
+
+    void setup(){
         Serial.begin(115200);
+    }
+
+    void processData(uint8_t *pData, uint8_t size, uint8_t *res){
+      uint8_t sum = 0;
+
+      for(int i= 0; i< size; i++){
+        sum = sum + (pData[i] - 0x30);
       }
+      *res =  sum;
+    }
 
-      void initCount() {
-        timerInitCount = true;
-        timeOld = millis();
-      }
+    void loop(void){
+      static uint8_t rxData[5];
+      static uint8_t dataCounter = 0;  
 
-      void stopCount() {
-        timerInitCount = false;
-        Timer = 20;
-      }
-
-      void taskBomb() {
-        enum class BombStates {SETTING, COUNTING};
-        static BombStates stateVar =  BombStates::SETTING;
-        static uint32_t keyInput[5] = {1, 2, 3, 4, 5};
-        static uint8_t counter = 0;
-        static uint32_t keyCode = 0;
-
-        switch (stateVar) {
-            case BombStates::SETTING: {
-              if (bombEvs == BOMBEVS::UP) {
-                  if (Timer < 60) {
-                  Timer++;
-                  Serial.println(Timer);
-                  }
-              } else if (bombEvs == BOMBEVS::DOWN) {
-                  if (Timer > 10) {
-                  Timer--;
-                  Serial.println(Timer);
-                  }
-
-              } else if (bombEvs == BOMBEVS::ARM) {
-                  initCount();
-                  stateVar = BombStates::COUNTING;
-              }
-
-              break;
-            }
-
-            case BombStates::COUNTING:{
-              if (bombEvs == BOMBEVS::EVTIMER) {
-
-                  Timer--;
-
-                  if (Timer == 0) {
-                  Serial.println("RIP");
-                  for (;;);
-                  }
-                  else {
-
-                  Serial.println(Timer);
-                  }
-              }
-              else if (bombEvs == BOMBEVS::UP) {
-                  if (counter < 5) {
-                  keyCode = keyCode + 8 * keyInput[counter];
-                  counter++;
-                  }
-              } else if (bombEvs == BOMBEVS::DOWN) {
-                  if (counter < 5) {
-                  keyCode = keyCode + 17 * keyInput[counter];
-                  counter++;
-                  }
-              } else if (bombEvs == BOMBEVS::ARM) {
-                  if(keyCode == 165){
-                          keyCode = 0;
-                          counter = 0;  
-                          Serial.println(":)");
-                          stopCount();
-                          stateVar = BombStates::SETTING;
-                  }
-                  else{
-                      counter = 0;
-                      keyCode = 0;
-                  }
-              }
-
-              break;
-            }
+      if(Serial.available() > 0){
+          rxData[dataCounter] = Serial.read();
+          dataCounter++;
+        if(dataCounter == 5){
+          uint8_t result = 0;
+          processData(rxData, dataCounter, &result);
+          dataCounter = 0;
+          Serial.println(result);
         }
       }
+    }
 
-      void taskInputSerial() {
+Piensa en las siguientes cuestiones:
 
-        if (Serial.available()) {
-            int dataRx = Serial.read();
-            if (dataRx == 'u') {
-              bombEvs  = BOMBEVS::UP;
-              bombEvsFlag = true;
-            }
-            else if (dataRx == 'd') {
-              bombEvs  = BOMBEVS::DOWN;
-              bombEvsFlag = true;
-            }
-            else if (dataRx == 'a') {
-              bombEvs  = BOMBEVS::ARM;
-              bombEvsFlag = true;
-            }
-
-
-        }
-      }
-
-      void taskTime() {
-        if (timerInitCount == true) {
-            uint32_t timeNow = millis();
-            if ( (timeNow - timeOld) >= 1000 ) {
-              timeOld = timeNow;
-              bombEvs = BOMBEVS::EVTIMER;
-              bombEvsFlag = true;
-            }
-        }
-      }
-
-      void loop() {
+* ¿Por qué es necesario declarar ``rxData`` static?
+* dataCounter se define static y se inicializa en 0. Cada 
+  vez que se ingrese a la función loop dataCounter se inicializa 
+  a 0? ¿Por qué es necesario declararlo static?
+* Observa que el nombre del arreglo corresponde a la dirección 
+  del primer elemento del arreglo. Por tanto, usar en una expresión 
+  el nombre rxData (sin el operador []) equivale a &rxData[].
+* En la expresión ``sum = sum + (pData[i] - 0x30);`` observa que 
+  puedes usar el puntero pData para indexar cada elemento del 
+  arreglo mediante el operador [].
+* Finalmente, la constante ``0x30`` en ``(pData[i] - 0x30)`` ¿Por qué 
+  es necesaria? Porque al enviar un carácter numérico desde 
+  el monitor serial, este se envía codificado, es decir, se envía 
+  un byte codificado en ASCII que representa al número. Por tanto, 
+  es necesario decodificar dicho valor. El código ASCII que 
+  representa los valores del 0 al 9 es respectivamente: 0x30, 0x31, 
+  0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39. De esta manera, 
+  si envías el ``1`` recibirás el valor 0x31. Si restas de 0x31 el 
+  0x30 obtendrás el número 1.
 
 
-      taskInputSerial();
+Trabajo Autónomo 4
+*********************
 
-      taskTime();
+Revisa de nuevo toda la unidad hasta este punto. He realizado algunas 
+actualizaciones al material para que complementes y SOBRE TODO 
+repases y PUEDAS RECORDAR lo que ya has practicado.
 
-      if (bombEvsFlag == true) {
-          bombEvsFlag = false;
-          taskBomb();
-      }
+Sesión 5
+*************
 
-      }
+Ejercicio 18: comunicaciones seriales
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
 
-    Un ejercicio extra para practicar: se propone implementar el modelo que muestra en
-    esta imagen:
+En el siguiente video te explico como funcionan las comunicaciones 
+seriales entre un sistema embebidos y una plataforma de cómputo interactiva.
 
-    .. image:: ../_static/SM.jpeg
-      :alt: state machine
-
-
-  PROYECTO EVALUATIVO
-  ^^^^^^^^^^^^^^^^^^^^^
-
-  Solución al ejercicio 30
-  ############################
-
-  Antes de comenzar a realizar la evaluación te recomiendo que revises una posible 
-  solución a uno de los ejercicios anteriores.
-
-  Solución al ejercicio 30:
-
-  Te muestro un posible montaje en el protoboard para solucionar el ejercicio 30. 
-  Para este montaje elegí como puerto de entrada el número 19. Tu debes seleccionar 
-  el puerto que más te convenga en un tu microcontrolador. 
-
-  .. image:: ../_static/debounceCircuit.png
-    :alt: circuito
-
-  Mira un posible diagrama de estados y un video corto 
-  donde te explico el diagrama:
-
-  .. image:: ../_static/debounceStateDiagram.png
-    :alt: state machine
-
-
-  .. raw:: html
+.. raw:: html
 
     <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/DTSqhBkYbJQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/nm0EdjXEBGQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
+Ejercicio 19: api serial de arduino
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Definición de los escenarios de prueba:
+¿Dónde encuentro el API de arduino para el manejo del serial?
 
-  .. image:: ../_static/debounceEscenarios.png
-    :alt: Escenarios de prueba
+`Aquí <https://www.arduino.cc/reference/en/language/functions/communication/serial/>`__
 
+Las siguientes preguntas las responderemos en los próximos ejercicios, 
+pero por ahora lee algunas de las funciones del API del serial y responde:
 
-  .. raw:: html
-    
-      <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/FSfR9sLR3v4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+* ¿Cual es la diferencia entre print y println?
+* ¿Cuál es la diferencia entre print y write?
+* ¿Qué pasa si utilizas read() cuando available() te devuelva cero?
+* ¿Cuál es la diferencia entre readBytes? y readBytesUntil()?
+* ¿Qué pasa si quieres leer 10 bytes con readBytes pero solo se han recibido 3?
 
+Ejercicio 20: análisis del api serial (investigación: hipótesis-pruebas)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  El código de la solución será este:
+Qué crees que ocurre cuando:
 
-  .. code-block:: cpp
+* ¿Qué pasa cuando hago un Serial.available()?
+* ¿Qué pasa cuando hago un Serial.read()?
+* ¿Qué pasa cuando hago un Serial.read() y no hay nada en el buffer de
+  recepción?
+* Un patrón común al trabajar con el puerto serial es este:
 
-      void setup() {
-        Serial.begin(115200);
+.. code-block:: cpp
+
+    if(Serial.available() > 0){
+        int dataRx = Serial.read() 
+    }
+
+* ¿Cuántos datos lee Serial.read()?
+* ¿Y si quiero leer más de un dato? No olvides que no se pueden leer más datos
+  de los disponibles en el buffer de recepción porque no hay
+  más datos que los que tenga allí.
+
+Ejercicio 21: buffer de recepción
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Así se pueden leer 3 datos que han llegado al puerto serial:
+
+.. code-block:: cpp
+
+    if(Serial.available() >= 3){
+        int dataRx1 = Serial.read()
+        int dataRx2 = Serial.read() 
+        int dataRx3 = Serial.read() 
+    }
+
+¿Qué escenarios podría tener en este caso?
+
+.. code-block:: cpp
+
+    if(Serial.available() >= 2){
+        int dataRx1 = Serial.read()
+        int dataRx2 = Serial.read() 
+        int dataRx3 = Serial.read() 
+    }
+
+Para responder, es necesario que experimentes. ESTOS son los ejercicios 
+que realmente te ayudarán a aprender.
+
+Ejercicio 22: miniRETO
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Piense cómo podrías hacer lo siguiente:
+
+.. code-block:: cpp
+
+    void taskSerial(){
+        // Esta tarea tiene su propio buffer de recepción,
+        // es decir, su propio vector. Nadie más tiene acceso
+    }
+    void loop(){
+        taskSerial();
+    }
+
+* En taskSerial almacena los datos del serial en su propio buffer de recepción
+  (el buffer será un arreglo).
+* El buffer debe estar encapsulado en la tarea.
+* Los datos almacenados en el buffer no se pueden perder
+  entre llamados a taskSerial(). La función taskSerial() se llama
+  en la función loop.
+* La tarea taskSerial() debe tener algún mecanismo para ir contando 
+  la cantidad de datos que han llegado. ¿Cómo lo harías?
+
+Ejercicio 23: terminal serial
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Vamos a detenernos un momento en el software del lado del
+computador: el terminal. Veamos dos de ellas, la terminal
+de arduino y `esta <https://sourceforge.net/projects/scriptcommunicator/>`__
+otra (scriptcommunicator)
+
+Considera el siguiente programa
+
+.. code-block:: cpp
+
+    void setup()
+    {
+      Serial.begin(9600);
+    }
+    void loop()
+    {
+      if(Serial.available() > 0){
+        Serial.read();
+        int8_t var = -1;
+        Serial.println("Inicio de la prueba");
+        Serial.write(var);
+        Serial.print("\n");
+        Serial.print(var);
+        Serial.print('\n');
+        Serial.println("Fin de la prueba"); 
       }
+    }
 
-      void task() {
-        enum class DebounceStates {INIT, WAITING_CHANGE, WAITING_STABLE};
-        static DebounceStates debounceState =  DebounceStates::INIT;
-        static uint8_t inputPinStableValue;
-        static uint32_t referenceTime;
-        const uint8_t INPUTPIN = 19;
-        const uint32_t STABLETIMEOUT = 100;
+Ejecuta el programa
 
-        switch (debounceState) {
+¿Qué observas en la terminal de arduino justo en estas dos líneas?
 
-          case DebounceStates::INIT: {
-              pinMode(INPUTPIN, INPUT_PULLUP);
-              inputPinStableValue = digitalRead(INPUTPIN);
-              debounceState = DebounceStates::WAITING_CHANGE;
-              Serial.println("DebounceStates::INIT");
-              break;
-            }
-          case DebounceStates::WAITING_CHANGE: {
-              if (digitalRead(INPUTPIN) != inputPinStableValue) {
-                referenceTime = millis();
-                debounceState = DebounceStates::WAITING_STABLE;
-                Serial.println("pin changes");
-              }
+.. code-block:: cpp
 
-              break;
-            }
-          case DebounceStates::WAITING_STABLE: {
-              uint8_t pinState = digitalRead(INPUTPIN);
-              if ( pinState == inputPinStableValue) {
-                debounceState = DebounceStates::WAITING_CHANGE;
-              }
-              else if ( (millis() - referenceTime) >= STABLETIMEOUT) {
-                inputPinStableValue = pinState;
-                debounceState = DebounceStates::WAITING_CHANGE;
-                Serial.print("pinState:");
-                Serial.println(inputPinStableValue);
-              }
-              break;
-            }
+    Serial.write(var);
+    Serial.print(var);
 
-          default:
-            Serial.println("Error");
+¿Qué observas en Scriptcommunicator para las dos líneas anteriores?
+
+Ejercicio 24: miniRETO
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Considera el siguiente código para analizar en Scriptcommunicator:
+
+.. code-block:: cpp
+
+    void setup()
+    {
+      Serial.begin(9600);
+    }
+
+    void loop()
+    {
+      if(Serial.available() > 0){
+        Serial.read();
+        int8_t var = 255;
+        int8_t var2 = 0xFF;
+        Serial.write(var);
+        Serial.print(var);
+        Serial.write(var2);
+        Serial.print(var2);
+      }
+    }
+
+Explica qué está ocurriendo en cada caso.
+
+Ejercicio 25: máquinas de estado
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Este ejercicio lo vamos a realizar todos juntos:
+
+Una aplicación interactiva posee un sensor que produce ruido eléctrico al
+cambiar de estado. La siguiente figura, capturada con un osciloscopio
+muestra la señal del sensor.
+
+.. image:: ../_static/bounce.jpg
+  :alt: bounce
+
+En la figura se observa el ruido generado en la transición de la señal
+al pasar del estado alto al estado bajo; sin embargo, el
+mismo fenómeno ocurre al cambiar del estado bajo al alto. Nota que
+además pueden ocurrir falsos positivos en la señal, que se manifiestan
+como pulsos de muy corta duración.
+Un ingeniero electrónica experto nos indica que podemos considerar un
+cambio de estado en el sensor siempre que la señal esté estable por
+lo menos durante 100 ms, es decir, sin ruido y sin falsos positivos.
+Se debe realizar una aplicación que filtre el comportamiento ruidoso
+del sensor y reporte por un puerto serial únicamente los valores
+estables de la señal.
+
+Para este ejercicio debes:
+
+* Realizar un diagrama con el modelo en máquinas de estado para la aplicación
+* Definir escenarios de prueba usando diagramas de secuencias.
+* Implementar el modelo.
+* Verificar los escenarios definidos
+
+Te muestro un posible montaje en el protoboard para solucionar el ejercicio 30. 
+Para este montaje elegí como puerto de entrada el número 19. Tu debes seleccionar 
+el puerto que más te convenga en un tu microcontrolador. SI NO QUIERES 
+hacer cambios al montaje que ya tienes, recuerda que debes los pulsadores 
+están conectados a los puertos 13, 32 y 33. No olvides modificar el puerto 
+en el siguiente código en caso de ser necesario.
+
+.. image:: ../_static/debounceCircuit.png
+  :alt: circuito
+
+Mira un posible diagrama de estados y un video corto 
+donde te explico el diagrama:
+
+.. image:: ../_static/debounceStateDiagram.png
+  :alt: state machine
+
+.. raw:: html
+
+  <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/DTSqhBkYbJQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+Definición de los escenarios de prueba:
+
+.. image:: ../_static/debounceEscenarios.png
+  :alt: Escenarios de prueba
+
+.. raw:: html
+  
+    <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/FSfR9sLR3v4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+El código de la solución será este:
+
+.. code-block:: cpp
+
+    void setup() {
+      Serial.begin(115200);
+    }
+
+    void task() {
+      enum class DebounceStates {INIT, WAITING_CHANGE, WAITING_STABLE};
+      static DebounceStates debounceState =  DebounceStates::INIT;
+      static uint8_t inputPinStableValue;
+      static uint32_t referenceTime;
+      const uint8_t INPUTPIN = 19;
+      const uint32_t STABLETIMEOUT = 100;
+
+      switch (debounceState) {
+
+        case DebounceStates::INIT: {
+            pinMode(INPUTPIN, INPUT_PULLUP);
+            inputPinStableValue = digitalRead(INPUTPIN);
+            debounceState = DebounceStates::WAITING_CHANGE;
+            Serial.println("DebounceStates::INIT");
             break;
-        }
+          }
+        case DebounceStates::WAITING_CHANGE: {
+            if (digitalRead(INPUTPIN) != inputPinStableValue) {
+              referenceTime = millis();
+              debounceState = DebounceStates::WAITING_STABLE;
+              Serial.println("pin changes");
+            }
+
+            break;
+          }
+        case DebounceStates::WAITING_STABLE: {
+            uint8_t pinState = digitalRead(INPUTPIN);
+            if ( pinState == inputPinStableValue) {
+              debounceState = DebounceStates::WAITING_CHANGE;
+            }
+            else if ( (millis() - referenceTime) >= STABLETIMEOUT) {
+              inputPinStableValue = pinState;
+              debounceState = DebounceStates::WAITING_CHANGE;
+              Serial.print("pinState:");
+              Serial.println(inputPinStableValue);
+            }
+            break;
+          }
+
+        default:
+          Serial.println("Error");
+          break;
       }
+    }
 
 
-      void loop() {
-        task();
-      }
+    void loop() {
+      task();
+    }
 
 
-  Explicación del código:
+Explicación del código:
+
+.. raw:: html
+
+  <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/Gdc2VvRwwBM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+Verificación de los escenarios de prueba:
 
   .. raw:: html
-
+  
     <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/Gdc2VvRwwBM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/dyONJlylaBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
+Trabajo Autónomo 5
+*********************
 
-  Verificación de los escenarios de prueba:
-
-    .. raw:: html
-    
-      <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/dyONJlylaBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-
-
-  Enunciado de la evaluación
-  ############################
-
-  En un escape room se requiere construir una aplicación para controlar una bomba temporizada.
-  La siguiente figura ilustra la interfaz de la bomba. El circuito de control
-  de la bomba está compuesto por tres sensores digitales,
-  en este caso pulsadores, denominados UP, DOWN, ARM (los simularemos con el PC),
-  un display (LCD) y una salida digital para activar la bomba
-  (simularemos la salida y el display con el PC).
-
-  El controlador funciona así:
-
-  .. image:: ../_static/bomb.png
-    :alt: bomba
-
-  * Inicia en modo de configuración, es decir, sin hacer cuenta regresiva aún, la bomba está
-    ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
-  * En el modo de configuración, los pulsadores UP y DOWN permiten
-    aumentar o disminuir el tiempo inicial de la bomba.
-  * El tiempo se puede programar entre 10 y 60 segundos con cambios de 1 segundo.
-  * El tiempo de configuración se debe visualizar en el LCD (enviamos el
-    valor al PC).
-  * El pulsador ARM arma la bomba.
-  * Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
-    en el LCD en por medio de una cuenta regresiva en segundos.
-  * La bomba explotará (se activa la salida de activación de la bomba) cuando
-    el tiempo llegue a cero. En este punto el control regresará al modo de
-    configuración.
-  * Una vez la bomba esté armada es posible desactivarla ingresando un código
-    de seguridad. El código será la siguiente secuencia de pulsadores
-    presionados uno después de otro:  DOWN, UP, DOWN, DOWN, UP, ARM.
-  * Si la secuencia se ingresa correctamente el controlador pasará de nuevo
-    al modo de configuración de lo contrario continuará la fatal cuenta
-    regresiva.
-
-  Requisitos
-  ############################
-
-  * R01: la solución debe tener dos tareas concurrentes. La Tarea 1 se debe encargar 
-    del control de la bomba. La Tarea 2 debe generar una señal digital periódica con una frecuencia 
-    de 1 Hz. La señal debe permanecer en alto 500 ms y en bajo 500 ms.
-  * R02: debes almacenar la clave de desarmado de la bomba en una arreglo.
-  * R03: debes definir una función a la cual le pasarás la dirección en memoria 
-    de dos arreglos: uno con la clave recibida y otro con la clave correcta. La función 
-    deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
-    así: true si la clave recibida es igual a la clave almacenada o false si las claves no coinciden.
-  * R04: realiza un diagrama con el modelo en máquina de estados para tu solución.
-  * R05: define varios escenarios de prueba que permitan recoger la funcionalidad descrita 
-    del controlador.
-  * R06: implementa el modelo de máquina de estados considerando todas las tareas solicitadas.
-  * R07: verifica todos los escenarios de prueba definidos.
-
-  Entregables
-  ############################
-
-  * Sube a `este <https://www.dropbox.com/request/DsHQVud5H3oKFDwL10Ye>`__ 
-    enlace un archivo pdf nombrado con los nueve dígitos que componen tu ID. Por ejemplo: 000008716.pdf. El archivo 
-    debe tener lo siguiente:
-
-    * Tu nombre completo.
-    * Evaluación de la unidad 1 y la fecha en la cual vas subir el archivo.
-    * Sección 1: imagen con el diagrama de estados.
-    * Sección 2: enlace a un video donde expliques el diagrama de estados.
-    * Sección 3: Definición de los escenarios de prueba (diagrama de secuencias)
-    * Sección 4: enlace a un video donde expliques los escenarios.
-    * Sección 5: enlace a GitHub a un repositorio PÚBLICO donde estará el código de la evaluación. 
-      NO OLVIDES que debes evidenciar el proceso de desarrollo mediante el historial de commits en 
-      el repositorio.
-    * Sección 6: enlace a un video donde expliques el código.
-    * Sección 7: enlace a un video donde muestres la verificación de cada escenario de prueba.
-    
-  Criterios de evaluación
-  ############################
-
-  * Solución del problema: (2 unidades):
-    
-    * Sección 1 (0.5).
-    * Sección 3 (0.5)  
-    * Sección 5 (1).
-
-  * Explicación de la solución (3 unidades)
-    
-    * Sección 2 (1).
-    * Sección 4 (0.5).
-    * Sección 6 (1).
-    * Sección 7 (0.5).
+Revisa el material de la unidad hasta este punto. RECUERDA que la próxima 
+semana tendremos la evaluación de la UNIDAD 1. Para realizar solucionar 
+el problema que te daré y realizar la documentación tendrás 6 horas. ES IMPORTANTE 
+entonces que te prepares para la evaluación revisando DETENIDAMENTE el material 
+trabajado hasta ahora.
