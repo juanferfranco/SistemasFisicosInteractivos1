@@ -939,7 +939,7 @@ Trabajo Autónomo 6
 *********************
 
 Revisa el material de la unidad hasta este punto. RECUERDA que la próxima 
-semana tendremos la evaluación de la UNIDAD 1. Para realizar solucionar 
+semana tendremos la evaluación de la UNIDAD 1. Para solucionar 
 el problema que te daré y realizar la documentación tendrás 6 horas. ES IMPORTANTE 
 entonces que te prepares para la evaluación revisando DETENIDAMENTE el material 
 trabajado hasta ahora.
