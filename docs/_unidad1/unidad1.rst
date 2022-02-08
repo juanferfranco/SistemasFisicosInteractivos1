@@ -943,3 +943,30 @@ semana tendremos la evaluación de la UNIDAD 1. Para solucionar
 el problema que te daré y realizar la documentación tendrás 6 horas. ES IMPORTANTE 
 entonces que te prepares para la evaluación revisando DETENIDAMENTE el material 
 trabajado hasta ahora.
+
+Sesión 7
+**********
+
+Continuarás realizando los ejercicios de las sesiones 5 y 6.
+
+Trabajo Autónomo 7
+*********************
+
+Continua trabajando en los ejercicios de las sesiones 5 y 6.
+
+Sesión 8
+**********
+
+Trata de finalizar los ejercicios de las sesiones 5 y 6.
+
+Trabajo Autónomo 8
+*********************
+
+Si ya finalizaste los ejercicios te pediré que les des una revisión a toda la unidad. Si 
+no has terminado, ahora si es el momento de finalizar la unidad. La próxima semana realizarás 
+la evaluación de la unidad 1.
+
+Evaluación de la unidad
+-------------------------
+
+Regresa aquí la semana entrante. No olvides presionar F5 para refrescar.
