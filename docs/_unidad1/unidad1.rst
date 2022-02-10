@@ -215,7 +215,7 @@ uno de 4 LEDs (un LED para cada combinación posible de los suiches).
 Ejercicio 7: puerto serial
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-En el siguiente ejercicio vas a explorar, de manera básica el puerto 
+En el siguiente ejercicio vas a explorar de manera básica el puerto 
 serial del microcontrolador. Lee el programa, entiéndelo, realiza 
 el montaje de hardware necesario y verifica su funcionamiento. 
 
@@ -396,7 +396,7 @@ La idea es que cada persona pueda realizar una tarea.
 
 Un pedido especial para ti. Recuerda:
 
-* ¿Para qué se usa la palabra reservada static en este caso?
+* ¿Para qué se usa la palabra ``static`` en este caso?
 * PREGUNTA DE INVESTIGACIÓN: ¿Qué ocurre con el programa si 
   le quitas el static a las variables?
 
