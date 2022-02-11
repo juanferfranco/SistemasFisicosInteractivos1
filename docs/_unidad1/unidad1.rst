@@ -962,9 +962,30 @@ Trata de finalizar los ejercicios de las sesiones 5 y 6.
 Trabajo Autónomo 8
 *********************
 
-Si ya finalizaste los ejercicios te pediré que les des una revisión a toda la unidad. Si 
-no has terminado, ahora si es el momento de finalizar la unidad. La próxima semana realizarás 
-la evaluación de la unidad 1.
+Continua trabajando en los ejercicios de la unidad y avanza todo lo que puedas.
+
+
+Sesión 9
+**********
+
+Continuarás realizando los ejercicios de las sesiones 5 y 6.
+
+Trabajo Autónomo 9
+*********************
+
+Continua trabajando en los ejercicios de las sesiones 5 y 6.
+
+Sesión 10
+**********
+
+Trata de finalizar los ejercicios de las sesiones 5 y 6.
+
+Trabajo Autónomo 10
+*********************
+
+Dale una mirada rápida a todo el material de la unidad y detente en aquellos 
+ejercicios donde requieras refrescar los conceptos.
+
 
 Evaluación de la unidad
 -------------------------
