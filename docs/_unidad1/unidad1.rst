@@ -1038,10 +1038,12 @@ Requisitos
 Entregables
 ****************
 
-ESTA sesión está en progreso. En el transcurso del día de hoy se actualizará.
-Recuerda presionar F5.
-
-* Tu repositorio para la evaluación está aquí (más tarde aparecerá el link)
+* Tu repositorio para la evaluación está `aquí <https://classroom.github.com/a/g5uiBmQa>`__.
+* Para poder usar el display vas a necesitar instalar una biblioteca. La puedes encontrar 
+  en el Administrador de bibliotecas usando la siguiente cadena de búsqueda: 
+  ``ESP8266 and ESP32 OLED driver for SSD1306 displays``. El administrador lo encuentras en el 
+  menú Programa, Incluir Librería, Administrar Bibliotecas. Si el idioma está en inglés 
+  buscas por Sketch, Include Library, Manage Library.
 
 Criterios de evaluación
 *************************
