@@ -990,4 +990,62 @@ ejercicios donde requieras refrescar los conceptos.
 Evaluación de la unidad
 -------------------------
 
-Regresa aquí la semana entrante. No olvides presionar F5 para refrescar.
+Enunciado 
+**************
+
+En un escape room se requiere construir una aplicación para controlar una bomba temporizada.
+La siguiente figura ilustra la interfaz de la bomba. El circuito de control
+de la bomba está compuesto por tres sensores digitales,
+en este caso pulsadores, denominados UP, DOWN, ARM,
+un display (LCD), un LED que indica si la bomba está contando o no y una salida 
+digital para activar la bomba (otro LED).
+
+El controlador funciona así:
+
+.. image:: ../_static/bomb.png
+  :alt: bomba
+
+* Inicia en modo de configuración, es decir, sin hacer cuenta regresiva aún, la bomba está
+  ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
+* En el modo de configuración, los pulsadores UP y DOWN permiten
+  aumentar o disminuir el tiempo inicial de la bomba. El LED de bomba contando 
+  está PERMANENTEMENTE encendido.
+* El tiempo se puede programar entre 10 y 60 segundos con cambios de 1 segundo.
+* El tiempo de configuración se debe visualizar en el LCD.
+* El pulsador ARM arma la bomba.
+* Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
+  en el LCD por medio de una cuenta regresiva en segundos. El LED que indica que la 
+  bomba está contando enciende y apaga a una frecuencia de 1Hz.
+* La bomba explotará (se activa la salida de activación de la bomba) cuando
+  el tiempo llegue a cero. En este punto el control regresará al modo de
+  configuración.
+* Una vez la bomba esté armada es posible desactivarla ingresando un código
+  de seguridad. El código será la siguiente secuencia de pulsadores
+  presionados uno después de otro:  UP,UP,DOWN, DOWN, UP, DOWN, ARM.
+* Si la secuencia se ingresa correctamente la bomba pasará de nuevo
+  al modo de configuración de lo contrario continuará la fatal cuenta
+  regresiva.
+
+Requisitos
+***********
+
+* R01: debes almacenar la clave de desarmado de la bomba en una arreglo.
+* R02: debes definir una función a la cual le pasarás la dirección en memoria 
+  de dos arreglos: uno con la clave recibida y otro con la clave correcta. La función 
+  deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
+  así: true si la clave recibida es igual a la clave almacenada o false si las claves no coinciden.
+
+Entregables
+****************
+
+ESTA sesión está en progreso. En el transcurso del día de hoy se actualizará.
+Recuerda presionar F5.
+
+* Tu repositorio para la evaluación está aquí (más tarde aparecerá el link)
+
+Criterios de evaluación
+*************************
+
+* Solución completa del problema: 5 unidades.
+* Solución completa del problema sin cumplir R01 y/o R02: 4 unidades.
+* Solución parcial del problema: 2 unidades.
