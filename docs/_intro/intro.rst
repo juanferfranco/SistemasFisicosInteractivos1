@@ -47,7 +47,7 @@ Estructura y metodología del curso
 El curso está divido en 4 unidades:
 
 #. Unidad 1: Software para sistemas embebidos
-#. Unidad 2: Protocolos ascii
+#. Unidad 2: Protocolos ASCII
 #. Unidad 3: Protocolos binarios
 #. Unidad 4: Plataformas de software interactivas de tiempo real
 
