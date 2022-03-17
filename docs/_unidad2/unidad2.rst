@@ -550,6 +550,17 @@ que ambas formas puedan convivir en la aplicación. DEBES adicionar un pulsador 
 La aplicación que debes modificar es de autoría de `Zachary Patten <https://github.com/ZacharyPatten/dotnet-console-games>`__, 
 pero le hice unas cuantas modificaciones.
 
+¿Cómo es el protocolo ASCII de comunicación?
+
+La aplicación interactiva debe enviar el request ``inputs``. 
+El microcontrolador responde con el estado de cada pulsador 
+separado por ``,`` y en este orden: 
+``estado_UP,estado_DOWN,estado_LEFT,estado_RIGHT``. Estos son 
+ejemplos de posibles respuestas:
+
+* ``1,1,1,1\n`` todos los sensores están relajados.
+* ``1,1,1,0\n`` todos los sensores están relajados menos RIGHT
+
 ¿Que debes hacer?
 *******************
 
