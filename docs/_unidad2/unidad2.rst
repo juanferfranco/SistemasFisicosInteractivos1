@@ -496,8 +496,6 @@ El código del microcontrolar:
       if(dato == "read"){
         Serial.print(digitalRead(DIGITAL_IN)); // se envía un 0 o un 1
         Serial.print(',');
-        Serial.print(analogRead(ANALOG_IN));
-        Serial.print(',');
         Serial.print(outState);
         Serial.print('\n');
               
