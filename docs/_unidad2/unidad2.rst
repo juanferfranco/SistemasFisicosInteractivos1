@@ -531,7 +531,31 @@ vuelve a hacerlos pero esta vez de memoria, no veas la solución.
 Evaluación de la unidad
 --------------------------
 
-.. warning:: REGRESA AQUÍ EN LA SEMANA 9
+.. warning:: FECHA MÁXIMA DE ENTREGA
 
-    No olvides presionar F5 para actualizar esta sección.
+    Martes 22 de marzo a las 11:59 p.m.
+
+.. warning:: MONTAJE
+
+    En el archivo de sensores.ino te entregaré un template con la definición de NOMBRE
+    de los puertos y PUERTOS. NO lo modifiques, si llegas a hacerlo hay una penalidad 
+    de 1 unidad en la nota final.
+
+Enunciado 
+**************
+
+Debes modificar una aplicación interactiva para permitir que se controle de dos maneras.
+La forma uno es usando el teclado con las teclas flecha arriba,
+abajo, izquierda y derecha. Dicha forma ya está implementada. La forma 2 con 4 pulsadores 
+externos que serán leídos por un microcontrolador. Tu debes implementar esta segunda forma de modo 
+que ambas formas puedan convivir en la aplicación. DEBES adicionar un pulsador más a tu montaje.  
+La aplicación que debes modificar es de autoría de `Zachary Patten <https://github.com/ZacharyPatten/dotnet-console-games>`__, 
+pero le hice unas cuantas modificaciones.
+
+¿Que debes hacer?
+*******************
+
+#. Clona tu repositorio que está `aquí <https://classroom.github.com/a/umNREJE_>`__.
+#. Modifica SOLO los archivos Program.cs y sensores.ino
+#. Realiza commits y push frecuentemente.
 
