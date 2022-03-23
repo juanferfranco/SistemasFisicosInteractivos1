@@ -39,6 +39,6 @@
         "sumativo"
     ],
     "editor.selectionClipboard": false,
-    "esbonio.sphinx.confDir": "${workspaceFolder}",
+    "esbonio.sphinx.confDir": "/home/juanupb/Github/SistemasFisicosInteractivos1/docs",
     "esbonio.server.enabled": false
 }

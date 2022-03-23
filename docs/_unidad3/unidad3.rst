@@ -24,8 +24,8 @@ Temas
 Trayecto de acciones
 -----------------------
 
-Sesión 1: introducción a los protocolos binarios
-****************************************************
+Sesión 1
+*************
 
 Ejercicio 1: introducción a los protocolos binarios - caso de estudio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -36,8 +36,7 @@ Para responder esta pregunta vamos a utilizar como ejemplo
 `este sensor <http://www.chafon.com/productdetails.aspx?pid=382>`__.
 Cuyo manual del fabricante se encuentra `aquí <https://drive.google.com/open?id=1uDtgNkUCknkj3iTkykwhthjLoTGJCcea>`__
 
-Explora la documentación, pero lee con mucho detalle hasta la página 5. 
-NO abandones el documento hasta no entender.
+Explora la documentación, pero lee con mucho detalle hasta la página 5.
 
 Ejercicio 2: API de arduino para implementar comunicaciones binarias
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -60,7 +59,7 @@ Nota que la siguiente función no está en el repaso:
 
 La razón es que en un protocolo binario usualmente no tenemos
 un carácter de fin de trama, como si ocurre con los protocolos
-ASCII, donde usualmente el último carácter es un enter.
+ASCII, donde usualmente el último carácter es el ``\n``.
 
 Analiza de nuevo el API, en particular los métodos resaltados.
 
@@ -68,74 +67,17 @@ Ejercicio 3: aplicación para depurar las comunicaciones binarias
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Mira `este <https://drive.google.com/file/d/1iVr2Fiv8wXLqNyShr_EOplSvOJBIPqJP/view>`__
-documento del fabricante del sensor. Podrás ver unos ejemplos de tramas. Utiliza
-`ScriptCommunicator <https://sourceforge.net/projects/scriptcommunicator/>`__ para reproducir 
-al menos un par de tramas. 
+documento del fabricante del sensor. Podrás ver unos ejemplos de tramas. 
+
+Utiliza `ScriptCommunicator <https://sourceforge.net/projects/scriptcommunicator/>`__ para reproducir 
+al menos un par de tramas. ¿Qué tienes que hacer para enviar por el serial 
+las tramas? (Explora y pregúntale a tu profesor).
 
 ¿Qué busco que practiques en este caso? Que explores ScriptCommunicator
 
-Trabajo autónomo 1: repaso, checksum y RETO 1
-*************************************************
-(Tiempo estimado: 4 horas 20 minutos)
-
-Ejercicio 4: repaso
-^^^^^^^^^^^^^^^^^^^^^^
-
-Antes de continuar vas a repasar:
-
-* El uso de ScriptCommunicator.
-* El API de arduino.
-
-Ejercicio 5: checksum 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Analiza de nuevo la documentación y REFLEXIONA:
-
-¿Para qué sirve el checksum?
-
-En el manual del sensor, el fabricante nos entrega el algoritmo para calcular el
-checksum. 
-
-.. code-block:: cpp
-
-    unsigned int uiCrc16Cal(unsigned char const *pucY, unsigned char ucX)
-    {
-      const uint16_t PRESET_VALUE = 0xFFFF;
-      const uint16_t POLYNOMIAL = 0x8408;
-    
-    
-      unsigned char ucI, ucJ;
-      unsigned short int uiCrcValue = PRESET_VALUE;
-    
-      for (ucI = 0; ucI < ucX; ucI++)
-      {
-        uiCrcValue = uiCrcValue ^ *(pucY + ucI);
-        for (ucJ = 0; ucJ < 8; ucJ++)
-        {
-          if (uiCrcValue & 0x0001)
-          {
-            uiCrcValue = (uiCrcValue >> 1) ^ POLYNOMIAL;
-          }
-          else
-          {
-            uiCrcValue = (uiCrcValue >> 1);
-          }
-        }
-      }
-      return uiCrcValue;
-    }
-
-Experimenta con este algoritmo:
-
-* Realiza programas de prueba para arduino
-* Realiza programas de prueba para C#. Ten presente que tendrás que portar 
-  el algoritmo de C a C#.
-  
-
-.. warning:: IMPORTANTE 
-
-  No avances hasta que no hagas los experimentos 
-
+Trabajo autónomo 1
+********************
+(Tiempo estimado: 1 horas 20 minutos)
 
 RETO 1: técnica de programación del controlador
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -213,6 +155,10 @@ Los PASOS para realizar la comunicación son:
   deberá retransmitir el paquete a la AI. Este comportamiento solo 
   se detendrá una vez la AI envié el 4A.
 
+.. warning:: ALERTA DE SPOILER
+
+    Te dejo una posible solución al reto
+
 Un posible modelo de la solución es este:
 
 .. image:: ../_static/parcial2SM.jpg
@@ -224,36 +170,50 @@ Y una posible implementación del modelo es este otro modelo en C++:
 
 .. code-block:: cpp 
 
+
+    void taskCom();
+
     void setup() {
-      Serial.begin(115200);
+      taskCom();
+    }
+
+    void loop() {
+      taskCom();
     }
     
     void taskCom() {
-      enum class state_t {WAIT_INIT, WAIT_PACKET, WAIT_ACK};
-      static state_t state = state_t::WAIT_INIT;
+      enum class StateTaskCom {INIT, WAIT_INIT, WAIT_PACKET, WAIT_ACK};
+      static StateTaskCom state = StateTaskCom::INIT;
       static uint8_t bufferRx[20] = {0};
       static uint8_t dataCounter = 0;
       static uint32_t timerOld;
       static uint8_t bufferTx[20];
     
       switch (state) {
-        case  state_t::WAIT_INIT:
+        case StateTaskCom::INIT:{
+          Serial.begin(115200);
+          state = StateTaskCom::WAIT_INIT;
+        break;
+        }
+
+        case  StateTaskCom::WAIT_INIT:{
           if (Serial.available()) {
             if (Serial.read() == 0x3E) {
               Serial.write(0x4A);
               dataCounter = 0;
               timerOld = millis();
-              state = state_t::WAIT_PACKET;
+              state = StateTaskCom::WAIT_PACKET;
             }
           }
     
           break;
+          }
     
-        case state_t::WAIT_PACKET:
+        case StateTaskCom::WAIT_PACKET:{
     
           if ( (millis() - timerOld) > 1000 ) {
             Serial.write(0x3D);
-            state = state_t::WAIT_INIT;
+            state = StateTaskCom::WAIT_INIT;
           }
           else if (Serial.available()) {
             uint8_t dataRx = Serial.read();
@@ -261,7 +221,7 @@ Y una posible implementación del modelo es este otro modelo en C++:
               Serial.write(0x3F);
               dataCounter = 0;
               timerOld = millis();
-              state = state_t::WAIT_PACKET;
+              state = StateTaskCom::WAIT_PACKET;
             }
             else {
               bufferRx[dataCounter] = dataRx;
@@ -289,21 +249,22 @@ Y una posible implementación del modelo es este otro modelo en C++:
                   Serial.write(0x4A);
                   Serial.write(bufferTx, dataCounter - 2);
                   timerOld = millis();
-                  state = state_t::WAIT_ACK;
+                  state = StateTaskCom::WAIT_ACK;
                 }
                 else {
                   Serial.write(0x3F);
                   dataCounter = 0;
                   timerOld = millis();
-                  state = state_t::WAIT_PACKET;
+                  state = StateTaskCom::WAIT_PACKET;
                 }
               }
             }
           }
     
           break;
-    
-        case state_t::WAIT_ACK:
+          }
+
+        case state_t::WAIT_ACK:{
           if ( (millis() - timerOld) > 1000 ) {
             timerOld = millis();
             Serial.write(bufferTx, dataCounter - 2);
@@ -314,13 +275,10 @@ Y una posible implementación del modelo es este otro modelo en C++:
           }
     
           break;
+          }
       }
     }
-    
-    
-    void loop() {
-      taskCom();
-    }
+
 
 Un ejemplo de una escenario de prueba:
 
@@ -330,8 +288,20 @@ Un ejemplo de una escenario de prueba:
    :alt: test vector
 
 
-Sesión 2: endian
-********************************
+Sesión 2
+*********
+
+Ejercicio 4: análisis grupal del RETO 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Vamos a analizar juntos el RETO 1
+
+
+Ejercicio 5: análisis individual del RETO 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ahora te daré unos minutos para que revises de nuevo el RETO 1 y 
+preguntes tus dudas.
 
 Ejercicio 6: ¿Qué es el endian?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -551,10 +521,12 @@ del ejercicio 8?
             }
     }
 
-Trabajo autónomo 2: RETO 2
-*******************************
-(Tiempo estimado 4 horas 20 minutos)
+Trabajo autónomo 2
+********************
+(Tiempo estimado 1 hora 20 minutos)
 
+RETO 2
+^^^^^^^
 REPASA todo lo visto hasta ahora. Una vez lo hagas resuelve el reto.
 
 Para este reto vas a implementar dos aplicaciones: microcontrolador y aplicación 
@@ -563,91 +535,40 @@ interactiva (tipo consola aún) que realicen el siguiente protocolo:
 * La aplicación interactiva solicita datos con el byte C4.
 * El microcontrolador le responde con un paquete compuestos de tres números 
   en punto flotante, un entero con signo de 32 bits más un checksum que se 
-  calcula como en el ejercicio 5. Por tanto, se estará transmitiendo un 
-  paquete con un tamaño total de 18 bytes.
+  calcula como en el reto 1. Por tanto, se estará transmitiendo un 
+  paquete con un tamaño total de 17 bytes.
 * Si el paquete llega correcto a la aplicación interactiva, esta responde 
   con un 3E, de lo contrario manda un B0 y el microcontrolador deberá reenviar 
   de nuevo el mismo paquete.
 * Si esto se repite 3 veces el microcontrolador colocará un LED a 
-  prender y apagar a 500Hz para marcar un el ERROR. Luego regresará a esperar 
-  por solicitud de datos, es decir, a esperar de nuevo el C4. Eso quiere decir 
-  que la aplicación interactiva tendrá que renunciar al paquete y pedir uno nuevo.
+  prender y apagar a 500Hz para marcar un el ERROR durante 3 segundos. 
+  Luego regresará a esperar por solicitud de datos, es decir, a esperar de 
+  nuevo el C4. Eso quiere decir que la aplicación interactiva tendrá que 
+  renunciar al paquete y pedir uno nuevo.
+
+Sesión 3
+************
+
+En esta sesión vas a terminar el RETO 2. Nota que no hay alerta de spoiler 
+para este reto. LA IDEA es que te comprometas a solucionarlo por tu propia 
+cuenta.
+
+Trabajo autónomo 3
+*******************
+
+Termina y repasa el RETO 2. Será súper IMPORTANTE que lo termines para poder 
+realizar la evaluación.
 
 Evaluación de la Unidad 3
 ----------------------------
 (Tiempo total estimado: 6 horas).
 
-Enunciado
-*************
-Te voy a proponer un RETO interesante para esta evaluación que podrás 
-resolver en un equipo máximo de 3 personas.
+.. warning::  REGRESA AQUÍ EN LA SEMANA 12
 
-Vas a realizar dos aplicaciones interactivas. Una para el PC tipo consola 
-y la otra para el microcontrolador. Las aplicaciones deben intercambiar 
-información usando únicamente un protocolo binario. Vas a implementar una calculadora.
-En la aplicación del PC ingresas la operación a realizar, transmitirás toda 
-la información al microcontrolador, este realizará el cálculo y retornará 
-al PC el resultado para su visualización.
-
-El flujo de la aplicación será así:
-
-* El usuario debe ingresar en el PC la operación a realizar así: 
- 
-  numero_punto_flotante1 operación numero_punto_flotante2 = 
-
-* Luego del igual presionará ENTER.
-* El PC enviará la información así: 8 bytes con los números + 1 byte con la operación + checksum.
-* El microcontrolador recibirá los datos, realizará la operación y devolverá 
-  el resultado así: 4 bytes con el resultado + checksum.
-* El checksum se calculará como en el ejercicio 5.
-* El PC mostrará el resultado luego del igual.
-* El flujo comenzará de nuevo.
-
-.. warning:: MUY IMPORTANTE
-
-    La aplicación del PC no debe solicitar información al usuario, solo debe esperar 
-    la operación y mostrar el resultado e inmediatamente esperar una nueva entrada por 
-    parte del usuario. Así se quedará hasta que ingreses la palabra exit.
-
-    Te recomiendo `este <https://docs.microsoft.com/en-us/dotnet/csharp/how-to/parse-strings-using-split#code-try-2>`__ 
-    enlace para aprender a separar una cadena en partes.
-
-Las posibles operaciones son: suma, resta, multiplicación y división. 
-
-
-¿Qué debes entregar?
-***************************
-
-Diligencia y entrega en este `enlace <https://forms.office.com/r/PZaj7up505>`__.
-
-Te pediré que subas a Github el código con tu solución usando SOLO dos archivos:
-Program.cs y sensor.ino, pero el archivo sensor.ino deberá estar en una carpeta llamada
-sensor.
-
-También tendrás que subir un video donde demuestres funcionando tus aplicaciones y sustentes
-su funcionamiento.
-
-Consideraciones para el video:
-
-#. El video DEBE TENER una duración ``MÁXIMA`` de 10 minutos.
-#. El video debe tener los siguientes capítulos en este mismo orden:
-   
-   * Demostración de la solución.
-   * Explicación del código con la implementación.
-
-#. En `este video <https://youtu.be/6-0cERIVsFg>`__ puedes aprender a adicionar 
-   capítulos a tu video.
-
-Criterios de evaluación
-****************************
-
-* Cumplimiento de todos los requisitos de forma solicitados: 0.5
-* Calidad y duración máxima del video y repositorio en Github: 0.5
-* Solución al problema: 2
-* Explicación de la solución: 2
-
-.. note:: Sobre las personas reportadas
-
-    Las personas que aparezcan reportadas indicando que no trabajaron obtendrán automáticamente 
-    una calificación de 0.
+    Regresa aquí la semana 12 y presiona F5 para cargar 
+    el enunciado de la evaluación. La evaluación la debes mostrar 
+    funcionando la segunda sesión de la semana 12. Por tanto, debes 
+    trabajar fuertemente en la sesión 1 y emplear todo el trabajo 
+    autónomo de la semana luego de la sesión 1. Para la sesión 2 
+    debes mostrar tu solución antes de terminar la sesión.
 
