@@ -1,5 +1,4 @@
 {
-    "restructuredtext.confPath": "${workspaceFolder}",
     "cSpell.language": "en,es",
     "python.pythonPath": "/bin/python",
     "cSpell.words": [
@@ -39,7 +38,6 @@
         "sumativas",
         "sumativo"
     ],
-    "restructuredtext.languageServer.disabled": true,
     "editor.selectionClipboard": false,
     "esbonio.sphinx.confDir": "${workspaceFolder}",
     "esbonio.server.enabled": false
