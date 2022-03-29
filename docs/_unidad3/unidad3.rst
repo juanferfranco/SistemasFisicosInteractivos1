@@ -264,13 +264,13 @@ Y una posible implementación del modelo es este otro modelo en C++:
           break;
           }
 
-        case state_t::WAIT_ACK:{
+        case StateTaskCom::WAIT_ACK:{
           if ( (millis() - timerOld) > 1000 ) {
             timerOld = millis();
             Serial.write(bufferTx, dataCounter - 2);
           } else if (Serial.available()) {
             if (Serial.read() == 0x4A) {
-              state = state_t::WAIT_INIT;
+              state = StateTaskCom::WAIT_INIT;
             }
           }
     
