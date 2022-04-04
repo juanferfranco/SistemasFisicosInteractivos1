@@ -573,18 +573,9 @@ información usando únicamente un protocolo binario.
 
 Considera:
 
-* La aplicación interactiva debe tener dos hilos. En uno de los hilos se imprimirá
-  el valor de un contador de 0 a 99 a 10 fps. En el otro hilo se realizarán 
-  las comunicaciones seriales.
+* La aplicación interactiva solo tendrá un hilos, pero este usará la técnica de programación 
+  no bloqueante mediante máquinas de estados y eventos.
 * La aplicación interactiva solicita datos con el byte 2A.
-* La aplicación interactiva simulará un escenario bueno con la tecla R. En este 
-  escenario enviará el byte 2A, calculará el checksum, mostrará en pantalla si es 
-  correcto y luego enviará el byte 3E.
-* La aplicación interactiva simulará un escenario con errores mediante la tecla E. En 
-  este caso solicitará datos con el byte 2A y luego enviará tres veces el byte B0 para 
-  inducir el error en el microcontrolador. Finalmente volverá al estado para esperar 
-  la simulación de un nuevo escenario.
-* El hilo de las comunicaciones seriales debe construirse como una máquina de estados.
 * El microcontrolador le responde con un paquete compuestos de tres números 
   en punto flotante, un entero con signo de 32 bits más un checksum que se 
   calcula como en el reto 1. Por tanto, se estará transmitiendo un 
@@ -601,6 +592,16 @@ Considera:
 * La velocidad de comunicación entre las aplicaciones será de 115200.
 * Para verificar el cálculo del checksum puedes utilizar 
   `este <https://www.scadacore.com/tools/programming-calculators/online-checksum-calculator/>`__ sitio.
+* La aplicación interactiva simulará un escenario bueno con la tecla R. En este 
+  escenario enviará el byte 2A, calculará el checksum, mostrará en pantalla si es 
+  correcto y luego enviará el byte 3E.
+* La aplicación interactiva simulará un escenario con errores mediante la tecla E. En 
+  este caso solicitará datos con el byte 2A y luego enviará tres veces el byte B0 para 
+  inducir el error en el microcontrolador. Finalmente volverá a esperar 
+  la simulación de un nuevo escenario.
+
+
+
 
 Criterios de calificación
 ****************************
