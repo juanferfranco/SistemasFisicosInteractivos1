@@ -561,14 +561,49 @@ realizar la evaluación.
 
 Evaluación de la Unidad 3
 ----------------------------
-(Tiempo total estimado: 6 horas).
+(Tiempo total estimado: 5 horas).
 
-.. warning::  REGRESA AQUÍ EN LA SEMANA 12
+Enunciado
+***********
+Vas a trabajar solo o con otra persona.
 
-    Regresa aquí la semana 12 y presiona F5 para cargar 
-    el enunciado de la evaluación. La evaluación la debes mostrar 
-    funcionando la segunda sesión de la semana 12. Por tanto, debes 
-    trabajar fuertemente en la sesión 1 y emplear todo el trabajo 
-    autónomo de la semana luego de la sesión 1. Para la sesión 2 
-    debes mostrar tu solución antes de terminar la sesión.
+Vas a realizar dos aplicaciones interactivas. Una para el PC tipo consola 
+y la otra para el microcontrolador. Las aplicaciones deben intercambiar 
+información usando únicamente un protocolo binario. 
 
+Considera:
+
+* La aplicación interactiva debe tener dos hilos. En uno de los hilos se imprimirá
+  el valor de un contador de 0 a 99 a 10 fps. En el otro hilo se realizarán 
+  las comunicaciones seriales.
+* La aplicación interactiva solicita datos con el byte 2A.
+* La aplicación interactiva simulará un escenario bueno con la tecla R. En este 
+  escenario enviará el byte 2A, calculará el checksum, mostrará en pantalla si es 
+  correcto y luego enviará el byte 3E.
+* La aplicación interactiva simulará un escenario con errores mediante la tecla E. En 
+  este caso solicitará datos con el byte 2A y luego enviará tres veces el byte B0 para 
+  inducir el error en el microcontrolador. Finalmente volverá al estado para esperar 
+  la simulación de un nuevo escenario.
+* El hilo de las comunicaciones seriales debe construirse como una máquina de estados.
+* El microcontrolador le responde con un paquete compuestos de tres números 
+  en punto flotante, un entero con signo de 32 bits más un checksum que se 
+  calcula como en el reto 1. Por tanto, se estará transmitiendo un 
+  paquete con un tamaño total de 17 bytes.
+* Si el paquete llega correcto a la aplicación interactiva, esta responde 
+  con el byte 3E, de lo contrario manda el byte B0 y el microcontrolador 
+  deberá reenviar de nuevo el mismo paquete.
+* Al tercer envía del byte B0 el microcontrolador ya no enviará el paquete sino que
+  colocará un LED a prender y apagar a 1Hz para marcar el ERROR durante 3 segundos.
+  Luego regresará a esperar por solicitud de datos, es decir, a esperar de 
+  nuevo el 2A. Eso quiere decir que la aplicación interactiva tendrá que 
+  renunciar al paquete y pedir uno nuevo.
+* Usa little endian para las comunicaciones.
+* La velocidad de comunicación entre las aplicaciones será de 115200.
+* Para verificar el cálculo del checksum puedes utilizar 
+  `este <https://www.scadacore.com/tools/programming-calculators/online-checksum-calculator/>`__ sitio.
+
+Criterios de calificación
+****************************
+
+* Prueba con la aplicación interactiva del profesor: 2.5
+* Prueba con el microcontrolador del profesor: 2.5
