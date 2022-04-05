@@ -573,7 +573,7 @@ información usando únicamente un protocolo binario.
 
 Considera:
 
-* La aplicación interactiva solo tendrá un hilos, pero este usará la técnica de programación 
+* La aplicación interactiva solo tendrá un hilo, pero este usará la técnica de programación 
   no bloqueante mediante máquinas de estados y eventos.
 * La aplicación interactiva solicita datos con el byte 2A.
 * El microcontrolador le responde con un paquete compuestos de tres números 
@@ -583,7 +583,7 @@ Considera:
 * Si el paquete llega correcto a la aplicación interactiva, esta responde 
   con el byte 3E, de lo contrario manda el byte B0 y el microcontrolador 
   deberá reenviar de nuevo el mismo paquete.
-* Al tercer envía del byte B0 el microcontrolador ya no enviará el paquete sino que
+* Al tercer envío del byte B0 el microcontrolador ya no enviará el paquete sino que
   colocará un LED a prender y apagar a 1Hz para marcar el ERROR durante 3 segundos.
   Luego regresará a esperar por solicitud de datos, es decir, a esperar de 
   nuevo el 2A. Eso quiere decir que la aplicación interactiva tendrá que 
@@ -593,8 +593,8 @@ Considera:
 * Para verificar el cálculo del checksum puedes utilizar 
   `este <https://www.scadacore.com/tools/programming-calculators/online-checksum-calculator/>`__ sitio.
 * La aplicación interactiva simulará un escenario bueno con la tecla R. En este 
-  escenario enviará el byte 2A, calculará el checksum, mostrará en pantalla si es 
-  correcto y luego enviará el byte 3E.
+  escenario enviará el byte 2A y una vez reciba la respuesta, calculará el checksum, 
+  mostrará en pantalla si es correcto y luego enviará el byte 3E.
 * La aplicación interactiva simulará un escenario con errores mediante la tecla E. En 
   este caso solicitará datos con el byte 2A y luego enviará tres veces el byte B0 para 
   inducir el error en el microcontrolador. Finalmente volverá a esperar 
