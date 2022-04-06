@@ -563,6 +563,12 @@ Evaluación de la Unidad 3
 ----------------------------
 (Tiempo total estimado: 5 horas).
 
+.. note:: REPOSITORIO DE ENTREGA
+
+  En `este <https://classroom.github.com/a/ODurXdAm>`__ enlace dejo tu repositorio para que subas las evidencias 
+  de tu trabajo. En una carpeta coloca el código del PC y en otra el código del 
+  arduino.
+
 Enunciado
 ***********
 Vas a trabajar solo o con otra persona.
@@ -600,11 +606,9 @@ Considera:
   inducir el error en el microcontrolador. Finalmente volverá a esperar 
   la simulación de un nuevo escenario.
 
-
-
-
 Criterios de calificación
 ****************************
 
 * Prueba con la aplicación interactiva del profesor: 2.5
 * Prueba con el microcontrolador del profesor: 2.5
+
