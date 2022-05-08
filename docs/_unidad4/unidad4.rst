@@ -631,10 +631,50 @@ RETO: integración con un protocolo binario
 Evaluación de la Unidad 4
 ---------------------------
 
-.. warning:: REGRESA AQUÍ LA SEMANA 16
+Enunciado
+***********
 
-    La semana 16 aparecerá el enunciado de la evaluación que deberás entregar 
-    como plazo máximo en la segunda sesión de la semana.
+Vas a realizar una aplicación interactiva en UNITY que tenga las siguientes características:
+
+#. Debe tener una escena con dos cubos y dos botones: CubeA, CubeB, ButtonA y ButtonB.
+#. Debe estar conectada a dos controladores externos: controlador a y controlador b.
+#. La aplicación se comunicará con el ``controlador a`` mediante un protocolo ascii.
+#. La aplicación se comunicará con el ``controlador b`` mediante un protocolo binario.
+#. DEBES emplear SOLO los scripts de Ardity que necesites, es decir, debes hacer el proyecto siguiendo
+   la metodología FromScratch que empleamos en clase.
+#. En cada controlador debes implementar DOS sensores (dos pulsadores). El pulsador 1 cambiará el tamaño 
+   del cubo. El pulsador 2 cambiará el color. El tamaño y el color estarán determinados por el estado
+   de los pulsadores. Tu debes decidir qué pasará si el pulsador está relajado o presionado.
+#. En cada controlador debes implementar DOS actuadores (dos LEDs). El LED 1 debe encender y apagar a 1Hz.
+   El LED 2 debe ser controlado desde Unity con un botón.
+
+La aplicación se puede ver como en la figura:
+
+.. image:: ../_static/sceneUnit4.png
+
+
+Criterios de evaluación 
+************************
+
+Funcionamiento
+^^^^^^^^^^^^^^^
+
+#. Funcionamiento correcto de la aplicación del controlador a: 1.25
+#. Funcionamiento correcto de la aplicación del controlador b: 1.25
+#. Funcionamiento correcto de la aplicación interactiva para la comunicación con el 
+   controlador a: 1.25
+#. Funcionamiento correcto de la aplicación interactiva para la comunicación con el 
+   controlador b: 1.25
+
+Sustentación
+^^^^^^^^^^^^^^^
+Debes presentar la aplicación en las sesiones de clase de la semana 16 y contestar 
+las preguntas del docente.
+
+Nota
+^^^^^
+
+Estará dada por el producto: CriteriosEvaluación*Sustentación.
 
 
 
