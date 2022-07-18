@@ -68,9 +68,9 @@ scripting.
 * Instalación del `soporte para el ESP32 <https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html>`__ 
   en el Arduino IDE
 * En la versión de popOS 22.04 aparece una nueva regla para el sistema braille que incluye entre sus reglas 
-  en ``/usr/lib/udev/rules.d/85-brltty.rules`` soporte para un dispositivo basado en el chip FTDI que convierte 
-  de USB a RS232. Este chip lo tienen varios sistemas de desarrollo de Arduino. Una solución simple a este problema 
-  es comentar la regla que señala al chip, salvar el archivo 85-brltty.rules y reiniciar.
+  en ``/usr/lib/udev/rules.d/85-brltty.rules`` soporte para un dispositivo basado en el chip cp210x (en mi caso los datos del 
+  chip son: idVendor=10c4, idProduct=ea60) que convierte de USB a RS232. Este chip lo tienen varios sistemas de desarrollo de Arduino. 
+  Una solución simple a este problema es comentar la regla que señala al chip, salvar el archivo 85-brltty.rules y reiniciar.
 * `Extensión Arduino <https://github.com/microsoft/vscode-arduino>`__ para Visual Studio Code. No olvidar 
   configurar el path donde está instalado el IDE de Arduino.
 * En visual studio code, en los settings, se recomienda deshabilitar el pegado del contenido del clipboard con el botón del medio del mouse: 
@@ -102,3 +102,14 @@ scripting.
 
 Los pasos para clonar la memoria USB los he tomado de 
 `aquí <https://www.cyberciti.biz/faq/linux-copy-clone-usb-stick-including-partitions/>`__.
+
+¿Hardware para el curso?
+--------------------------
+
+En este curso vas a conectar dispositivos periféricos a sistemas de cómputo. 
+¿Qué debes conseguir?
+
+#. Consigue un sistema de desarrollo que tenga soporte en el framework de Arduino. Te dejaré algunas 
+   ideas:
+
+   * 
