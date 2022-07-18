@@ -109,7 +109,15 @@ Los pasos para clonar la memoria USB los he tomado de
 En este curso vas a conectar dispositivos periféricos a sistemas de cómputo. 
 ¿Qué debes conseguir?
 
-#. Consigue un sistema de desarrollo que tenga soporte en el framework de Arduino. Te dejaré algunas 
-   ideas:
-
-   * 
+#. Un sistema de desarrollo para el ESP32. Puedes conseguir uno de 
+   `estos kits <https://www.didacticaselectronicas.com/index.php/sistemas-de-desarrollo/espressif-systems/esp32/tarjeta-de-desarrollo-esp32-wrover-b-tarjetas-modulos-de-desarrollo-de-con-wifi-y-bluetooth-esp32u-comunicaci%C3%B3n-wi-fi-bluetooth-esp32u-iot-esp32-nodemcu-wrover-devkit-detail>`__.
+#. Protoboard de 840, o de 830 puntos, o 2 pequeños de 400 puntos de inserción.
+#. Cables `conexión fácil macho a macho <https://www.didacticaselectronicas.com/index.php/cables-conectores-y-accesorios/conexion-facil/kit-cables-conexion-facil-mm-premium-10pcs-1-dupont-arduino-cables-de-conexion-f%C3%A1cil-macho-macho-dupont-header-easy-conection-arduino-r%C3%A1pida-1852-detail>`__: 
+   paquete de 20.
+#. `LED amarillo <https://www.didacticaselectronicas.com/index.php/optoelectronica/diodos-led/dip/5mm/led-5mm-difuso-amarillo-diodos-leds-difusos-de-5mm-iluminaci%C3%B3n-through-hole-dip-amarillos-detail>`__, 
+   `LED rojo <https://www.didacticaselectronicas.com/index.php/optoelectronica/diodos-led/dip/5mm/led-5mm-difuso-rojo-diodos-leds-difusos-de-5mm-iluminaci%C3%B3n-through-hole-dip-rojos-detail>`__, 
+   `LED azul <https://www.didacticaselectronicas.com/index.php/optoelectronica/diodos-led/dip/5mm/led-5mm-difuso-azul-diodos-leds-difusos-de-5mm-iluminaci%C3%B3n-through-hole-dip-azules-detail>`__, 
+   `LED verde <https://www.didacticaselectronicas.com/index.php/optoelectronica/diodos-led/dip/5mm/led-5mm-difuso-verde-diodos-leds-difusos-de-5mm-iluminaci%C3%B3n-through-hole-dip-verdes-detail>`__. 
+#. 4 resistencias de 1000 ohm.
+#. 4 `pulsadores <https://www.didacticaselectronicas.com/index.php/suiches-y-conectores/suiches/pulsadores/pulsador-peque%C3%B1o-2-pines-2mm-interruptores-botones-switch-suiches-pulsadores-cuadrados-de-2-pines-6mm-x-5mm-momentaneos-moment%C3%A1neo-sw-6x5-2p-sw-057b-de-montaje-through-hole-detail>`__ 
+   de patas largas para introducir en el protobard.
