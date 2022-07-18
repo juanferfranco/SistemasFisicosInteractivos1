@@ -1,4 +1,4 @@
-Unidad 1. Software para sistemas embebido
+Unidad 1. Software para sistemas embebidos
 ==============================================
 
 Introducción
@@ -11,25 +11,17 @@ desde y hacia el mundo exterior de la aplicación interactiva.
 Propósito de aprendizaje
 ***************************
 
-Analizar la plataforma de hardware y software del controlador que se empleará
-como interfaz entre los sensores-actuadores y las plataformas de software
-interactivas a utilizar en el curso.
-
-Construir aplicaciones simples para el controlador con el fin de explorar algunas
-posibilidades y características de su plataforma de software.
-
 Modelar el software del controlador, mediante el uso de máquinas
 de estado, para poder establecer escenarios que permitan
 documentar y verificar su funcionamiento.
 
 Implementar el software del controlador mediante las técnicas de
 programación adecuadas que permitan sacarle el máximo provecho a
-dicho controlador. 
+dicho controlador.
 
 Verificar el software del controlador por medio de la
 comparación de resultados de funcionamiento con los posibles
 escenarios o vectores de prueba definidos en el modelado.
-
 
 Temas
 *******
@@ -44,24 +36,241 @@ Temas
 Trayecto de actividades
 ---------------------------
 
-
 Sesión 1
 *************
 
-Ejercicio 1: Introducción a Git y GitHub 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Lectura 1: sistemas de control de versión 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-(Tiempo estimado: 1 hora 40 minutos)
+En este curso vamos a realizar todos los ejercicios y evaluaciones usando 
+un sistema de control de versión. Git y Github.
 
-.. toctree::
-    :maxdepth: 1
+¿Qué es un sistema de control versión?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    Introducción a Git y GitHub <./introGit>
+Cuando estás desarrollando software, alguna vez te ha pasado que terminas 
+nombrando tus archivos así::
+
+* Versión buena con un error
+* Versión casi lista con un bug
+* Versión para compartir con Camila
+* Versión para enviar al profesor
+* Esta versión si está bien
+* Versión 1, versión 1-1, versión 2, versión 3
+* versión enero 11 de 2022.
+
+¿No sería ideal que el nombre de una archivo siempre fuera el mismo y existiera 
+una forma de acceder a todo el historial de cambios del archivo?
+
+Lo anterior lo puedes lograr con un sistema de control de versión. Un sistema de control 
+de versión te ayuda a evitar la necesidad de guardar tus archivos con nombres 
+diferentes a medida que realizas cambios, incluyes nuevas características 
+o tienes alguna nueva receta de archivos para producir tu programa. El sistema 
+de control de versión te ayudará a gestionar la versión de los archivos 
+de manera automática evitando procesos manuales tediosos y susceptibles al error.
+
+El sistema de control de versión ES UN PROGRAMA (que instalas en tu computador)
+que te permitirá trazar y guardar información de los cambios que haces a tus 
+archivos en el tiempo. Podrás recuperar incluso una versión pasada de un archivo si 
+descubres que cometiste un error. 
+
+¿Te va sonando?
+
+Quiero contarte además que hoy en día prácticamente es impensable una 
+empresa que desarrolle cualquier producto de software que NO TENGA control 
+de versión.
+
+¿Qué es Git y GitHub?
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Git es un sistema de control de versión libre y de código abierto que instalas 
+en tu computador para realizar el control de versión de tus proyectos. 
+Por su parte GitHub te permite guardar tus proyectos de software en un servidor 
+en Internet con la información del control de versión que tienes en tu computador. 
+¿Para qué quieres esto? Para compartir tu código, para hacer copias de seguridad, 
+para mostrar tus habilidades y portafolio y SOBRE TODO para trabajar en EQUIPO. 
+
+Por medio de GitHub, los aportes de cada miembro del equipo se pueden 
+sincronizar y compartir. De esta manera, es posible construir productos de software 
+muy complejos en los cuales participen MUCHOS desarrolladores.
 
 
-Trabajo autónomo 1
-*********************
-(Tiempo estima: 1 horas 20 minutos)
+Ejercicio 1: introducción a la terminal 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Para realizar el control de versión de tus programas vas a usar inicialmente 
+la terminal. Una vez estés familiarizado con esta puedes explorar otras herramientas; sin embargo,
+la ventaja de la terminal es su rapidez y que definitivamente te obliga a entender 
+qué estás haciendo. Esto es importante porque luego este conocimiento lo podrás extrapolar 
+a cualquier herramienta gráfica.
+
+Es posible que esta sea tu primera experiencia con la terminal. La terminal 
+es un programa que te permite interactuar con el sistema operativo y los programas 
+que tienes instalados por medio de comandos. Es por ello que a la terminal 
+también la conocemos como interfaz de línea de comandos.
+
+Abre la terminal y escribe en el buscador de aplicaciones la palabra ``terminal``. 
+Escribe el siguiente comando::
+
+  pwd
+
+En mi caso (en tu caso será distinto) el resultado es::
+
+  /home/jfupb
+
+Acabas de escribir tu primer comando en la terminal. ``pwd`` te permite 
+conocer la ruta en la cual estás posicionado en el sistema de archivos. Por el momento,
+piensa en el sistema de archivos como una forma de organizar la información en el computador 
+usando DIRECTORIOS.
+
+Ahora vas un nuevo DIRECTORIO::
+
+  mkdir demo1
+
+
+.. note:: RECUERDA
+
+  ¿Qué comando debes ejecutar para saber en qué directorio estás posicionado en este momento?
+
+
+¿Y si quieres posicionarte en el nuevo directorio que acabas de crear? Ejecutas el comando 
+``cd`` que quiere decir ``change directory``::
+
+  cd demo1
+
+Para listar el contenido del nuevo directorio deberás escribir el comando::
+
+  ls -al 
+
+Verás algo como esto:
+
+.. code-block::
+
+    total 8
+    drwxrwxr-x  2 jfupb jfupb 4096 Jan 11 15:40 .
+    drwxr-x--- 37 jfupb jfupb 4096 Jan 11 15:43 ..
+
+Te estarás preguntando, qué es ``.`` y ``..``. Se trata de referencias a dos directorios. ``.``
+se refiere al directorio actual y ``..`` se refiere al directorio padre. Entonces, si 
+escribes este comando::
+
+.. code-block:: bash 
+
+    cd ..
+
+.. note:: RETO
+
+    ¿Cuál crees que sea el resultado? 
+    
+¿Perdido? No te preocupes. Repitamos el proceso juntos. Supón que la posición actual es::
+  pwd
+  /home/jfupb/demo1
+
+Luego de ejecutar el comando::
+
+  cd ..
+
+El resultado será::
+
+    pwd
+    /home/jfupb
+
+
+.. note:: RECUERDA
+
+  En este momento debes estar en el directorio padre del directorio demo1. ¿Te cambias 
+  de nuevo al directorio demo1 por fa?
+
+Debiste hacer algo como esto::
+
+  cd demo1
+
+Ahora regresa de nuevo al directorio padre de demo1 y una vez estés allí ejecuta los comandos::
+
+  cd ./demo1
+  pwd
+
+El resultado será::
+
+  /home/jfupb/demo1
+
+¿Te diste cuenta? 
+
+.. note:: RECUERDA
+
+  La entrada `.` se refiere al directorio actual y ``..`` se refiere al directorio padre del 
+  directorio actual.
+
+Al cambiarte al padre de demo1, ``.`` se refiere al directorio padre de ``demo1``. 
+Por tanto, ``./demo1`` será la ruta RELATIVA de demo1 con respecto a su padre. 
+
+
+Ejercicio 2: Vas a practicar 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ahora te voy a pedir que hagas varias cosas y preguntes si tienes dudas:
+
+
+* Crea el directorio demo2 en demo1. ¿Recuerdas cómo listar el contenido de un directorio? 
+* Cámbiate al directorio padre de demo1 y desde allí crea el directorio demo3 en el directorio 
+  demo2.
+* ¿Cuál será la ruta relativa de demo3 con respecto a al padre de demo1?
+
+
+.. warning:: ALERTA DE SPOILER
+
+  Crea el directorio demo2 en demo1. ¿Recuerdas cómo listar el contenido de un directorio?::
+
+    mkdir demo2
+    ls -al
+
+  Cámbiate al directorio padre de demo1 y desde allí crea el directorio demo3 en el directorio 
+  demo2. Asumiendo que estás posicionado en demo1::
+
+    cd ..
+    mkdir ./demo1/demo2/demo3
+
+  ¿Cuál será la ruta relativa de demo3 con respecto a al padre de demo1?::
+
+    ../demo1/demo2/demo3
+
+
+Ejercicio 3: experimenta
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+¿Qué comandos has visto hasta ahora?::
+
+  pwd
+  ls -al
+  cd
+  mkdir
+
+Ahora tómate unos minutos para experimentar. ¿Cómo? 
+
+* Inventa tus propios ejemplo o retos.
+* Antes de ejecutar un comando PIENSA cuál sería el resultado.Si el resultado es como 
+  te lo imaginaste, en hora buena, vas bien. Si no es así, MUCHO mejor, tienes una 
+  oportunidad de oro para aprender. Entonces trata de explicar qué está mal, discute 
+  con otros compañeros y si quieres habla con el profe.
+
+Ejercicio 4: recuerda (evaluación formativa)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+De nuevo tómate unos minutos para:
+
+#. Listar cada uno de los comandos que has aprendido hasta ahora y escribe al 
+   frete de cada uno qué hace.
+#. ¿Qué es una ruta absoluta?
+#. ¿Qué es una ruta relativa?
+
+
+
+
+
+
+
+
+
 
 Ejercicio 2: terminar sesión 1 y conseguir materiales 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
