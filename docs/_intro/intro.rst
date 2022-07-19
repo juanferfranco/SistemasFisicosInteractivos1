@@ -7,6 +7,18 @@ Descripción del curso
 El objeto de este curso es aprender a integrar dispositivos periféricos a 
 sistemas de cómputo para la construcción de aplicaciones interactivas.
 
+¿Por ejemplo?
+
+* `ARcade <https://youtu.be/3qmF6oCIxdQ>`__ de Moment Factory
+* `The VOID <https://youtu.be/cML814JD09g>`__
+* `AR + IoT <https://youtu.be/Fwikx1TOidE>`__ 
+* `Demo UPB <https://youtu.be/oskw30HNovk>`__
+* `Mario Kart <https://youtu.be/NKE39Tg9oQY>`__
+* Proyecto `Galia <https://youtu.be/4P5JcA0tB9w>`__
+* `AR Snapdragon <https://youtu.be/de0HgyUBBic>`__ Spaces
+* `Haptic VR Gloves <https://youtu.be/h5WzF1ch3ww>`__
+
+
 Propósito del curso
 ---------------------
 
@@ -56,15 +68,15 @@ Cronograma
 -----------
 
 * Introducción al curso: semana 1
-* Unidad 1: semanas 2 a 6
-* Unidad 2: semanas 7 a 9
+* Unidad 1: semanas 2 a 5
+* Unidad 2: semanas 6 a 9
 * Unidad 3: semanas 10 a 12
 * Unidad 4: semanas 13 a 16
 
 Evaluación
 -----------
 
-* Evaluación 1: 25%. Semana 6.
+* Evaluación 1: 25%. Semana 5.
 * Evaluación 2: 25%. Semana 9.
 * Evaluación 3: 25%. Semana 12.
 * Evaluación 4: 25%. Semana 16.
