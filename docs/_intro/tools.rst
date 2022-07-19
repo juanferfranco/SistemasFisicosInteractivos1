@@ -112,7 +112,7 @@ En este curso vas a conectar dispositivos periféricos a sistemas de cómputo.
 #. Un sistema de desarrollo para el ESP32. Puedes conseguir uno de 
    `estos kits <https://www.didacticaselectronicas.com/index.php/sistemas-de-desarrollo/espressif-systems/esp32/tarjeta-de-desarrollo-esp32-wrover-b-tarjetas-modulos-de-desarrollo-de-con-wifi-y-bluetooth-esp32u-comunicaci%C3%B3n-wi-fi-bluetooth-esp32u-iot-esp32-nodemcu-wrover-devkit-detail>`__.
 #. Para conectar el sistema de desarrollo anterior, necesitarás un cable micro USB de BUENA CALIDAD.
-   Te recomiendo `este <https://www.panamericana.com.co/cable-micro-usb-a-usb-a-1m-belkin-color-negro-609919/p>`.__
+   Te recomiendo `este <https://www.panamericana.com.co/cable-micro-usb-a-usb-a-1m-belkin-color-negro-609919/p>`__.
 #. Protoboard de 840, o de 830 puntos, o 2 pequeños de 400 puntos de inserción.
 #. Cables `conexión fácil macho a macho <https://www.didacticaselectronicas.com/index.php/cables-conectores-y-accesorios/conexion-facil/kit-cables-conexion-facil-mm-premium-10pcs-1-dupont-arduino-cables-de-conexion-f%C3%A1cil-macho-macho-dupont-header-easy-conection-arduino-r%C3%A1pida-1852-detail>`__: 
    paquete de 20.
