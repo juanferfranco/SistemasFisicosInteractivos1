@@ -21,6 +21,9 @@ sistemas de cómputo para la construcción de aplicaciones interactivas.
 * `AR Snapdragon <https://youtu.be/de0HgyUBBic>`__ Spaces
 * `Haptic VR Gloves <https://youtu.be/h5WzF1ch3ww>`__
 
+¿Cómo encaja este curso en el diseño de Ingeniería en diseño de entretenimiento digital?
+
+Te lo cuento en el tablero.
 
 Propósito del curso
 ---------------------
