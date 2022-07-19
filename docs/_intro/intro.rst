@@ -12,7 +12,7 @@ sistemas de cómputo para la construcción de aplicaciones interactivas.
 * `Interactive <https://momentfactory.com/reel/interactive-demo>`__ Momento Factory
 * `Lumia <https://momentfactory.com/reel/lumina-night-walks-demo>`__ de Moment Factory
 * `ARcade <https://youtu.be/3qmF6oCIxdQ>`__ de Moment Factory
-* 
+* `TDAxis <https://tdaxis.github.io/index.htmls>`__ trabajo de grado entretenimiento digital
 * `The VOID <https://youtu.be/cML814JD09g>`__
 * `AR + IoT <https://youtu.be/Fwikx1TOidE>`__ 
 * `Demo UPB <https://youtu.be/oskw30HNovk>`__
