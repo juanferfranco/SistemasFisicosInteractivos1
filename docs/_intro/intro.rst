@@ -9,6 +9,7 @@ sistemas de cómputo para la construcción de aplicaciones interactivas.
 
 ¿Por ejemplo?
 
+* `Lumia <https://momentfactory.com/reel/lumina-night-walks-demo>`__ de Moment Factory
 * `ARcade <https://youtu.be/3qmF6oCIxdQ>`__ de Moment Factory
 * `The VOID <https://youtu.be/cML814JD09g>`__
 * `AR + IoT <https://youtu.be/Fwikx1TOidE>`__ 
