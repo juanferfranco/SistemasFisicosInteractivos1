@@ -157,7 +157,10 @@ qué es un protoboard o cómo lo puedes trabajar, te dejaré este par de recurso
 
 .. image:: ../_static/montaje.png
   :alt: montaje
+  :align: center
+  :width: 75%
 
+|
 
 Ejercicio 7: prueba tu montaje 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
