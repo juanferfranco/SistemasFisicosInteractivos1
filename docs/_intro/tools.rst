@@ -85,14 +85,13 @@ scripting.
    echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
    sudo apt install mono-complete   
 
+
+* Instalar una biblioteca necesaria para correr UnityHub y el editor de Unity::
+
+   wget "http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5.10_amd64.deb"
+   sudo dpkg -i libssl1.0.0_1.0.2n-1ubuntu5.10_amd64.deb
+   
 * `Unity Hub <https://docs.unity3d.com/hub/manual/InstallHub.html#install-hub-linux>`__
-* Una vez instalado Unity Hub es necesario adicionar una biblioteca que ya no viene con Ubuntu 22.04. Esta 
-  versión de Ubuntu es en la que se basa la versión de PopOS que estamos usando::
-
-   echo "deb http://security.ubuntu.com/ubuntu impish-security main" | sudo tee /etc/apt/sources.list.d/impish-security.list
-   sudo apt update
-   sudo apt-get install libssl1.1
-
 * Unity 2021 LTS
 * Crear una cuenta educativa en jetbrains y descargar Rider.
 * En Unity se debe configurar el editor para que abra los proyectos con Rider.
