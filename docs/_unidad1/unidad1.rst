@@ -69,7 +69,7 @@ Para realizar esta evaluación sigue los siguientes pasos:
   formativa del curso. Espera unos segundos y presiona 
   la tecla F5.
 * Ahora ingresa al enlace con tu repositorio, despliega el menú del botón
-  clone y selecciona la opción https. Copia la URL.
+  Code y selecciona la opción https. Copia la URL.
 * Abre la terminal y escribe el comando::
 
     cd ~
@@ -91,7 +91,7 @@ Para realizar esta evaluación sigue los siguientes pasos:
   debes abrir directorios completos.
 
 * Una vez en visual studio code, abre la paleta de comandos con CRTL+SHIFT+P
-* Escribe el comando Arduino: Initialize.
+* Escribe el comando Arduino: Initialize (si no te sale, llama al profe).
 * Y cambia sketch.ino por simpleProject.ino
 * Selecciona tu microcontrolador. Escribe ESP32 (si tienes uno ESP32) y 
   luego selecciona el ESP32 Dev Module.
@@ -130,7 +130,9 @@ Para realizar esta evaluación sigue los siguientes pasos:
   izquierdo del chulo verde.
 * Abre el Monitor serial y comprueba el resultado (parte inferior ícono con 
   un enchufe).
-* Regresa a la termina y en el directorio del proyecto escribe::
+* Regresa a la termina y en el directorio del proyecto escribe (si 
+  hay un error, posiblemente tu terminal no está autenticada aún. Llama 
+  al profe)::
 
     git add --all
     git commit -m "Test done"
