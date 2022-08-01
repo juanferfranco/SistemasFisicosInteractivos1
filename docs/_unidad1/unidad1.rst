@@ -539,14 +539,35 @@ el ejercicio como te lo propongo?
 #. Ahora tu debes verificar el pull request de tu compañero, verificar 
    que todo funciona correctamente y aceptar o rechazar el trabajo. 
 
-#. Ingresa de nuevo ....
+#. Ingresa de nuevo de tu cuenta de GitHub si están trabajando en el mismo 
+   computador. Vas a descargar TODOS los metadatos del repositorio en GitHub::
 
+    git fetch --all --prune
+    git log --oneline --all
 
+#. Ya puedes ver la rama en el remoto de uno de tus compañeros. Ahora 
+   mira las ramas locales y remotas::
 
+    git branch -a
 
+#. Descarga la rama remota de tu compañero (a tu local)::
 
+    gh pr checkout 1
 
+#. Verifica, compila, realiza pruebas y si todo está bien acepta el pull 
+   request::
 
+    gh pr merge -d -s
+
+   En este caso aceptas el pull request, borras la rama 
+   task2 local y la remota (-d) y realizas un Squash merge (-s). 
+
+#. Verifica que todo quedó bien::
+
+    git fetch --all --prune
+    git branch -a
+
+#. Repite los pasos anteriores con los demás compañeros.
 
 ..
   Ejercicio 14: punteros
