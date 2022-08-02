@@ -351,81 +351,231 @@ Antes de comenzar a programar:
 * ¿Cuáles serían los eventos?
 * ¿Cuáles serían las acciones?
 
-..
-  Ejercicio 13: encapsulamiento con tareas
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Ejercicio 9: template para trabajo en equipo por tareas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Analiza la estructura del siguiente código. Esta estructura 
-  te permitirá trabajar fácilmente en equipo porque puedes 
-  delegar las diferentes partes de la aplicación a varias personas.
-  La idea es que cada persona pueda realizar una tarea.
+Como sé que sé o sé quieres comenzar a trabajar en equipo, 
+te voy a dejar `un repositorio <https://github.com/juanferfranco/arduinoTeamTemplate.git>`__ 
+que puedes usar como un template para trabajar con otros compañeros.
 
-  Un pedido especial para ti. Recuerda:
+El template tiene un archivo .ino que usarás para llamar las 
+diferentes tareas que componen tu aplicación. Por tanto, cuando 
+tengas un problema de programación a resolver, lo primero 
+que deberás hacer es dividirlo por tareas.
 
-  * ¿Para qué se usa la palabra ``static`` en este caso?
-  * PREGUNTA DE INVESTIGACIÓN: ¿Qué ocurre con el programa si 
-    le quitas el static a las variables?
+.. code-block:: cpp
+
+  #include "task1.h"
+  #include "task2.h"
+  #include "task3.h"
+
+  void setup()
+  {
+      task1();
+      task2();
+      task3();
+  }
+
+  void loop()
+  {
+      task1();
+      task2();
+      task3();
+  }
+
+Luego, cada tarea estará compuesta de un archivo .h y un archivo cpp.
+En el archivo .h publicarás el API de tu tarea, por ejemplo, el prototipo 
+del método que define la tarea (el tipo de retorno, el tipo de los 
+argumentos). En el archivo .cpp estará la implementación de la tarea en sí.
+
+Ejercicio 10: RETO
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Este es un RETO para que resuelvas en equipo. Te voy a indicar una 
+serie de pasos que puedes seguir para comenzar y luego te invitaré 
+a pensar con tus compañeros los pasos finales del reto.
+
+#. Clona el `template <https://github.com/juanferfranco/arduinoTeamTemplate.git>`__ 
+   de trabajo en equipo.
+#. Ingresa a la carpeta con el repositorio y borra el directorio .git::
+
+    rm -r -f .git
+
+  ¿Por qué es necesario que hagas esto? porque la carpeta .git contiene toda 
+  la información del repositorio que clonaste. Al borrar la carpeta, estás 
+  borrando el repositorio. De esta manera, tu puedes iniciar un nuevo 
+  repositorio.
+
+#. Crea tu propio repositorio::
+
+    git init
+    git add --all
+    git commit -m "Init project"
+
+#. Ahora abre el browser e ingresa a tu cuenta de GitHub.
+#. Luego en la terminal autoriza el acceso a tu cuenta de Github::
+
+    gh auth logout 
+    gh auth login
+
+#. Crea el repositorio en Github con el cual sincronizarás el repositorio 
+   local::
+
+    gh repo create PROJECT_NAME --public --source=. --push --remote=origin
+
+#. Verifica que el repositorio se ha creado y que tienes los mismos archivos 
+   que en el repositorio local.
+
+#. Te voy a mostrar el código para la task1 y luego con tu equipo vas 
+   a construir las demás tareas. La frecuencia del LED rojo será de 5 Hz
 
   .. code-block:: cpp
+  
+    #include <Arduino.h>
+    #include "task1.h"
 
-      void setup() {
-        task1();
-        task2();
-      }
 
-      void task1(){
-        static uint32_t previousMillis = 0;
-        static const uint32_t interval = 1250;
-        static bool taskInit = false;
-        static const uint8_t ledPin =  25;
-        static uint8_t ledState = LOW;
-        
-        if(taskInit == false){
-          pinMode(ledPin, OUTPUT);	
-          taskInit = true;
+    void task1(){
+        enum class Task1States{
+            INIT,
+            WAIT_TO_TOGGLE_LED
+        };
+        static Task1States task1State = Task1States::INIT;
+        static uint32_t lasTime;
+        static constexpr uint32_t INTERVAL = 100;
+        static constexpr uint8_t ledRed = 14;
+        static bool ledStatus = false;
+
+        switch(task1State){
+            case Task1States::INIT:{
+                pinMode(ledRed,OUTPUT);
+                lasTime = millis();
+                task1State = Task1States::WAIT_TO_TOGGLE_LED;
+                break;
+            }
+
+            case Task1States::WAIT_TO_TOGGLE_LED:{
+                // evento 1:
+                uint32_t currentTime = millis();
+                if( (currentTime - lasTime) >= INTERVAL ){
+                    lasTime = currentTime;
+                    digitalWrite(ledRed,ledStatus);
+                    ledStatus = !ledStatus;
+                }
+                break;
+            }
+
+            default:{
+                break;
+            }
         }
-        
-        uint32_t currentMillis = millis();	
-        if ( (currentMillis - previousMillis) >= interval) {
-          previousMillis = currentMillis;
-          if (ledState == LOW) {
-            ledState = HIGH;
-          } else {
-            ledState = LOW;
-          }
-          digitalWrite(ledPin, ledState);
-        }
-      }
 
-      void task2(){
-        static uint32_t previousMillis = 0;
-        static const uint32_t interval = 370;
-        static bool taskInit = false;
-        static const uint8_t ledPin =  26;
-        static uint8_t ledState = LOW;
-        
-        if(taskInit == false){
-          pinMode(ledPin, OUTPUT);	
-          taskInit = true;
-        }
-        
-        uint32_t currentMillis = millis();	
-        if ( (currentMillis - previousMillis) >= interval) {
-          previousMillis = currentMillis;
-          if (ledState == LOW) {
-            ledState = HIGH;
-          } else {
-            ledState = LOW;
-          }
-          digitalWrite(ledPin, ledState);
-        }
-      }
+    }  
 
-      void loop() {
-        task1();
-        task2();
-      }
+Los pasos que harás con tus compañeros serán estos:
 
+#. Piensa con tus compañeros la construcción de tres 
+   tareas más que modifiquen los LED restantes (25, 26, 27) a 
+   una frecuencia de 4 Hz, 3 Hz, 2 Hz respectivamente.
+
+#. No olvides realizar commit y push a medida que vas trabajando::
+
+    git commit -am "update taskX file with..."
+    git push
+
+Ejercicio 11: RETO
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Ahora vas a trabajar en equipo bajo control de versión 
+como lo harías en el mundo real. Ten presente que en tu equipo 
+de trabajo es posible que solo tengas un sistema de desarrollo.
+No importa, como la idea es practicar, lo que puedes hacer es 
+rotar entre todos el uso del sistema de desarrollo. Incluso, pueden 
+trabajar en el mismo computador. Lo que cambiará es la cuenta de GitHub 
+que usará cada persona cuando le toque su turno. MIRA, es 
+muy importante que SE ACOMPAÑEN entre todos, es decir, cuando 
+llegue el turno de un compañero, la idea es que los otros 
+estén atentos para ayudarle y corregir errores. ¿Me prometes que harás 
+el ejercicio como te lo propongo?
+
+#. Clona de nuevo el template y borra el repositorio. Vas a crear 
+   tu propio repositorio.
+#. Divide las tareas entre tus compañeros, por ejemplo, si son 4 personas, 
+   cada uno puedo hacer una tarea.
+#. Dale acceso al repositorio, como colaborador, a cada uno de tus compañeros::
+
+    gh api -X PUT repos/TU-GITHUB-USER/EL-NOMBRE-DEL-REPO/collaborators/EL-GITHUB-USER-DE-TU-COMPA
+   
+#. Cada compañero debe iniciar sesión en GitHub (puede ser desde el celular o 
+   una pestaña incógnita). Luego abrir el correo y aceptar la invitación a 
+   trabajar como colaborador en el repositorio.
+
+#. Ahora ha llegado el turno de que cada uno haga la tarea que le tocó. Te 
+   voy a mostrar paso a paso lo que debe hacer cada uno de tus compañeros. PERO 
+   recuerda hacer el ejercicio por turnos para que todos practiquen y repasen 
+   a la vez.
+
+#. Crea un nuevo directorio (si estás trabajando en el mismo computador) por 
+   fuera del repositorio. 
+  
+#. Clona el proyecto.
+
+#. Crea una nueva rama para desarrollar tu tarea::
+
+    git switch -c task2
+
+#. Inicializa un proyecto de Arduino (CRTL+SHIFT+P, Arduino Initialize, selecciona
+   el sistema de desarrollo).
+
+#. Desarrolla tu tarea, compila, realiza pruebas.
+#. Realiza commit y push. Para crear el push::
+
+    git push -u origin task2
+
+#. Realiza un pull request. La idea es que uno de los miembros del 
+   equipo sea el encargado de hacer las pruebas de integración con todas 
+   las tareas de los compañeros. Ese miembro del equipo será el responsable 
+   de aceptar los pull request y de mezclar las contribuciones de todos 
+   en la rama principal (master en este caso o main si le cambiaste 
+   el nombre)::
+
+    gh pr create --title "Termine la task2"
+
+#. Ahora tu debes verificar el pull request de tu compañero, verifica 
+   que todo funciona correctamente y acepta el trabajo (por ahora). 
+
+#. Ingresa de nuevo a tu cuenta de GitHub si están trabajando en el mismo 
+   computador. Vas a descargar a tu local TODOS los metadatos 
+   desde repositorio de GitHub::
+
+    git fetch --all --prune
+    git log --oneline --all
+
+#. Ya puedes ver la rama en el remoto de uno de tus compañeros. Ahora 
+   mira las ramas locales y remotas::
+
+    git branch -a
+
+#. Descarga la rama remota de tu compañero (a tu local)::
+
+    gh pr checkout 1
+
+#. Verifica, compila, realiza pruebas y si todo está bien acepta el pull 
+   request::
+
+    gh pr merge -d -s
+
+   Te explico qué hace el comando. Acepta el pull request (merge), borra 
+   la rama task2 local y la remota (-d) y realiza un Squash merge (-s). 
+
+#. Verifica que todo quedó bien::
+
+    git fetch --all --prune
+    git branch -a
+
+#. Repite los pasos anteriores con los demás compañeros.
+
+..
   Ejercicio 14: punteros
   ^^^^^^^^^^^^^^^^^^^^^^^
 
