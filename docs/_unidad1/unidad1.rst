@@ -575,163 +575,364 @@ el ejercicio como te lo propongo?
 
 #. Repite los pasos anteriores con los demás compañeros.
 
-..
-  Ejercicio 14: punteros
-  ^^^^^^^^^^^^^^^^^^^^^^^
+Ejercicio 12: monitor serial
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Para profundizar un poco más en el funcionamiento de los programas 
+vas a usar una herramienta muy interesante llamada terminal serial.
+En este curso vas a utilizar ScriptCommunicator. La aplicación 
+la encuentras en la carpeta Apps o apps del directorio del usuario.
+Si estás usando otro sistema operativo diferente a Linux puedes 
+descargar la aplicación `aquí <https://sourceforge.net/projects/scriptcommunicator/>`__
 
-  Vas a explorar un concepto fundamental de los lenguajes de programación 
-  C y C++. Se trata de los punteros. Para ello, te voy a proponer que 
-  escribas el siguiente programa. Para probarlo, debes abrir el monitor 
-  serial y enviar un carácter. Asegúrate que en las configuraciones 
-  del monitor serial tengas seleccionado ``No line ending`` y ``115200``. 
+Para lanzar la aplicación abre el directorio ScriptCommunicator en la terminal 
+y ejecuta::
 
-  .. code-block:: cpp
+  ./ScriptCommunicator &
 
-    void setup() {
-      Serial.begin(115200);
-    }
+Ingresa al menu Settings, selecciona la pestaña serial port y elige 
+el puerto (el puerto asignado por el sistema operativo a tu sistema 
+de desarrollo) y la BaudRate a 115200. Los demás parámetros los puedes 
+dejar igual.
 
-    void loop() {
+Selecciona la pestaña console options y allí marca ÚNICAMENTE las opciones: 
+utf8, receive, hex, mixed.
 
-      if(Serial.available()>0){ // Ha llegado al menos un dato por el puerto serial?
-        Serial.read(); // DEBO leer ese dato, sino se acumula y el buffer de recepción
-                      // del serial se llenará. 
-        uint32_t var= 0;
-        uint32_t *pvar = &var; // Almaceno en pvar la dirección de var.
-        Serial.print("var content: "); // Envía por el puerto serial el arreglo de caracteres 
-                                    // "var content"
-        Serial.print(*pvar);         // LEE el valor de var por medio de pvar
-        Serial.print('\n');          // Envía solo un carácter usas comillas sencillas.
-        *pvar = 10;                  // ESCRIBE el valor de var por medio de pvar
+En la pestaña serial port ve a la sección general, selecciona como 
+current interface serial port. Cierra la ventana de configuración.
 
-        Serial.print("var content: ");
-        Serial.print(*pvar);
-        Serial.print('\n');
-      }
-    }
+.. warning:: IMPORTANTE
 
-  La variable ``pvar`` se conoce como puntero. Simplemente es una variable 
-  en la cual se almacenan direcciones de otras variables. En este caso 
-  en pvar se almacena la dirección de ``var``. Nota que debes decirle al 
-  compilador cuál es el tipo de la variable (uint32_t en este caso) 
-  cuya dirección será almacenada en pvar. 
+  No olvides que para DEBES TENER conectado el sistema de desarrollo 
+  al computador para poder seleccionar el Port correcto.
 
-  Ahora responde las siguientes preguntas:
+Para conectar ScriptCommunicator al microcontrolador, solo tienes que 
+dar click en Connect y para desconectar Disconnect.
 
-  * ¿Cómo se declara un puntero?
-  * ¿Cómo se define un puntero? (cómo se inicializa)
-  * ¿Cómo se obtiene la dirección de una variable?
-  * ¿Cómo se puede leer el contenido de una variable por medio de un 
-    puntero?
-  * ¿Cómo se puede escribir el contenido de una variable por medio 
-    de un puntero?
+.. warning:: ESTO ES CRÍTICO
 
-  .. warning:: IMPORTANTE
+  SOLO UNA APLICACIÓN puede comunicarse a la vez con el microcontrolador.
+  Por tanto SOLO una aplicación puede abrir o conectarse al puerto 
+  serial que el sistema operativo le asigna al sistema de desarrollo.
 
-    No avances hasta que este ejercicio no lo tengas claro.
+Ejercicio 13: retrieval practice
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Ejercicio 15: punteros y funciones 
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Ahora vas a probar ScriptCommunicator con el sistema de desarrollo.
 
-  Ahora analiza este programa:
+Usa el template para trabajar en equipo y crea una tarea con 
+este código:
 
-  .. code-block:: cpp
+.. code-block:: cpp
 
-    void setup() {
-      Serial.begin(115200);
-    }
+  #include <Arduino.h>
+  #include "task1.h"
 
-    void changeVar(uint32_t *pdata) {
-      *pdata = 10;
-    }
+  void task1()
+  {
+      enum class Task1States
+      {
+          INIT,
+          WAIT_DATA
+      };
+      static Task1States task1State = Task1States::INIT;
 
-    void printVar(uint32_t value) {
-      Serial.print("var content: ");
-      Serial.print(value);
-      Serial.print('\n');
-    }
-
-    void loop() {
-
-      if (Serial.available() > 0) {
-        Serial.read();
-        uint32_t var = 0;
-        uint32_t *pvar = &var;
-        printVar(*pvar);
-        changeVar(pvar);
-        printVar(var);
-      }
-    }
-
-  Nota entonces como pdata recibe el valor de la dirección 
-  de var que está almacenada en pvar.
-
-  Ejercicio 16: RETO
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  Realiza un programa que intercambie mediante una función 
-  el valor de dos variables definidas en la función loop. 
-
-  Ejercicio 17: punteros y arreglos
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Realiza el siguiente programa. Luego abre el monitor serial. Verifica 
-  que en las configuración indique ``No line ending`` y la velocidad sea 
-  ``115200``. Envía 5 número de un solo dígito. ¿Qué hace el programa? 
-
-  .. code-block:: cpp
-
-      void setup(){
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
           Serial.begin(115200);
+          task1State = Task1States::WAIT_DATA;
+          break;
       }
 
-      void processData(uint8_t *pData, uint8_t size, uint8_t *res){
-        uint8_t sum = 0;
-
-        for(int i= 0; i< size; i++){
-          sum = sum + (pData[i] - 0x30);
-        }
-        *res =  sum;
-      }
-
-      void loop(void){
-        static uint8_t rxData[5];
-        static uint8_t dataCounter = 0;  
-
-        if(Serial.available() > 0){
-            rxData[dataCounter] = Serial.read();
-            dataCounter++;
-          if(dataCounter == 5){
-            uint8_t result = 0;
-            processData(rxData, dataCounter, &result);
-            dataCounter = 0;
-            Serial.println(result);
+      case Task1States::WAIT_DATA:
+      {
+          // evento 1:
+          // Ha llegado al menos un dato por el puerto serial?
+          if (Serial.available() > 0)
+          {                  
+              Serial.read();
+              Serial.print("Hola computador\n"); 
           }
-        }
+          break;
       }
 
-  Piensa en las siguientes cuestiones:
+      default:
+      {
+          break;
+      }
+      }
+  }
 
-  * ¿Por qué es necesario declarar ``rxData`` static?
-  * dataCounter se define static y se inicializa en 0. Cada 
-    vez que se ingrese a la función loop dataCounter se inicializa 
-    a 0? ¿Por qué es necesario declararlo static?
-  * Observa que el nombre del arreglo corresponde a la dirección 
-    del primer elemento del arreglo. Por tanto, usar en una expresión 
-    el nombre rxData (sin el operador []) equivale a &rxData[].
-  * En la expresión ``sum = sum + (pData[i] - 0x30);`` observa que 
-    puedes usar el puntero pData para indexar cada elemento del 
-    arreglo mediante el operador [].
-  * Finalmente, la constante ``0x30`` en ``(pData[i] - 0x30)`` ¿Por qué 
-    es necesaria? Porque al enviar un carácter numérico desde 
-    el monitor serial, este se envía codificado, es decir, se envía 
-    un byte codificado en ASCII que representa al número. Por tanto, 
-    es necesario decodificar dicho valor. El código ASCII que 
-    representa los valores del 0 al 9 es respectivamente: 0x30, 0x31, 
-    0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39. De esta manera, 
-    si envías el ``1`` recibirás el valor 0x31. Si restas de 0x31 el 
-    0x30 obtendrás el número 1.
+Ahora abre ScriptCommunicator:
 
+* Presiona el botón Connect.
+* Selecciona la pestaña Mixed.
+* Luego escribe una letra en la caja de texto que está debajo del botón 
+  ``send``. Si quiere coloca la letra `s`.
+* Al lado del botón send selecciona la opción utf8.
+* Dale click a send.
+* Deberías recibir el mensaje ``Hola computador``.
+
+Ahora PIENSA:
+
+#. Analiza el programa.
+#. `Abre <https://www.asciitable.com/>`__ esta tabla.
+#. Analiza los números que se ven debajo de las letras. Nota 
+   que luego de la r, abajo, hay un número. ¿Qué es ese número?
+#. ¿Qué relación encuentras entre las letras y los números?
+
+Ejercicio 14: punteros
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Vas a explorar un concepto fundamental de los lenguajes de programación 
+C y C++. Se trata de los punteros. Para ello, te voy a proponer que 
+escribas el siguiente programa (es una tarea). Para probarlo usa ScriptCommunicator. 
+
+.. code-block:: cpp
+
+  #include <Arduino.h>
+  #include "task1.h"
+
+  void task1()
+  {
+      enum class Task1States
+      {
+          INIT,
+          WAIT_DATA
+      };
+      static Task1States task1State = Task1States::INIT;
+
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
+          Serial.begin(115200);
+          task1State = Task1States::WAIT_DATA;
+          break;
+      }
+
+      case Task1States::WAIT_DATA:
+      {
+          // evento 1:
+          // Ha llegado al menos un dato por el puerto serial?
+          if (Serial.available() > 0)
+          {                  
+              // DEBES leer ese dato, sino se acumula y el buffer de recepción
+              // del serial se llenará.            
+              Serial.read(); 
+              uint32_t var = 0;
+              // Almacena en pvar la dirección de var.
+              uint32_t *pvar = &var;         
+              // Envía por el serial el contenido de var usando 
+              // el apuntador pvar.
+              printf("var content: %d\n", *pvar); 
+              // ESCRIBE el valor de var usando pvar
+              *pvar = 10;                    
+              printf("var content: %d\n", *pvar); 
+          }
+          break;
+      }
+
+      default:
+      {
+          break;
+      }
+      }
+  }
+
+La variable ``pvar`` se conoce como puntero. Simplemente es una variable 
+en la cual se almacenan direcciones de otras variables. En este caso, 
+en pvar se almacena la dirección de ``var``. Nota que debes decirle al 
+compilador el tipo de la variable (uint32_t en este caso) 
+cuya dirección será almacenada en pvar. 
+
+Ahora responde las siguientes preguntas:
+
+* ¿Cómo se declara un puntero?
+* ¿Cómo se define un puntero? (cómo se inicializa)
+* ¿Cómo se obtiene la dirección de una variable?
+* ¿Cómo se puede leer el contenido de una variable por medio de un 
+  puntero?
+* ¿Cómo se puede escribir el contenido de una variable por medio 
+  de un puntero?
+
+.. warning:: IMPORTANTE
+
+  No avances hasta que este ejercicio no lo tengas claro.
+
+Ejercicio 15: punteros y funciones 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Vas a escribir el siguiente programa, pero antes de ejecutarlo vas 
+a tratar de lanzar una HIPÓTESIS de qué hace. Luego lo vas a 
+ejecutar y compararás el resultado con lo que creías. Si el 
+resultado no es el esperado, no deberías seguir al siguiente 
+ejercicio hasta que no experimentes y salgas de la duda.
+
+.. code-block:: cpp
+
+  #include <Arduino.h>
+  #include "task1.h"
+
+  static void changeVar(uint32_t *pdata)
+  {
+      *pdata = 10;
+  }
+
+  static void printVar(uint32_t value)
+  {
+      printf("var content: %d\n", value);
+  }
+
+  void task1()
+  {
+      enum class Task1States
+      {
+          INIT,
+          WAIT_DATA
+      };
+      static Task1States task1State = Task1States::INIT;
+
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
+          Serial.begin(115200);
+          task1State = Task1States::WAIT_DATA;
+          break;
+      }
+
+      case Task1States::WAIT_DATA:
+      {
+          // evento 1:
+          // Ha llegado al menos un dato por el puerto serial?
+          if (Serial.available() > 0)
+          {
+              Serial.read();
+              uint32_t var = 0;
+              uint32_t *pvar = &var;
+              printVar(*pvar);
+              changeVar(pvar);
+              printVar(var);
+          }
+          break;
+      }
+
+      default:
+      {
+          break;
+      }
+      }
+  }
+
+Ejercicio 16: retrieval practice (evaluación formativa)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Realiza un programa que intercambie mediante una función 
+el valor de dos variables. Clona `este <https://classroom.github.com/a/DpmeuO2p>`__ 
+repositorio para que trabajes con tus compañeros.
+
+Ejercicio 17: punteros y arreglos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Escribe el siguiente programa (como siempre te doy la tarea). ``ANALIZA`` qué 
+hace, cómo funciona y qué necesitas para probarlo. No olvides revisar de nuevo 
+una tabla ASCII. Para hacer las pruebas usa ScriptCommunicator y abre la pestaña 
+Utf8. 
+
+.. code-block:: cpp
+
+  #include <Arduino.h>
+  #include "task1.h"
+
+  static void processData(uint8_t *pData, uint8_t size, uint8_t *res)
+  {
+
+      uint8_t sum = 0;
+      for (int i = 0; i < size; i++)
+      {
+          sum = sum + (pData[i] - 0x30);
+      }
+      *res = sum;
+  }
+
+  void task1()
+  {
+      enum class Task1States
+      {
+          INIT,
+          WAIT_DATA
+      };
+      static Task1States task1State = Task1States::INIT;
+      static uint8_t rxData[5];
+      static uint8_t dataCounter = 0;
+
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
+          Serial.begin(115200);
+          task1State = Task1States::WAIT_DATA;
+          break;
+      }
+
+      case Task1States::WAIT_DATA:
+      {
+          // evento 1:
+
+          if (Serial.available() > 0)
+          {
+              rxData[dataCounter] = Serial.read();
+              dataCounter++;
+              if (dataCounter == 5)
+              {
+                  uint8_t result = 0;
+                  processData(rxData, dataCounter, &result);
+                  dataCounter = 0;
+                  printf("result: %d\n",result);
+              }
+          }
+          break;
+      }
+
+      default:
+      {
+          break;
+      }
+      }
+  }
+
+
+Piensa en las siguientes cuestiones:
+
+* ¿Por qué es necesario declarar ``rxData`` static?
+* dataCounter se define static y se inicializa en 0. Cada 
+  vez que se ingrese a la función loop dataCounter se inicializa 
+  a 0? ¿Por qué es necesario declararlo static?
+* Observa que el nombre del arreglo corresponde a la dirección 
+  del primer elemento del arreglo. Por tanto, usar en una expresión 
+  el nombre rxData (sin el operador []) equivale a &rxData[0].
+* En la expresión ``sum = sum + (pData[i] - 0x30);`` observa que 
+  puedes usar el puntero pData para indexar cada elemento del 
+  arreglo mediante el operador [].
+* Finalmente, la constante ``0x30`` en ``(pData[i] - 0x30)`` ¿Por qué 
+  es necesaria? 
+  
+  
+.. tip:: ALERTA DE SPOILER
+
+    Con respecto a la pregunta anterior. Al enviar un carácter numérico desde 
+  ScriptCommunicator este se envía codificado, es decir, se envía 
+  un byte codificado en ASCII que representa al número. Por tanto, 
+  es necesario decodificar dicho valor. El código ASCII que 
+  representa los valores del 0 al 9 es respectivamente: 0x30, 0x31, 
+  0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39. De esta manera, 
+  si envías el ``1`` recibirás el valor 0x31. Si restas de 0x31 el 
+  0x30 obtendrás el número 1.
+
+  Repite el ejercicio anterior pero esta vez usa la pestaña Mixed.
+
+..
   Ejercicio 18: comunicaciones seriales
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
 
@@ -832,46 +1033,6 @@ el ejercicio como te lo propongo?
   * La tarea taskSerial() debe tener algún mecanismo para ir contando 
     la cantidad de datos que han llegado. ¿Cómo lo harías?
 
-  Ejercicio 23: terminal serial
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Vamos a detenernos un momento en el software del lado del
-  computador: el terminal. Veamos dos de ellas, la terminal
-  de arduino y `esta <https://sourceforge.net/projects/scriptcommunicator/>`__
-  otra (scriptcommunicator)
-
-  Considera el siguiente programa
-
-  .. code-block:: cpp
-
-      void setup()
-      {
-        Serial.begin(9600);
-      }
-      void loop()
-      {
-        if(Serial.available() > 0){
-          Serial.read();
-          int8_t var = -1;
-          Serial.println("Inicio de la prueba");
-          Serial.write(var);
-          Serial.print("\n");
-          Serial.print(var);
-          Serial.print('\n');
-          Serial.println("Fin de la prueba"); 
-        }
-      }
-
-  Ejecuta el programa
-
-  ¿Qué observas en la terminal de arduino justo en estas dos líneas?
-
-  .. code-block:: cpp
-
-      Serial.write(var);
-      Serial.print(var);
-
-  ¿Qué observas en Scriptcommunicator para las dos líneas anteriores?
 
   Ejercicio 24: miniRETO
   ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1040,6 +1201,9 @@ el ejercicio como te lo propongo?
       <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
             <iframe width="100%" height="315" src="https://www.youtube.com/embed/dyONJlylaBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
+
+
+
 
   Evaluación de la unidad
   -------------------------
