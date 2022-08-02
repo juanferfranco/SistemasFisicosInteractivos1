@@ -354,7 +354,7 @@ Antes de comenzar a programar:
 Ejercicio 9: template para trabajo en equipo por tareas
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Como se que si o si quieres comenzar a trabajar en equipo, 
+Como sé que sé o sé quieres comenzar a trabajar en equipo, 
 te voy a dejar `un repositorio <https://github.com/juanferfranco/arduinoTeamTemplate.git>`__ 
 que puedes usar como un template para trabajar con otros compañeros.
 
@@ -384,8 +384,9 @@ que deberás hacer es dividirlo por tareas.
   }
 
 Luego, cada tarea estará compuesta de un archivo .h y un archivo cpp.
-En el archivo .h publicarás el API de tu tarea, es decir, el nombre 
-del método. En el archivo .cpp estará la implementación.
+En el archivo .h publicarás el API de tu tarea, por ejemplo, el prototipo 
+del método que define la tarea (el tipo de retorno, el tipo de los 
+argumentos). En el archivo .cpp estará la implementación de la tarea en sí.
 
 Ejercicio 10: RETO
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -471,11 +472,13 @@ a pensar con tus compañeros los pasos finales del reto.
 
     }  
 
-#. Ahora piensa con tus compañeros la construcción de tres 
-   tareas más que modifiquen los LED restantes (25, 26, 27) a 
-   una frecuencia de 4 Hz, 3 Hz, 2 Hz. 
+Los pasos que harás con tus compañeros serán estos:
 
-#. No olvides realizar commit push a medida que vas trabajando::
+#. Piensa con tus compañeros la construcción de tres 
+   tareas más que modifiquen los LED restantes (25, 26, 27) a 
+   una frecuencia de 4 Hz, 3 Hz, 2 Hz respectivamente.
+
+#. No olvides realizar commit y push a medida que vas trabajando::
 
     git commit -am "update taskX file with..."
     git push
@@ -509,11 +512,13 @@ el ejercicio como te lo propongo?
 
 #. Ahora ha llegado el turno de que cada uno haga la tarea que le tocó. Te 
    voy a mostrar paso a paso lo que debe hacer cada uno de tus compañeros. PERO 
-   recuerda hacer el ejercicio en turnos para que todos practiquen y repasen 
+   recuerda hacer el ejercicio por turnos para que todos practiquen y repasen 
    a la vez.
 
 #. Crea un nuevo directorio (si estás trabajando en el mismo computador) por 
-   fuera del repositorio. Clona el proyecto.
+   fuera del repositorio. 
+  
+#. Clona el proyecto.
 
 #. Crea una nueva rama para desarrollar tu tarea::
 
@@ -536,11 +541,12 @@ el ejercicio como te lo propongo?
 
     gh pr create --title "Termine la task2"
 
-#. Ahora tu debes verificar el pull request de tu compañero, verificar 
-   que todo funciona correctamente y aceptar o rechazar el trabajo. 
+#. Ahora tu debes verificar el pull request de tu compañero, verifica 
+   que todo funciona correctamente y acepta el trabajo (por ahora). 
 
-#. Ingresa de nuevo de tu cuenta de GitHub si están trabajando en el mismo 
-   computador. Vas a descargar TODOS los metadatos del repositorio en GitHub::
+#. Ingresa de nuevo a tu cuenta de GitHub si están trabajando en el mismo 
+   computador. Vas a descargar a tu local TODOS los metadatos 
+   desde repositorio de GitHub::
 
     git fetch --all --prune
     git log --oneline --all
@@ -559,8 +565,8 @@ el ejercicio como te lo propongo?
 
     gh pr merge -d -s
 
-   En este caso aceptas el pull request, borras la rama 
-   task2 local y la remota (-d) y realizas un Squash merge (-s). 
+   Te explico qué hace el comando. Acepta el pull request (merge), borra 
+   la rama task2 local y la remota (-d) y realiza un Squash merge (-s). 
 
 #. Verifica que todo quedó bien::
 
