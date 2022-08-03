@@ -921,7 +921,7 @@ Piensa en las siguientes cuestiones:
   
 .. tip:: ALERTA DE SPOILER
 
-    Con respecto a la pregunta anterior. Al enviar un carácter numérico desde 
+  Con respecto a la pregunta anterior. Al enviar un carácter numérico desde 
   ScriptCommunicator este se envía codificado, es decir, se envía 
   un byte codificado en ASCII que representa al número. Por tanto, 
   es necesario decodificar dicho valor. El código ASCII que 
@@ -932,340 +932,255 @@ Piensa en las siguientes cuestiones:
 
   Repite el ejercicio anterior pero esta vez usa la pestaña Mixed.
 
-..
-  Ejercicio 18: comunicaciones seriales
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+Ejercicio 18: análisis del api serial (investigación: hipótesis-pruebas)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  En el siguiente video te explico como funcionan las comunicaciones 
-  seriales entre un sistema embebidos y una plataforma de cómputo interactiva.
+Para responder estas preguntas 
+Qué crees que ocurre cuando:
 
-  .. raw:: html
+* ¿Qué pasa cuando hago un `Serial.available() <https://www.arduino.cc/reference/en/language/functions/communication/serial/available/>`__?
+* ¿Qué pasa cuando hago un `Serial.read() <https://www.arduino.cc/reference/en/language/functions/communication/serial/read/>`__?
+* ¿Qué pasa cuando hago un Serial.read() y no hay nada en el buffer de
+  recepción?
+* Un patrón común al trabajar con el puerto serial es este:
 
-      <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/nm0EdjXEBGQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+.. code-block:: cpp
 
-  Ejercicio 19: api serial de arduino
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    if(Serial.available() > 0){
+        int dataRx = Serial.read() 
+    }
 
-  ¿Dónde encuentro el API de arduino para el manejo del serial?
+* ¿Cuántos datos lee Serial.read()?
+* ¿Y si quiero leer más de un dato? No olvides que no se pueden leer más datos
+  de los disponibles en el buffer de recepción porque no hay
+  más datos que los que tenga allí.
+* ¿Qué pasa si te envían datos por serial y se te olvida llamar Serial.read()?
 
-  `Aquí <https://www.arduino.cc/reference/en/language/functions/communication/serial/>`__
+.. warning:: NO AVANCES SIN ACLARAR LAS PREGUNTAS ANTERIORES
 
-  Las siguientes preguntas las responderemos en los próximos ejercicios, 
-  pero por ahora lee algunas de las funciones del API del serial y responde:
+  Te pido que resuelvas las preguntas anteriores antes de avanzar. 
+  ES MUY IMPORTANTE.  
 
-  * ¿Cual es la diferencia entre print y println?
-  * ¿Cuál es la diferencia entre print y write?
-  * ¿Qué pasa si utilizas read() cuando available() te devuelva cero?
-  * ¿Cuál es la diferencia entre readBytes? y readBytesUntil()?
-  * ¿Qué pasa si quieres leer 10 bytes con readBytes pero solo se han recibido 3?
+Ejercicio 19: buffer de recepción
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Ejercicio 20: análisis del api serial (investigación: hipótesis-pruebas)
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Así se pueden leer 3 datos que han llegado al puerto serial:
 
-  Qué crees que ocurre cuando:
+.. code-block:: cpp
 
-  * ¿Qué pasa cuando hago un Serial.available()?
-  * ¿Qué pasa cuando hago un Serial.read()?
-  * ¿Qué pasa cuando hago un Serial.read() y no hay nada en el buffer de
-    recepción?
-  * Un patrón común al trabajar con el puerto serial es este:
+    if(Serial.available() >= 3){
+        int dataRx1 = Serial.read()
+        int dataRx2 = Serial.read() 
+        int dataRx3 = Serial.read() 
+    }
 
-  .. code-block:: cpp
+¿Qué escenarios podría tener en este caso?
 
-      if(Serial.available() > 0){
-          int dataRx = Serial.read() 
-      }
+.. code-block:: cpp
 
-  * ¿Cuántos datos lee Serial.read()?
-  * ¿Y si quiero leer más de un dato? No olvides que no se pueden leer más datos
-    de los disponibles en el buffer de recepción porque no hay
-    más datos que los que tenga allí.
+    if(Serial.available() >= 2){
+        int dataRx1 = Serial.read()
+        int dataRx2 = Serial.read() 
+        int dataRx3 = Serial.read() 
+    }
 
-  Ejercicio 21: buffer de recepción
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Para responder, es necesario que experimentes. ESTOS son los ejercicios 
+que realmente te ayudarán a aprender.
 
-  Así se pueden leer 3 datos que han llegado al puerto serial:
+Ejercicio 20: miniRETO
+^^^^^^^^^^^^^^^^^^^^^^^
 
-  .. code-block:: cpp
+Piense cómo podrías hacer lo siguiente:
 
-      if(Serial.available() >= 3){
-          int dataRx1 = Serial.read()
-          int dataRx2 = Serial.read() 
-          int dataRx3 = Serial.read() 
-      }
+* Crea una aplicación con una tarea.
+* La tarea debe tener su propio buffer de recepción y una capacidad 
+  para 32 bytes.
+* La tarea almacena los datos del serial en su propio buffer de recepción
+  (el buffer será un arreglo).
+* El buffer debe estar encapsulado en la tarea.
+* Los datos almacenados en el buffer no se pueden perder
+  entre llamados a la tarea.
+* La tarea debe tener algún mecanismo para ir contando 
+  la cantidad de datos que han llegado. ¿Cómo lo harías?
 
-  ¿Qué escenarios podría tener en este caso?
+Inventa un programa que ilustre todo lo anterior.
 
-  .. code-block:: cpp
+Ejercicio 21: CASO DE ESTUDIO
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-      if(Serial.available() >= 2){
-          int dataRx1 = Serial.read()
-          int dataRx2 = Serial.read() 
-          int dataRx3 = Serial.read() 
-      }
+Una aplicación interactiva posee un sensor que produce ruido eléctrico al
+cambiar de estado. La siguiente figura, capturada con un osciloscopio
+, muestra la señal del sensor.
 
-  Para responder, es necesario que experimentes. ESTOS son los ejercicios 
-  que realmente te ayudarán a aprender.
+.. image:: ../_static/bounce.jpg
+  :alt: bounce
 
-  Ejercicio 22: miniRETO
-  ^^^^^^^^^^^^^^^^^^^^^^^
+En la figura se observa el ruido generado en la transición de la señal
+al pasar del estado alto al estado bajo; sin embargo, el
+mismo fenómeno ocurre al cambiar del estado bajo al alto. Nota que
+además pueden ocurrir falsos positivos en la señal, que se manifiestan
+como pulsos de muy corta duración.
+Un ingeniero electrónica experto nos indica que podemos considerar un
+cambio de estado en el sensor siempre que la señal esté estable por
+lo menos durante 100 ms, es decir, sin ruido y sin falsos positivos.
+Se debe realizar una aplicación que filtre el comportamiento ruidoso
+del sensor y reporte por un puerto serial únicamente los valores
+estables de la señal.
 
-  Piense cómo podrías hacer lo siguiente:
+Para este ejercicio debes:
 
-  .. code-block:: cpp
+* Realizar un diagrama con el modelo en máquinas de estado para la aplicación
+* Definir escenarios de prueba usando diagramas de secuencias.
+* Implementar el modelo.
+* Verificar los escenarios definidos
 
-      void taskSerial(){
-          // Esta tarea tiene su propio buffer de recepción,
-          // es decir, su propio vector. Nadie más tiene acceso
-      }
-      void loop(){
-          taskSerial();
-      }
+Te muestro un posible montaje en el protoboard para ilustrar este problema. 
+Para este montaje elegí como puerto de entrada el número 19. Tu debes 
+seleccionar el puerto que más te convenga en un tu microcontrolador.
 
-  * En taskSerial almacena los datos del serial en su propio buffer de recepción
-    (el buffer será un arreglo).
-  * El buffer debe estar encapsulado en la tarea.
-  * Los datos almacenados en el buffer no se pueden perder
-    entre llamados a taskSerial(). La función taskSerial() se llama
-    en la función loop.
-  * La tarea taskSerial() debe tener algún mecanismo para ir contando 
-    la cantidad de datos que han llegado. ¿Cómo lo harías?
+.. image:: ../_static/debounceCircuit.png
+  :alt: circuito
 
+Mira un posible diagrama de estados y un video corto 
+donde te explico el diagrama:
 
-  Ejercicio 24: miniRETO
-  ^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: ../_static/debounceStateDiagram.png
+  :alt: state machine
 
-  Considera el siguiente código para analizar en Scriptcommunicator:
+.. raw:: html
 
-  .. code-block:: cpp
+  <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/DTSqhBkYbJQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
 
-      void setup()
-      {
-        Serial.begin(9600);
-      }
+Definición de los escenarios de prueba:
 
-      void loop()
-      {
-        if(Serial.available() > 0){
-          Serial.read();
-          int8_t var = 255;
-          int8_t var2 = 0xFF;
-          Serial.write(var);
-          Serial.print(var);
-          Serial.write(var2);
-          Serial.print(var2);
-        }
-      }
+.. image:: ../_static/debounceEscenarios.png
+  :alt: Escenarios de prueba
 
-  Explica qué está ocurriendo en cada caso.
-
-  Ejercicio 25: máquinas de estado
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Este ejercicio lo vamos a realizar todos juntos:
-
-  Una aplicación interactiva posee un sensor que produce ruido eléctrico al
-  cambiar de estado. La siguiente figura, capturada con un osciloscopio
-  muestra la señal del sensor.
-
-  .. image:: ../_static/bounce.jpg
-    :alt: bounce
-
-  En la figura se observa el ruido generado en la transición de la señal
-  al pasar del estado alto al estado bajo; sin embargo, el
-  mismo fenómeno ocurre al cambiar del estado bajo al alto. Nota que
-  además pueden ocurrir falsos positivos en la señal, que se manifiestan
-  como pulsos de muy corta duración.
-  Un ingeniero electrónica experto nos indica que podemos considerar un
-  cambio de estado en el sensor siempre que la señal esté estable por
-  lo menos durante 100 ms, es decir, sin ruido y sin falsos positivos.
-  Se debe realizar una aplicación que filtre el comportamiento ruidoso
-  del sensor y reporte por un puerto serial únicamente los valores
-  estables de la señal.
-
-  Para este ejercicio debes:
-
-  * Realizar un diagrama con el modelo en máquinas de estado para la aplicación
-  * Definir escenarios de prueba usando diagramas de secuencias.
-  * Implementar el modelo.
-  * Verificar los escenarios definidos
-
-  Te muestro un posible montaje en el protoboard para solucionar el ejercicio 30. 
-  Para este montaje elegí como puerto de entrada el número 19. Tu debes seleccionar 
-  el puerto que más te convenga en un tu microcontrolador. SI NO QUIERES 
-  hacer cambios al montaje que ya tienes, recuerda que debes los pulsadores 
-  están conectados a los puertos 13, 32 y 33. No olvides modificar el puerto 
-  en el siguiente código en caso de ser necesario.
-
-  .. image:: ../_static/debounceCircuit.png
-    :alt: circuito
-
-  Mira un posible diagrama de estados y un video corto 
-  donde te explico el diagrama:
-
-  .. image:: ../_static/debounceStateDiagram.png
-    :alt: state machine
-
-  .. raw:: html
-
+.. raw:: html
+  
     <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/DTSqhBkYbJQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/FSfR9sLR3v4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-  Definición de los escenarios de prueba:
+El código de la solución será este:
 
-  .. image:: ../_static/debounceEscenarios.png
-    :alt: Escenarios de prueba
+.. code-block:: cpp
 
-  .. raw:: html
-    
-      <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/FSfR9sLR3v4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+    void setup() {
+      Serial.begin(115200);
+    }
 
-  El código de la solución será este:
+    void task() {
+      enum class DebounceStates {INIT, WAITING_CHANGE, WAITING_STABLE};
+      static DebounceStates debounceState =  DebounceStates::INIT;
+      static uint8_t inputPinStableValue;
+      static uint32_t referenceTime;
+      const uint8_t INPUTPIN = 19;
+      const uint32_t STABLETIMEOUT = 100;
 
-  .. code-block:: cpp
+      switch (debounceState) {
 
-      void setup() {
-        Serial.begin(115200);
-      }
-
-      void task() {
-        enum class DebounceStates {INIT, WAITING_CHANGE, WAITING_STABLE};
-        static DebounceStates debounceState =  DebounceStates::INIT;
-        static uint8_t inputPinStableValue;
-        static uint32_t referenceTime;
-        const uint8_t INPUTPIN = 19;
-        const uint32_t STABLETIMEOUT = 100;
-
-        switch (debounceState) {
-
-          case DebounceStates::INIT: {
-              pinMode(INPUTPIN, INPUT_PULLUP);
-              inputPinStableValue = digitalRead(INPUTPIN);
-              debounceState = DebounceStates::WAITING_CHANGE;
-              Serial.println("DebounceStates::INIT");
-              break;
-            }
-          case DebounceStates::WAITING_CHANGE: {
-              if (digitalRead(INPUTPIN) != inputPinStableValue) {
-                referenceTime = millis();
-                debounceState = DebounceStates::WAITING_STABLE;
-                Serial.println("pin changes");
-              }
-
-              break;
-            }
-          case DebounceStates::WAITING_STABLE: {
-              uint8_t pinState = digitalRead(INPUTPIN);
-              if ( pinState == inputPinStableValue) {
-                debounceState = DebounceStates::WAITING_CHANGE;
-              }
-              else if ( (millis() - referenceTime) >= STABLETIMEOUT) {
-                inputPinStableValue = pinState;
-                debounceState = DebounceStates::WAITING_CHANGE;
-                Serial.print("pinState:");
-                Serial.println(inputPinStableValue);
-              }
-              break;
-            }
-
-          default:
-            Serial.println("Error");
+        case DebounceStates::INIT: {
+            pinMode(INPUTPIN, INPUT_PULLUP);
+            inputPinStableValue = digitalRead(INPUTPIN);
+            debounceState = DebounceStates::WAITING_CHANGE;
+            Serial.println("DebounceStates::INIT");
             break;
-        }
+          }
+        case DebounceStates::WAITING_CHANGE: {
+            if (digitalRead(INPUTPIN) != inputPinStableValue) {
+              referenceTime = millis();
+              debounceState = DebounceStates::WAITING_STABLE;
+              Serial.println("pin changes");
+            }
+
+            break;
+          }
+        case DebounceStates::WAITING_STABLE: {
+            uint8_t pinState = digitalRead(INPUTPIN);
+            if ( pinState == inputPinStableValue) {
+              debounceState = DebounceStates::WAITING_CHANGE;
+            }
+            else if ( (millis() - referenceTime) >= STABLETIMEOUT) {
+              inputPinStableValue = pinState;
+              debounceState = DebounceStates::WAITING_CHANGE;
+              Serial.print("pinState:");
+              Serial.println(inputPinStableValue);
+            }
+            break;
+          }
+
+        default:
+          Serial.println("Error");
+          break;
       }
+    }
 
 
-      void loop() {
-        task();
-      }
+    void loop() {
+      task();
+    }
 
 
-  Explicación del código:
+Explicación del código:
+
+.. raw:: html
+
+  <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/Gdc2VvRwwBM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+
+Verificación de los escenarios de prueba:
 
   .. raw:: html
-
+  
     <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/Gdc2VvRwwBM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/dyONJlylaBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-
-  Verificación de los escenarios de prueba:
-
-    .. raw:: html
-    
-      <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/dyONJlylaBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+Ejercicio 22: RETO
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 
+En un escape room se requiere construir una aplicación para controlar 
+una bomba temporizada.La siguiente figura ilustra la interfaz de la bomba. 
+El circuito de control de la bomba está compuesto por tres sensores digitales,
+en este caso pulsadores, denominados UP, DOWN, ARM,
+un display (simulado con el serial), un LED que indica si la bomba está 
+contando o no y una salida digital para simular la activación de la bomba, 
+de nuevo otro LED.
 
+El controlador funciona así:
 
-  Evaluación de la unidad
-  -------------------------
+.. image:: ../_static/bomb.png
+  :alt: bomba
 
-  Enunciado 
-  **************
-
-  En un escape room se requiere construir una aplicación para controlar una bomba temporizada.
-  La siguiente figura ilustra la interfaz de la bomba. El circuito de control
-  de la bomba está compuesto por tres sensores digitales,
-  en este caso pulsadores, denominados UP, DOWN, ARM,
-  un display (LCD), un LED que indica si la bomba está contando o no y una salida 
-  digital para activar la bomba (otro LED).
-
-  El controlador funciona así:
-
-  .. image:: ../_static/bomb.png
-    :alt: bomba
-
-  * Inicia en modo de configuración, es decir, sin hacer cuenta regresiva aún, la bomba está
-    ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
-  * En el modo de configuración, los pulsadores UP y DOWN permiten
-    aumentar o disminuir el tiempo inicial de la bomba. El LED de bomba contando 
-    está PERMANENTEMENTE encendido.
-  * El tiempo se puede programar entre 10 y 60 segundos con cambios de 1 segundo.
-  * El tiempo de configuración se debe visualizar en el LCD.
-  * El pulsador ARM arma la bomba.
-  * Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
-    en el LCD por medio de una cuenta regresiva en segundos. El LED que indica que la 
-    bomba está contando enciende y apaga a una frecuencia de 1Hz.
-  * La bomba explotará (se activa la salida de activación de la bomba) cuando
-    el tiempo llegue a cero. En este punto el control regresará al modo de
-    configuración.
-  * Una vez la bomba esté armada es posible desactivarla ingresando un código
-    de seguridad. El código será la siguiente secuencia de pulsadores
-    presionados uno después de otro:  UP,UP,DOWN, DOWN, UP, DOWN, ARM.
-  * Si la secuencia se ingresa correctamente la bomba pasará de nuevo
-    al modo de configuración de lo contrario continuará la fatal cuenta
-    regresiva.
-
-  Requisitos
-  ***********
-
-  * R01: debes almacenar la clave de desarmado de la bomba en una arreglo.
-  * R02: debes definir una función a la cual le pasarás la dirección en memoria 
-    de dos arreglos: uno con la clave recibida y otro con la clave correcta. La función 
-    deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
-    así: true si la clave recibida es igual a la clave almacenada o false si las claves no coinciden.
-
-  Entregables
-  ****************
-
-  * Tu repositorio para la evaluación está `aquí <https://classroom.github.com/a/g5uiBmQa>`__.
-  * Para poder usar el display vas a necesitar instalar una biblioteca. La puedes encontrar 
-    en el Administrador de bibliotecas usando la siguiente cadena de búsqueda: 
-    ``ESP8266 and ESP32 OLED driver for SSD1306 displays``. El administrador lo encuentras en el 
-    menú Programa, Incluir Librería, Administrar Bibliotecas. Si el idioma está en inglés 
-    buscas por Sketch, Include Library, Manage Library.
-
-  Criterios de evaluación
-  *************************
-
-  * Solución completa del problema: 5 unidades.
-  * Solución completa del problema sin cumplir R01 y/o R02: 4 unidades.
-  * Solución parcial del problema: 2 unidades.
+* Inicia en modo de ``configuración``, es decir, sin hacer cuenta regresiva aún, 
+  la bomba está ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
+* En el modo de configuración, los pulsadores UP y DOWN permiten
+  aumentar o disminuir el tiempo inicial de la bomba. El LED de bomba contando 
+  está PERMANENTEMENTE encendido.
+* El tiempo se puede programar entre 10 y 60 segundos con cambios de 1 segundo.
+* El tiempo de configuración se debe visualizar por el serial.
+* El pulsador ARM arma la bomba.
+* Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
+  por el serial por medio de una cuenta regresiva en segundos. El LED que 
+  indica que la bomba está contando enciende y apaga a una frecuencia de 1Hz.
+* La bomba explotará (se activa la salida de activación de la bomba) cuando
+  el tiempo llegue a cero. En este punto el control regresará al modo de
+  configuración.
+* Una vez la bomba esté armada es posible desactivarla ingresando un código
+  de seguridad. El código será la siguiente secuencia de pulsadores
+  presionados uno después de otro:  UP, DOWN, UP, DOWN, UP, UP, ARM.
+* Si la secuencia se ingresa correctamente la bomba pasará de nuevo
+  al modo de configuración de lo contrario continuará la fatal cuenta
+  regresiva.
+* Debes almacenar la clave de desarmado de la bomba en una arreglo.
+* Debes definir una función a la cual le pasarás la dirección en memoria 
+  de dos arreglos: uno con la clave recibida y otro con la clave correcta. 
+  La función deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
+  así: true si la clave recibida es igual a la clave almacenada o 
+  false si las claves no coinciden.
