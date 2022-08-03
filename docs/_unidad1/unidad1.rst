@@ -1144,6 +1144,12 @@ Verificación de los escenarios de prueba:
 Ejercicio 22: RETO
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Vas a crear y configurar tu proyecto para trabajar en equipo 
+en `este <https://classroom.github.com/a/DJ4VeJ3m>`__ repositorio. Ten 
+en cuenta que SOLO debes subir al repositorio estos archivos: .ino, .cpp, 
+.h, .gitignore y README.md.
+
+Vas a documentar la solución al problema en README.md.
 
 En un escape room se requiere construir una aplicación para controlar 
 una bomba temporizada.La siguiente figura ilustra la interfaz de la bomba. 
