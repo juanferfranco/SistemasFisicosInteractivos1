@@ -486,7 +486,8 @@ Los pasos que harás con tus compañeros serán estos:
 Ejercicio 11: RETO
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Ahora vas a trabajar en equipo bajo control de versión 
+Usando las tareas definidas en el reto anterior vas a realizar 
+este ejercicio de trabajo en equipo bajo control de versión 
 como lo harías en el mundo real. Ten presente que en tu equipo 
 de trabajo es posible que solo tengas un sistema de desarrollo.
 No importa, como la idea es practicar, lo que puedes hacer es 
@@ -520,9 +521,10 @@ el ejercicio como te lo propongo?
   
 #. Clona el proyecto.
 
-#. Crea una nueva rama para desarrollar tu tarea::
+#. Crea una nueva rama para desarrollar tu tarea (cada uno tendrá un valor 
+   diferente para X)::
 
-    git switch -c task2
+    git switch -c taskX
 
 #. Inicializa un proyecto de Arduino (CRTL+SHIFT+P, Arduino Initialize, selecciona
    el sistema de desarrollo).
@@ -530,7 +532,7 @@ el ejercicio como te lo propongo?
 #. Desarrolla tu tarea, compila, realiza pruebas.
 #. Realiza commit y push. Para crear el push::
 
-    git push -u origin task2
+    git push -u origin taskX
 
 #. Realiza un pull request. La idea es que uno de los miembros del 
    equipo sea el encargado de hacer las pruebas de integración con todas 
@@ -539,7 +541,7 @@ el ejercicio como te lo propongo?
    en la rama principal (master en este caso o main si le cambiaste 
    el nombre)::
 
-    gh pr create --title "Termine la task2"
+    gh pr create --title "Termine la taskX"
 
 #. Ahora tu debes verificar el pull request de tu compañero, verifica 
    que todo funciona correctamente y acepta el trabajo (por ahora). 
