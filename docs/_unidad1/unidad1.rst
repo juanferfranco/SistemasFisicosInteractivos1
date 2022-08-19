@@ -1186,9 +1186,16 @@ El controlador funciona así:
 * Si la secuencia se ingresa correctamente la bomba pasará de nuevo
   al modo de configuración de lo contrario continuará la fatal cuenta
   regresiva.
-* Debes almacenar la clave de desarmado de la bomba en una arreglo.
+* Debes almacenar la clave de desarmado de la bomba en un arreglo.
 * Debes definir una función a la cual le pasarás la dirección en memoria 
   de dos arreglos: uno con la clave recibida y otro con la clave correcta. 
   La función deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
   así: true si la clave recibida es igual a la clave almacenada o 
   false si las claves no coinciden.
+
+
+.. warning:: ALERTA DE SPOILER
+
+  Te voy a dejar dos recursos para que les des una mirar.
+  El `código <https://github.com/juanferfranco/ex22-bomb-2022-20>`__ y un 
+  `video <https://youtu.be/ZYu_O1PJutA?t=22>`__ capturado en clase donde se explica parte de la solución.
