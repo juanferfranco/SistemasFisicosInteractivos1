@@ -22,19 +22,15 @@ el uso de protocolos seriales ASCII.
 Temas
 ********
 
-* Repaso de tipos de dato valor y tipos referencia en C#.
+* Repaso rápido de programación orientada a objetos (intro).
 * Concepto de hilo y programación básica.
-* Conceptos básicos de sincronización de hilos.
-* Introducción al concepto de máquina virtual y su uso
-  en la plataforma interactiva Unity.
-* Construcción de aplicaciones tipo consola que hagan uso del
-  puerto serial.
 * Protocolos de comunicación ASCII.
+* Construcción de aplicaciones interactivas en el computador.
 
 Trayecto de actividades
 ---------------------------
 
-Sesión 1
+Ejercicios
 ***********
 
 Ejercicio 1: repaso rápido de POO
@@ -186,385 +182,393 @@ Y este es el código para el computador:
         }
     }
 
-Trabajo autónomo 1
-*********************
-(Tiempo estima: 1 horas 20 minutos)
-
-Reproduce el ejercicio 3 y analiza con detenimiento su funcionamiento. Repite 
-de memoria el ejercicio considerando que cada vez que el PC manda el carácter ``1`` 
-el microcontrolador debe responder con la cadena ``Hello from ESP32``.
+* Estas aplicaciones requieren MUCHO ANÁLISIS DE TU PARTE por fa CUESTIONA 
+  TODO LO QUE VEAS, es decir, pregunta por qué y para qué se está usando cada cosa.
+* Piensa en qué situaciones los programas podrían fallar.
+* ¿El programa del PC se bloquea?
+* Prueba las aplicaciones, pero ten presente que para probar la aplicación del 
 
 
-Sesión 2
-************
+..
+  Trabajo autónomo 1
+  *********************
+  (Tiempo estima: 1 horas 20 minutos)
 
-Ejercicio 4: comunicación y operaciones de I/O bloqueantes en el computador
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  Reproduce el ejercicio 3 y analiza con detenimiento su funcionamiento. Repite 
+  de memoria el ejercicio considerando que cada vez que el PC manda el carácter ``1`` 
+  el microcontrolador debe responder con la cadena ``Hello from ESP32``.
 
-Ahora programa tanto el controlador como el PC con los siguientes
-códigos.
 
-NO OLVIDES! analiza el código con detenimiento, entiéndelo por favor 
-antes de ejecutarlo. Escribe qué hace el código, cómo se comunicarán ambos 
-controladores. Luego ejecuta el código y compara tu hipótesis de funcionamiento 
-con la ejecución. 
+  Sesión 2
+  ************
 
-Este es el código para programar en el arduino:
+  Ejercicio 4: comunicación y operaciones de I/O bloqueantes en el computador
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: cpp
+  Ahora programa tanto el controlador como el PC con los siguientes
+  códigos.
+
+  NO OLVIDES! analiza el código con detenimiento, entiéndelo por favor 
+  antes de ejecutarlo. Escribe qué hace el código, cómo se comunicarán ambos 
+  controladores. Luego ejecuta el código y compara tu hipótesis de funcionamiento 
+  con la ejecución. 
+
+  Este es el código para programar en el arduino:
+
+  .. code-block:: cpp
+
+      void setup() {
+        Serial.begin(115200);
+      }
+
+      void loop() {
+
+        if(Serial.available()){
+          if(Serial.read() == '1'){
+            delay(1000);
+            Serial.print("Hello from ESP32\n");
+          }
+        }
+      }
+
+  Este es el código para programar el computador
+
+  .. code-block:: csharp
+
+      using System;
+      using System.IO.Ports;
+      using System.Threading;
+
+      namespace serialTestBlock
+      {
+      class Program{
+              static void Main(string[] args)
+              {
+                  SerialPort _serialPort = new SerialPort();
+                  _serialPort.PortName = "/dev/ttyUSB0";
+                  _serialPort.BaudRate = 115200;
+                  _serialPort.DtrEnable = true;
+                  _serialPort.Open();
+
+                  byte[] data = {0x31};
+                  byte[] buffer = new byte[20];
+                  int counter = 0;
+
+                  while(true){
+                      if(Console.KeyAvailable == true){
+                          Console.ReadKey(true);
+                          _serialPort.Write(data,0,1);
+                          string message = _serialPort.ReadLine();
+                          Console.WriteLine(message);
+                      }
+                      Console.WriteLine(counter);
+                      counter = (counter + 1) % 100;
+                      Thread.Sleep(100);
+                  } 
+              }   
+          }
+      }
+
+  * Conecta el controlador.
+  * Modifica el código del computador asignando el puerto
+    serial correcto.
+  * Ejecuta el código del computador.
+  * Al presionar cualquier tecla qué pasa?
+
+  RETO 1: operaciones bloqueantes vs frame rate de la aplicación
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  Te diste cuenta que al presionar una tecla, el conteo se detiene
+  un momento?
+
+  Al construir aplicaciones interactivas no te puedes dar este lujo.
+  Piensa en esto: ¿Y si en vez de imprimir un contador estás
+  renderizando una escena? Por tanto, las comunicaciones con el
+  controlador y el proceso de impresión del contador en la pantalla deben
+  ser dos flujos independientes, es decir, dos hilos.
+
+  Regresa al ejercicio 2 donde se introduce el uso de hilos. Ahora trata 
+  tu mismo de crear dos hilos. Uno para imprimir el valor del contador en 
+  pantalla a 10 fps (100 ms por frame) y otro hilo solo para manejar las 
+  comunicaciones seriales.
+
+  .. warning::
+    Alerta de spoiler
+
+    El siguiente código muestra una posible solución al reto
+
+  .. code-block:: csharp
+
+      using System;
+      using System.IO.Ports;
+      using System.Threading;
+
+      namespace SerialTest
+      {
+          class Program
+          {
+              static void Main(string[] args)
+              {
+
+                  int counter = 0;
+
+                  Thread t = new Thread(readKeyboard);
+                  t.Start();
+
+                  while (true)
+                  {
+                      Console.WriteLine(counter);
+                      counter = (counter + 1) % 100;
+                      Thread.Sleep(100);
+                  }
+              }
+
+              static void readKeyboard()
+              {
+
+                  SerialPort _serialPort = new SerialPort(); ;
+                  _serialPort.PortName = "COM4";
+                  _serialPort.BaudRate = 115200;
+                  _serialPort.DtrEnable = true;
+                  _serialPort.Open();
+
+                  byte[] data = { 0x31 };
+
+                  while (true) {     
+                      if (Console.KeyAvailable == true)
+                      {
+                          Console.ReadKey(true);
+                          _serialPort.Write(data, 0, 1);
+                          string message = _serialPort.ReadLine();
+                          Console.WriteLine(message);
+                      }
+                  }
+              }
+          }
+      }
+
+  RETO 2: protocolo ASCII
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
+  el microcontrolador.
+
+  Aplicación para el PC:
+
+  * Debe tener dos hilos. Uno de los hilos se debe ejecutar a 10 frames por segundo imprimiendo 
+    el valor de un contador que se incrementará cada 100 ms. El otro hilo se debe encargar de las comunicaciones seriales.
+
+  Aplicación para el microcontrolador:
+
+  La aplicación del microcontrolador debe tener dos tareas. La tarea uno debe encender 
+  y apagar un LED a una frecuencia de 1Hz. La segunda tarea debe enviar al PC el estado 
+  de un sensor digital (pulsador) y modificar una salida digital (LED) con la información 
+  recibida desde el PC.
+
+  Protocolo de comunicación:
+
+  * El PC SIEMPRE inicia la comunicación solicitando información al microcontrolador. Es decir, desde 
+    la aplicación del PC siempre se solicita información y el microcontrolador responde.
+  * Desde el PC se enviarán tres solicitudes: ``read``, ``outON``, ``outOFF``.
+  * Para enviar los comandos anteriores se presionará en el PC las teclas r,i,o respectivamente.
+  * El framerate NO DEBE CAERSE al leer las teclas por tanto debes usar la técnica no 
+    bloqueante de lectura del teclado usada en el ejercicio anterior.
+  * El microcontrolador enviará los siguientes mensajes de respuesta a cada solicitud:
+    
+    * Respuesta a ``read``: ``estadoPulsador,estadoLED``
+    * Respuesta a ``outON`` y ``outOFF``: ``estadoSalida``. Es decir, el microcontrolador recibe el 
+      el comando, realiza la orden solicitada y devuelve el estado en el cual quedó la salida 
+      luego de la orden.
+      
+  * No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
+    ambas partes sepan que el mensaje está completo.
+
+  .. warning:: ALERTA DE SPOILER
+
+    Te dejo aquí una posible solución al problema.
+
+  El código del PC:
+
+  .. code-block:: csharp
+
+      using System;
+      using System.IO.Ports;
+      using System.Threading;
+
+      namespace un2_reto_ej4_2021_20
+      {
+          class Program
+          {
+              static void Main(string[] args)
+              {
+                  int counter = 0;
+
+                  Thread t = new Thread(serialCom);
+                  t.Start();
+
+                  while (true)
+                  {
+                      Console.WriteLine(counter);
+                      counter = (counter + 1);
+                      Thread.Sleep(100);
+                  }
+              }
+
+              static void serialCom()
+              {
+                  SerialPort _serialPort = new SerialPort(); ;
+                  _serialPort.PortName = "/dev/ttyUSB0";
+                  _serialPort.BaudRate = 115200;
+                  _serialPort.DtrEnable = true;
+                  _serialPort.Open();
+
+                  while (true)
+                  {
+                      if (Console.KeyAvailable == true)
+                      {
+                          ConsoleKeyInfo key;
+                          key = Console.ReadKey(true);
+
+                          if (key.Key == ConsoleKey.R)
+                          {
+                              _serialPort.WriteLine("read");
+                              string message = _serialPort.ReadLine();
+                              Console.WriteLine(message);
+                              
+                          }else if (key.Key == ConsoleKey.I)
+                          {
+                              _serialPort.WriteLine("outON");
+                              string message = _serialPort.ReadLine();
+                              Console.WriteLine(message);
+                              
+                          }else if (key.Key == ConsoleKey.O)
+                          {
+                              _serialPort.WriteLine("outOFF");
+                              string message = _serialPort.ReadLine();
+                              Console.WriteLine(message);
+                          }
+                      }
+                  }
+              }
+          }
+      }
+
+
+  El código del microcontrolar:
+
+  .. code-block:: cpp
+
+    #define DIGITAL_IN 32
+    #define DIGITAL_OUT 25
+    #define LED 14
 
     void setup() {
+
       Serial.begin(115200);
+      pinMode(DIGITAL_IN, INPUT_PULLUP);
+      digitalWrite(DIGITAL_OUT, true);
+      pinMode(DIGITAL_OUT, OUTPUT);
+      pinMode(LED, OUTPUT);
+    }
+
+
+    void Task1() {
+      static uint32_t previousMillis = 0;
+      const uint32_t interval = 500;
+      static bool ledState = false;
+
+      uint32_t currentMillis = millis();
+
+      if ( (currentMillis - previousMillis) >= interval) {
+        previousMillis = currentMillis;
+
+        if (ledState == false) {
+          ledState = true;
+        } else {
+          ledState = false;
+        }
+        digitalWrite(LED, ledState);
+      }
+    }
+
+    void Task2() {
+      static bool outState = false;
+
+      
+      if (Serial.available() > 0) {
+        String dato = Serial.readStringUntil('\n');
+        if(dato == "read"){
+          Serial.print(digitalRead(DIGITAL_IN)); // se envía un 0 o un 1
+          Serial.print(',');
+          Serial.print(outState);
+          Serial.print('\n');
+                
+        }else if(dato == "outOFF"){
+          outState = false;
+          digitalWrite(DIGITAL_OUT,!outState);
+          Serial.print(outState);
+          Serial.print('\n');
+        }else if(dato == "outON"){
+          outState = true;
+          digitalWrite(DIGITAL_OUT,!outState);
+          Serial.print(outState);
+          Serial.print('\n');
+        }
+      }
     }
 
     void loop() {
-
-      if(Serial.available()){
-        if(Serial.read() == '1'){
-          delay(1000);
-          Serial.print("Hello from ESP32\n");
-        }
-      }
+      Task1();
+      Task2();
     }
 
-Este es el código para programar el computador
+  Trabajo autónomo 2
+  *********************
+  (Tiempo estima: 1 horas 20 minutos)
 
-.. code-block:: csharp
+  Estudia en detalle los dos retos anteriores. Entiende cómo funcionan. Una vez lo hagas,
+  vuelve a hacerlos pero esta vez de memoria, no veas la solución.
 
-    using System;
-    using System.IO.Ports;
-    using System.Threading;
 
-    namespace serialTestBlock
-    {
-    class Program{
-            static void Main(string[] args)
-            {
-                SerialPort _serialPort = new SerialPort();
-                _serialPort.PortName = "/dev/ttyUSB0";
-                _serialPort.BaudRate = 115200;
-                _serialPort.DtrEnable = true;
-                _serialPort.Open();
+  Evaluación de la unidad
+  --------------------------
 
-                byte[] data = {0x31};
-                byte[] buffer = new byte[20];
-                int counter = 0;
+  .. warning:: FECHA MÁXIMA DE ENTREGA
 
-                while(true){
-                    if(Console.KeyAvailable == true){
-                        Console.ReadKey(true);
-                        _serialPort.Write(data,0,1);
-                        string message = _serialPort.ReadLine();
-                        Console.WriteLine(message);
-                    }
-                    Console.WriteLine(counter);
-                    counter = (counter + 1) % 100;
-                    Thread.Sleep(100);
-                } 
-            }   
-        }
-    }
+      Martes 22 de marzo a las 11:59 p.m.
 
-* Conecta el controlador.
-* Modifica el código del computador asignando el puerto
-  serial correcto.
-* Ejecuta el código del computador.
-* Al presionar cualquier tecla qué pasa?
+  .. warning:: MONTAJE
 
-RETO 1: operaciones bloqueantes vs frame rate de la aplicación
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      En el archivo de sensores.ino te entregaré un template con la definición de NOMBRE
+      de los puertos y PUERTOS. NO lo modifiques, si llegas a hacerlo hay una penalidad 
+      de 1 unidad en la nota final.
 
-Te diste cuenta que al presionar una tecla, el conteo se detiene
-un momento?
+  Enunciado 
+  **************
 
-Al construir aplicaciones interactivas no te puedes dar este lujo.
-Piensa en esto: ¿Y si en vez de imprimir un contador estás
-renderizando una escena? Por tanto, las comunicaciones con el
-controlador y el proceso de impresión del contador en la pantalla deben
-ser dos flujos independientes, es decir, dos hilos.
+  Debes modificar una aplicación interactiva para permitir que se controle de dos maneras.
+  La forma uno es usando el teclado con las teclas flecha arriba,
+  abajo, izquierda y derecha. Dicha forma ya está implementada. La forma 2 con 4 pulsadores 
+  externos que serán leídos por un microcontrolador. Tu debes implementar esta segunda forma de modo 
+  que ambas formas puedan convivir en la aplicación. DEBES adicionar un pulsador más a tu montaje.  
+  La aplicación que debes modificar es de autoría de `Zachary Patten <https://github.com/ZacharyPatten/dotnet-console-games>`__, 
+  pero le hice unas cuantas modificaciones.
 
-Regresa al ejercicio 2 donde se introduce el uso de hilos. Ahora trata 
-tu mismo de crear dos hilos. Uno para imprimir el valor del contador en 
-pantalla a 10 fps (100 ms por frame) y otro hilo solo para manejar las 
-comunicaciones seriales.
+  ¿Cómo es el protocolo ASCII de comunicación?
 
-.. warning::
-  Alerta de spoiler
+  La aplicación interactiva debe enviar el request ``inputs``. 
+  El microcontrolador responde con el estado de cada pulsador 
+  separado por ``,`` y en este orden: 
+  ``estado_UP,estado_DOWN,estado_LEFT,estado_RIGHT``. Estos son 
+  ejemplos de posibles respuestas:
 
-  El siguiente código muestra una posible solución al reto
+  * ``1,1,1,1\n`` todos los sensores están relajados.
+  * ``1,1,1,0\n`` todos los sensores están relajados menos RIGHT
 
-.. code-block:: csharp
+  ¿Que debes hacer?
+  *******************
 
-    using System;
-    using System.IO.Ports;
-    using System.Threading;
-
-    namespace SerialTest
-    {
-        class Program
-        {
-            static void Main(string[] args)
-            {
-
-                int counter = 0;
-
-                Thread t = new Thread(readKeyboard);
-                t.Start();
-
-                while (true)
-                {
-                    Console.WriteLine(counter);
-                    counter = (counter + 1) % 100;
-                    Thread.Sleep(100);
-                }
-            }
-
-            static void readKeyboard()
-            {
-
-                SerialPort _serialPort = new SerialPort(); ;
-                _serialPort.PortName = "COM4";
-                _serialPort.BaudRate = 115200;
-                _serialPort.DtrEnable = true;
-                _serialPort.Open();
-
-                byte[] data = { 0x31 };
-
-                while (true) {     
-                    if (Console.KeyAvailable == true)
-                    {
-                        Console.ReadKey(true);
-                        _serialPort.Write(data, 0, 1);
-                        string message = _serialPort.ReadLine();
-                        Console.WriteLine(message);
-                    }
-                }
-            }
-        }
-    }
-
-RETO 2: protocolo ASCII
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
-el microcontrolador.
-
-Aplicación para el PC:
-
-* Debe tener dos hilos. Uno de los hilos se debe ejecutar a 10 frames por segundo imprimiendo 
-  el valor de un contador que se incrementará cada 100 ms. El otro hilo se debe encargar de las comunicaciones seriales.
-
-Aplicación para el microcontrolador:
-
-La aplicación del microcontrolador debe tener dos tareas. La tarea uno debe encender 
-y apagar un LED a una frecuencia de 1Hz. La segunda tarea debe enviar al PC el estado 
-de un sensor digital (pulsador) y modificar una salida digital (LED) con la información 
-recibida desde el PC.
-
-Protocolo de comunicación:
-
-* El PC SIEMPRE inicia la comunicación solicitando información al microcontrolador. Es decir, desde 
-  la aplicación del PC siempre se solicita información y el microcontrolador responde.
-* Desde el PC se enviarán tres solicitudes: ``read``, ``outON``, ``outOFF``.
-* Para enviar los comandos anteriores se presionará en el PC las teclas r,i,o respectivamente.
-* El framerate NO DEBE CAERSE al leer las teclas por tanto debes usar la técnica no 
-  bloqueante de lectura del teclado usada en el ejercicio anterior.
-* El microcontrolador enviará los siguientes mensajes de respuesta a cada solicitud:
-  
-  * Respuesta a ``read``: ``estadoPulsador,estadoLED``
-  * Respuesta a ``outON`` y ``outOFF``: ``estadoSalida``. Es decir, el microcontrolador recibe el 
-    el comando, realiza la orden solicitada y devuelve el estado en el cual quedó la salida 
-    luego de la orden.
-    
-* No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
-  ambas partes sepan que el mensaje está completo.
-
-.. warning:: ALERTA DE SPOILER
-
-  Te dejo aquí una posible solución al problema.
-
-El código del PC:
-
-.. code-block:: csharp
-
-    using System;
-    using System.IO.Ports;
-    using System.Threading;
-
-    namespace un2_reto_ej4_2021_20
-    {
-        class Program
-        {
-            static void Main(string[] args)
-            {
-                int counter = 0;
-
-                Thread t = new Thread(serialCom);
-                t.Start();
-
-                while (true)
-                {
-                    Console.WriteLine(counter);
-                    counter = (counter + 1);
-                    Thread.Sleep(100);
-                }
-            }
-
-            static void serialCom()
-            {
-                SerialPort _serialPort = new SerialPort(); ;
-                _serialPort.PortName = "/dev/ttyUSB0";
-                _serialPort.BaudRate = 115200;
-                _serialPort.DtrEnable = true;
-                _serialPort.Open();
-
-                while (true)
-                {
-                    if (Console.KeyAvailable == true)
-                    {
-                        ConsoleKeyInfo key;
-                        key = Console.ReadKey(true);
-
-                        if (key.Key == ConsoleKey.R)
-                        {
-                            _serialPort.WriteLine("read");
-                            string message = _serialPort.ReadLine();
-                            Console.WriteLine(message);
-                            
-                        }else if (key.Key == ConsoleKey.I)
-                        {
-                            _serialPort.WriteLine("outON");
-                            string message = _serialPort.ReadLine();
-                            Console.WriteLine(message);
-                            
-                        }else if (key.Key == ConsoleKey.O)
-                        {
-                            _serialPort.WriteLine("outOFF");
-                            string message = _serialPort.ReadLine();
-                            Console.WriteLine(message);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-El código del microcontrolar:
-
-.. code-block:: cpp
-
-  #define DIGITAL_IN 32
-  #define DIGITAL_OUT 25
-  #define LED 14
-
-  void setup() {
-
-    Serial.begin(115200);
-    pinMode(DIGITAL_IN, INPUT_PULLUP);
-    digitalWrite(DIGITAL_OUT, true);
-    pinMode(DIGITAL_OUT, OUTPUT);
-    pinMode(LED, OUTPUT);
-  }
-
-
-  void Task1() {
-    static uint32_t previousMillis = 0;
-    const uint32_t interval = 500;
-    static bool ledState = false;
-
-    uint32_t currentMillis = millis();
-
-    if ( (currentMillis - previousMillis) >= interval) {
-      previousMillis = currentMillis;
-
-      if (ledState == false) {
-        ledState = true;
-      } else {
-        ledState = false;
-      }
-      digitalWrite(LED, ledState);
-    }
-  }
-
-  void Task2() {
-    static bool outState = false;
-
-    
-    if (Serial.available() > 0) {
-      String dato = Serial.readStringUntil('\n');
-      if(dato == "read"){
-        Serial.print(digitalRead(DIGITAL_IN)); // se envía un 0 o un 1
-        Serial.print(',');
-        Serial.print(outState);
-        Serial.print('\n');
-              
-      }else if(dato == "outOFF"){
-        outState = false;
-        digitalWrite(DIGITAL_OUT,!outState);
-        Serial.print(outState);
-        Serial.print('\n');
-      }else if(dato == "outON"){
-        outState = true;
-        digitalWrite(DIGITAL_OUT,!outState);
-        Serial.print(outState);
-        Serial.print('\n');
-      }
-    }
-  }
-
-  void loop() {
-    Task1();
-    Task2();
-  }
-
-Trabajo autónomo 2
-*********************
-(Tiempo estima: 1 horas 20 minutos)
-
-Estudia en detalle los dos retos anteriores. Entiende cómo funcionan. Una vez lo hagas,
-vuelve a hacerlos pero esta vez de memoria, no veas la solución.
-
-
-Evaluación de la unidad
---------------------------
-
-.. warning:: FECHA MÁXIMA DE ENTREGA
-
-    Martes 22 de marzo a las 11:59 p.m.
-
-.. warning:: MONTAJE
-
-    En el archivo de sensores.ino te entregaré un template con la definición de NOMBRE
-    de los puertos y PUERTOS. NO lo modifiques, si llegas a hacerlo hay una penalidad 
-    de 1 unidad en la nota final.
-
-Enunciado 
-**************
-
-Debes modificar una aplicación interactiva para permitir que se controle de dos maneras.
-La forma uno es usando el teclado con las teclas flecha arriba,
-abajo, izquierda y derecha. Dicha forma ya está implementada. La forma 2 con 4 pulsadores 
-externos que serán leídos por un microcontrolador. Tu debes implementar esta segunda forma de modo 
-que ambas formas puedan convivir en la aplicación. DEBES adicionar un pulsador más a tu montaje.  
-La aplicación que debes modificar es de autoría de `Zachary Patten <https://github.com/ZacharyPatten/dotnet-console-games>`__, 
-pero le hice unas cuantas modificaciones.
-
-¿Cómo es el protocolo ASCII de comunicación?
-
-La aplicación interactiva debe enviar el request ``inputs``. 
-El microcontrolador responde con el estado de cada pulsador 
-separado por ``,`` y en este orden: 
-``estado_UP,estado_DOWN,estado_LEFT,estado_RIGHT``. Estos son 
-ejemplos de posibles respuestas:
-
-* ``1,1,1,1\n`` todos los sensores están relajados.
-* ``1,1,1,0\n`` todos los sensores están relajados menos RIGHT
-
-¿Que debes hacer?
-*******************
-
-#. Clona tu repositorio que está `aquí <https://classroom.github.com/a/umNREJE_>`__.
-#. Modifica SOLO los archivos Program.cs y sensores.ino
-#. Realiza commits y push frecuentemente.
+  #. Clona tu repositorio que está `aquí <https://classroom.github.com/a/umNREJE_>`__.
+  #. Modifica SOLO los archivos Program.cs y sensores.ino
+  #. Realiza commits y push frecuentemente.
 
