@@ -1186,9 +1186,67 @@ El controlador funciona así:
 * Si la secuencia se ingresa correctamente la bomba pasará de nuevo
   al modo de configuración de lo contrario continuará la fatal cuenta
   regresiva.
-* Debes almacenar la clave de desarmado de la bomba en una arreglo.
+* Debes almacenar la clave de desarmado de la bomba en un arreglo.
 * Debes definir una función a la cual le pasarás la dirección en memoria 
   de dos arreglos: uno con la clave recibida y otro con la clave correcta. 
   La función deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
   así: true si la clave recibida es igual a la clave almacenada o 
   false si las claves no coinciden.
+
+
+.. warning:: ALERTA DE SPOILER
+
+  Te voy a dejar dos recursos para que les des una mirar.
+  El `código <https://github.com/juanferfranco/ex22-bomb-2022-20>`__ y un 
+  `video <https://youtu.be/ZYu_O1PJutA?t=22>`__ capturado en clase donde se explica parte de la solución.
+
+Evaluación
+---------------------------
+
+.. warning:: SUSTENTACIÓN DE LA EVALUACIÓN
+
+  La evaluación debe estar lista ANTES de la sesión del jueves 
+  25 de agosto. En la primera hora aprovecha para estudiar con tu equipo de trabajo 
+  la solución. En la segunda hora realizarás la sustentación con tu equipo de trabajo.
+
+  No inicies la evaluación si aún no has estudiado en detalle el reto de la bomba.
+
+Consideraciones
+********************
+
+* Entrega la evaluación en `este <https://classroom.github.com/a/tgKfWef5>`__ enlace.
+* Usa el template que está `aquí <https://github.com/juanferfranco/arduinoTeamTemplate>`__.
+* La evaluación la debes realizar con tu equipo de trabajo.
+
+
+Enunciado
+****************
+
+En un escape room se requiere implementar un control compuesto por: 1 LED y 2 botones.
+El funcionamiento del control es así:
+
+* El LED tiene tres modos de operación: lento, medio y rápido.
+* En el modo lento enciende y apaga cada segundo, en el medio cada 500 ms y en el 
+  rápido cada 250 ms.
+* Al ingresar a cada modo el LED inicia encendido.
+* Si en el modo lento se presiona el botón 1 el LED debe quedar PERMANENTEMENTE APAGADO, pero DEBE ESPERAR 
+  a que termine el segundo ya sea encendido o apagado. 
+* Para regresar el modo lento se debe presionar el botón 1.
+* Para pasar del modo lento al modo medio y viceversa se debe presionar el botón 2.
+* Si en el modo medio se presiona el botón 1 el LED debe quedar PERMANENTEMENTE ENCENDIDO, pero 
+  DEBE ESPERAR a que terminen los 500 ms ya sea encendido o apagado.
+* Para regresar al modo medio se debe presionar de nuevo el botón 1.
+* Al modo rápido se ingresa cuando el LED está PERMANENTEMENTE apagado o encendido y se presiona 
+  el botón 2.
+* Si estando en modo rápido se presiona la secuencia botón 1, botón 1, botón 2, botón 2, botón 1 
+  el LED debe regresar al modo desde el que venía cuando ingresó al modo rápido. 
+
+
+Criterios de evaluación 
+************************
+
+* Funcionamiento: 2 unidades para la implementación de los modos lento y medio con sus condiciones 
+  de permanentemente encendido o apagado. 1 unidad para el modo rápido y la condición de regreso a los 
+  modos lentos y medio.
+* Sustentación: 2 unidades por contestar correctamente las preguntas realizadas a cada 
+  miembro del equipo.
