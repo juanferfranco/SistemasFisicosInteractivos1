@@ -186,8 +186,64 @@ Y este es el código para el computador:
   TODO LO QUE VEAS, es decir, pregunta por qué y para qué se está usando cada cosa.
 * Piensa en qué situaciones los programas podrían fallar.
 * ¿El programa del PC se bloquea?
-* Prueba las aplicaciones, pero ten presente que para probar la aplicación del 
 
+
+.. warning:: PARA PROBAR LA APLICACIÓN DEL PC
+
+    Recientemente microsoft realizó un cambio en el proceso de instalación de 
+    .NET. Es posible que la versión que tenemos instalada dejara de funcionar. Por 
+    tanto, debemos reparar la instalación con los siguientes comandos::
+
+      bash
+      sudo apt remove --purge --autoremove *dotnet*
+      sudo touch /etc/apt/preferences
+      sudo gedit /etc/apt/preferences
+
+    Adiciona al archivo:
+
+    .. code-block:: text
+
+        Package: *net*
+        Pin: origin packages.microsoft.com
+        Pin-Priority: 1001
+
+    Por último ejecuta::
+
+      sudo apt install dotnet-sdk-6.0
+
+* Ahora si programa el ESP32.
+* Para crear la aplicación del PC:
+
+  * Crea una carpeta con el nombre del proyecto
+  * Ejecuta el comando::
+
+      dotnet new console
+
+  * Abre el proyecto con el comando::
+
+      code .
+
+  * Visual Studio Code te preguntará: Required assets to build and 
+    debug are missing from 'csharpTest1'. Add them? Dile que YES.
+  
+  * Regresa a la terminal y ejecuta::
+
+      dotnet run
+
+    Este comando te permitirá compilar y ejecutar la aplicación. Si te funciona 
+    la aplicación creada por defecto, estamos listos para copiar la aplicación 
+    de este ejercicio. Al ejecutar de nuevo::
+
+      dotnet run
+    
+    Tendrás un error que indica que la clase SerialPort no puede ser encontrada 
+    en el espacio de nombres System.IO.Ports. Entonces ahora lo que tienes que hacer 
+    es adicionar la clase a tu proyecto con el comando::
+
+      dotnet add package System.IO.Ports --version 6.0.0
+
+    Ten presente que para cada proyecto que use el puerto serial tendrás que realizar 
+    lo anterior.
 
 ..
   Trabajo autónomo 1
