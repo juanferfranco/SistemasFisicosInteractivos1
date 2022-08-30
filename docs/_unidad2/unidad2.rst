@@ -250,9 +250,9 @@ Ahora realiza este experimento. Modifica la aplicación del PC así:
   de comunicación de 115200 a 9600. ¿Qué pasa ahora? Trata de explicar 
   el comportamiento. Discute con tus compañeros y con tu profe.
 * Una vez sale data por el puerto serial (_serialPort.Write(data,0,1);)
-  cuándo tarda, aproximadamente, en llegar la respuesta del ESP32 para 
+  ¿Cuándo tarda, aproximadamente, en llegar la respuesta del ESP32 para 
   una velocidad de 115200 y 9600?
-  
+
 ..
   Trabajo autónomo 1
   *********************
