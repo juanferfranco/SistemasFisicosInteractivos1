@@ -112,15 +112,7 @@ Al ejecutar el código el resultado es:
           }
       }
 
-Ejercicio 2: introducción al concepto de hilo
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Lee `este blog <http://www.albahari.com/threading/>`__ hasta la la sección que dice 
-Join and Sleep y reproduce los ejemplos que están allí. Analiza con detenimiento cada
-ejemplo.
-
-
-Ejercicio 3: comunicación computador-controlador
+Ejercicio 2: comunicación computador-controlador
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La idea de este ejercicio es comunicar a través del puerto serial
@@ -254,6 +246,14 @@ Ahora realiza este experimento. Modifica la aplicación del PC así:
   una velocidad de 115200 y 9600?
 
 ..
+  Ejercicio 2: introducción al concepto de hilo
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  Lee `este blog <http://www.albahari.com/threading/>`__ hasta la la sección que dice 
+  Join and Sleep y reproduce los ejemplos que están allí. Analiza con detenimiento cada
+  ejemplo.
+
+
   Trabajo autónomo 1
   *********************
   (Tiempo estima: 1 horas 20 minutos)
