@@ -124,15 +124,16 @@ Ejercicio 3: comunicación computador-controlador
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La idea de este ejercicio es comunicar a través del puerto serial
-un computador con un controlador, en este caso un ESP32. La aplicación del computador será tipo consola 
-.NET framework.
+un computador con un controlador, en este caso un ESP32. La aplicación del computador 
+la construirás usando una plataforma de creación de contenido digital interactivo llamada 
+Unity 2021 LTS.
 
 Estudia con detenimiento el código para el controlador y para el computador. Busca la definición 
 de todas las funciones usadas en la documentación de Arduino y de Microsoft.
 
 * ¿Quién debe comenzar primero, el computador o el controlador? ¿Por qué?
 
-Programa el arduino con este código:
+Programa el ESP32 con este código:
 
 .. code-block:: cpp
 
@@ -148,103 +149,110 @@ Programa el arduino con este código:
     }
   }
 
-Y este es el código para el computador:
+Prueba la aplicación con ScriptCommunicator. ¿Cómo funciona?
+
+Ahora crea un proyecto en Unity 2021 LTS. Antes de continuar 
+con la escritura del código configura:
+
+* La herramienta que usarás para editar tus programas. En este caso 
+  usarás Rider. Recuerda que este paso lo puedes hacer en el menú 
+  Edit, Preferences, External Tools y seleccionar Rider en la opción 
+  External Script Editor. Si estás trabajando en Windows puedes seleccionar 
+  Visual Studio.
+* Configura un scripting backend que permita soportar las comunicaciones 
+  seriales con el controlador. Ve al menú Edit, Project Settings, Player, 
+  Other Settings, busca la opción Scripting backend y selecciona Mono, luego 
+  busca API Compatibility Level y seleccionar .NET Framework.  
+
+Crea un nuevo C# Script y un Game Object. Añade el Script al GameObject. 
+Ve al menu Assets y luego selecciona Open C# Project. 
 
 .. code-block:: csharp
   
-    using System;
+    using UnityEngine;
     using System.IO.Ports;
+    public class Serial : MonoBehaviour
+    {
+        private SerialPort _serialPort = new SerialPort();
+        private byte[] buffer = new byte[32];
 
-    namespace hello_serialport{
-        class Program{
-            static void Main(string[] args)
+        void Start()
+        {
+            _serialPort.PortName = "/dev/ttyUSB0";
+            _serialPort.BaudRate = 115200;
+            _serialPort.DtrEnable = true;
+            _serialPort.Open();
+            Debug.Log("Open Serial Port");
+        }
+
+        void Update()
+        {
+
+            if (Input.GetKeyDown(KeyCode.A))
             {
-              SerialPort _serialPort = new SerialPort();
-              // Allow the user to set the appropriate properties.
-              _serialPort.PortName = "/dev/ttyUSB0";
-              _serialPort.BaudRate = 115200;
-              _serialPort.DtrEnable = true;
-              _serialPort.Open();
+                byte[] data = {0x31}; // or byte[] data = {'1'};
+                _serialPort.Write(data,0,1);
+                Debug.Log("Send Data");
+            }
 
-              byte[] data = {0x31}; // or byte[] data = {'1'};
-              _serialPort.Write(data,0,1);
-              byte[] buffer = new byte[20];
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                if (_serialPort.BytesToRead >= 16)
+                {
+                    _serialPort.Read(buffer, 0, 20);
+                    Debug.Log("Receive Data");
+                    Debug.Log(System.Text.Encoding.ASCII.GetString(buffer));
+                }
+            }
 
-              while(true){
-                  if(_serialPort.BytesToRead > 0){
-                      _serialPort.Read(buffer,0,20);
-                      Console.WriteLine(System.Text.Encoding.ASCII.GetString(buffer));
-                      Console.ReadKey();
-                      _serialPort.Write(data,0,1);
-                  }
-              }
+        }
+    }
+
+Analiza:
+
+* ¿Por qué es importante considerar las propiedades PortName y BaudRate?
+* ¿Qué relación tienen las propiedades anteriores con el ESP32?
+
+Ahora realiza este experimento. Modifica la aplicación del PC así:
+
+.. code-block:: csharp
+
+    using UnityEngine;
+    using System.IO.Ports;
+    public class Serial : MonoBehaviour
+    {
+        private SerialPort _serialPort = new SerialPort();
+        private byte[] buffer = new byte[32];
+
+        void Start()
+        {
+            _serialPort.PortName = "/dev/ttyUSB0";
+            _serialPort.BaudRate = 115200;
+            _serialPort.DtrEnable = true;
+            _serialPort.Open();
+            Debug.Log("Open Serial Port");
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                byte[] data = {0x31}; // or byte[] data = {'1'};
+                _serialPort.Write(data,0,1);
+                _serialPort.Read(buffer, 0, 20);
+                Debug.Log(System.Text.Encoding.ASCII.GetString(buffer));
             }
         }
     }
 
-* Estas aplicaciones requieren MUCHO ANÁLISIS DE TU PARTE por fa CUESTIONA 
-  TODO LO QUE VEAS, es decir, pregunta por qué y para qué se está usando cada cosa.
-* Piensa en qué situaciones los programas podrían fallar.
-* ¿El programa del PC se bloquea?
-
-
-.. warning:: PARA PROBAR LA APLICACIÓN DEL PC
-
-    Recientemente microsoft realizó un cambio en el proceso de instalación de 
-    .NET. Es posible que la versión que tenemos instalada dejara de funcionar. Por 
-    tanto, debemos reparar la instalación con los siguientes comandos::
-
-      bash
-      sudo apt remove --purge --autoremove *dotnet*
-      sudo touch /etc/apt/preferences
-      sudo gedit /etc/apt/preferences
-
-    Adiciona al archivo:
-
-    .. code-block:: text
-
-        Package: *net*
-        Pin: origin packages.microsoft.com
-        Pin-Priority: 1001
-
-    Por último ejecuta::
-
-      sudo apt install dotnet-sdk-6.0
-
-* Ahora si programa el ESP32.
-* Para crear la aplicación del PC:
-
-  * Crea una carpeta con el nombre del proyecto
-  * Ejecuta el comando::
-
-      dotnet new console
-
-  * Abre el proyecto con el comando::
-
-      code .
-
-  * Visual Studio Code te preguntará: Required assets to build and 
-    debug are missing from 'csharpTest1'. Add them? Dile que YES.
+* ¿Funciona? Es decir, recibes el mensaje completo?
+* Ahora modifica el programa del ESP32 y del PC variando la velocidad 
+  de comunicación de 115200 a 9600. ¿Qué pasa ahora? Trata de explicar 
+  el comportamiento. Discute con tus compañeros y con tu profe.
+* Una vez sale data por el puerto serial (_serialPort.Write(data,0,1);)
+  cuándo tarda, aproximadamente, en llegar la respuesta del ESP32 para 
+  una velocidad de 115200 y 9600?
   
-  * Regresa a la terminal y ejecuta::
-
-      dotnet run
-
-    Este comando te permitirá compilar y ejecutar la aplicación. Si te funciona 
-    la aplicación creada por defecto, estamos listos para copiar la aplicación 
-    de este ejercicio. Al ejecutar de nuevo::
-
-      dotnet run
-    
-    Tendrás un error que indica que la clase SerialPort no puede ser encontrada 
-    en el espacio de nombres System.IO.Ports. Entonces ahora lo que tienes que hacer 
-    es adicionar la clase a tu proyecto con el comando::
-
-      dotnet add package System.IO.Ports --version 6.0.0
-
-    Ten presente que para cada proyecto que use el puerto serial tendrás que realizar 
-    lo anterior.
-
 ..
   Trabajo autónomo 1
   *********************
