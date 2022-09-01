@@ -66,6 +66,10 @@ Al ejecutar el código el resultado es:
 * ¿Por qué ocurre esto?
 * ¿Cómo podrías independizar los objetos?
 
+.. warning:: ALERTA DE SPOLIER
+
+    Una posible solución al problema de una mala clonación de perritos.
+
 .. code-block:: csharp
 
       using System;
@@ -205,17 +209,26 @@ Analiza:
 * ¿Por qué es importante considerar las propiedades PortName y BaudRate?
 * ¿Qué relación tienen las propiedades anteriores con el ESP32?
 
+Ejercicio 3: experimento
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Ahora realiza este experimento. Modifica la aplicación del PC así:
 
 .. code-block:: csharp
 
     using UnityEngine;
     using System.IO.Ports;
+    using TMPro;
+
     public class Serial : MonoBehaviour
     {
         private SerialPort _serialPort = new SerialPort();
         private byte[] buffer = new byte[32];
 
+        public TextMeshProUGUI myText;
+
+        private static int counter = 0;
+        
         void Start()
         {
             _serialPort.PortName = "/dev/ttyUSB0";
@@ -227,23 +240,275 @@ Ahora realiza este experimento. Modifica la aplicación del PC así:
 
         void Update()
         {
+            myText.text = counter.ToString();
+            counter++;
+            
             if (Input.GetKeyDown(KeyCode.A))
             {
                 byte[] data = {0x31}; // or byte[] data = {'1'};
                 _serialPort.Write(data,0,1);
-                _serialPort.Read(buffer, 0, 20);
+                int numData = _serialPort.Read(buffer, 0, 20);
                 Debug.Log(System.Text.Encoding.ASCII.GetString(buffer));
+                Debug.Log("Bytes received: " + numData.ToString());
             }
         }
     }
 
-* ¿Funciona? Es decir, recibes el mensaje completo?
-* Ahora modifica el programa del ESP32 y del PC variando la velocidad 
-  de comunicación de 115200 a 9600. ¿Qué pasa ahora? Trata de explicar 
-  el comportamiento. Discute con tus compañeros y con tu profe.
-* Una vez sale data por el puerto serial (_serialPort.Write(data,0,1);)
-  ¿Cuándo tarda, aproximadamente, en llegar la respuesta del ESP32 para 
-  una velocidad de 115200 y 9600?
+Debe adicionar a la aplicación un elemento de GUI tipo Text - TextMeshPro y 
+y luego arrastrar una referencia a este elemento a myText (si no sabes 
+cómo hacerlo llama al profe).
+
+Y la aplicación del ESP32:
+
+.. code-block:: cpp
+
+  void setup() {
+    Serial.begin(115200);
+  }
+
+  void loop() {
+    if(Serial.available()){
+      if(Serial.read() == '1'){
+        delay(3000);
+        Serial.print("Hello from ESP32");
+      }
+    }
+  }
+
+Ejecuta la aplicación en Unity. Verás un número cambiar rápidamente 
+en pantalla. Ahora presiona la tecla A (no olvides dar click en 
+la pantalla Game). ¿Qué pasa? ¿Por qué crees que ocurra esto?
+
+.. tip:: MUY IMPORTANTE
+
+    ¿Viste entonces que la aplicación se bloquea? Este comportamiento 
+    es inaceptable para una aplicación interactiva de tiempo real.
+
+¿Cómo podemos corregir el comportamiento anterior?
+
+Prueba con el siguiente código, luego ANALIZA CON DETENIMIENTO.
+
+.. code-block:: csharp
+
+    using UnityEngine;
+    using System.IO.Ports;
+    using TMPro;
+
+    public class Serial : MonoBehaviour
+    {
+        private SerialPort _serialPort = new SerialPort();
+        private byte[] buffer = new byte[32];
+
+        public TextMeshProUGUI myText;
+
+        private static int counter = 0;
+        
+        void Start()
+        {
+            _serialPort.PortName = "/dev/ttyUSB0";
+            _serialPort.BaudRate = 115200;
+            _serialPort.DtrEnable = true;
+            _serialPort.Open();
+            Debug.Log("Open Serial Port");
+        }
+
+        void Update()
+        {
+            myText.text = counter.ToString();
+            counter++;
+            
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                byte[] data = {0x31}; // or byte[] data = {'1'};
+                _serialPort.Write(data,0,1);
+            }
+
+            if (_serialPort.BytesToRead > 0)
+            {
+                int numData = _serialPort.Read(buffer, 0, 20);
+                Debug.Log(System.Text.Encoding.ASCII.GetString(buffer));
+                Debug.Log("Bytes received: " + numData.ToString());
+            }
+        }
+    }
+
+¿Funciona? ¿Qué pasaría si al momento de ejecutar la instrucción 
+``int numData = _serialPort.Read(buffer, 0, 20);`` solo han llegado 
+10 de los 16 bytes del mensaje? ¿Cómo puede hacer tu programa para 
+saber que ya tiene el mensaje completo?
+
+¿Cómo podrías garantizar que antes de hacer la operación Read tengas 
+los 16 bytes listos para ser leídos?
+
+Y si los mensajes que envía el ESP32 tienen tamaños diferentes ¿Cómo 
+haces para saber que el mensaje enviado está completo o faltan 
+bytes por recibir?
+
+Ejercicio 4: eventos externos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Nota que en los experimentos anteriores el PC primero le pregunta al 
+ESP32 (le manda un ``1``) por datos. ¿Y si el PC no pregunta? Realiza 
+el siguiente experimento. Programa ambos códigos y analiza su funcionamiento.
+
+.. code-block:: cpp
+
+    void task()
+    {
+      enum class TaskStates
+      {
+        INIT,
+        WAIT_INIT,
+        SEND_EVENT
+      };
+      static TaskStates taskState = TaskStates::INIT;
+      static uint32_t previous = 0;
+      static u_int32_t counter = 0;
+
+      switch (taskState)
+      {
+      case TaskStates::INIT:
+      {
+        Serial.begin(115200);
+        taskState = TaskStates::WAIT_INIT;
+        break;
+      }
+      case TaskStates::WAIT_INIT:
+      {
+        if (Serial.available() > 0)
+        {
+          if (Serial.read() == '1')
+          {
+            previous = 0; // Force to send the first value immediately
+            taskState = TaskStates::SEND_EVENT;
+          }
+        }
+        break;
+      }
+      case TaskStates::SEND_EVENT:
+      {
+        uint32_t current = millis();
+        if ((current - previous) > 2000)
+        {
+          previous = current;
+          Serial.print(counter);
+          counter++;
+        }
+
+        if (Serial.available() > 0)
+        {
+          if (Serial.read() == '2')
+          {
+            taskState = TaskStates::WAIT_INIT;
+          }
+        }
+
+        break;
+      }
+      default:
+      {
+        break;
+      }
+      }
+    }
+
+    void setup()
+    {
+      task();
+    }
+
+    void loop()
+    {
+      task();
+    }
+
+.. code-block:: csharp
+
+    using UnityEngine;
+    using System.IO.Ports;
+    using TMPro;
+
+    enum TaskState
+    {
+        INIT,
+        WAIT_START,
+        WAIT_EVENTS
+    }
+
+    public class Serial : MonoBehaviour
+    {
+        private static TaskState taskState = TaskState.INIT;
+        private SerialPort _serialPort;
+        private byte[] buffer;
+        public TextMeshProUGUI myText;
+        private int counter = 0;
+        
+        void Start()
+        {
+            _serialPort = new SerialPort();
+            _serialPort.PortName = "/dev/ttyUSB0";
+            _serialPort.BaudRate = 115200;
+            _serialPort.DtrEnable = true;
+            _serialPort.Open();
+            Debug.Log("Open Serial Port");
+            buffer = new byte[128];
+        }
+
+        void Update()
+        {
+            myText.text = counter.ToString();
+            counter++;
+            
+            switch (taskState)
+            {
+                case TaskState.INIT:
+                    taskState = TaskState.WAIT_START;
+                    Debug.Log("WAIT START");
+                    break;
+                case TaskState.WAIT_START:
+                    if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        byte[] data = {0x31}; // start
+                        _serialPort.Write(data,0,1);
+                        Debug.Log("WAIT EVENTS");
+                        taskState = TaskState.WAIT_EVENTS;
+                    }
+                    
+                    break;
+                case TaskState.WAIT_EVENTS:
+                    if (Input.GetKeyDown(KeyCode.B))
+                    {
+                        byte[] data = {0x32}; // stop
+                        _serialPort.Write(data,0,1);
+                        Debug.Log("WAIT START");
+                        taskState = TaskState.WAIT_START;
+                    }
+            
+                    if (_serialPort.BytesToRead > 0)
+                    {
+                        int numData = _serialPort.Read(buffer, 0, 128);
+                        Debug.Log(System.Text.Encoding.ASCII.GetString(buffer));
+                    }
+                    break;
+                default:
+                    Debug.Log("State Error");
+                    break;
+            }
+        }
+    }
+
+¿Recuerdas las preguntas del otro experimento? Aquí nos pasa lo mismo.
+Analicemos el asunto. Cuando preguntas ``_serialPort.BytesToRead > 0`` lo 
+que puedes asegurar es que al MENOS tienes un byte del mensaje, pero 
+no puedes saber si tienes todos los bytes que lo componen. Una idea 
+para resolver esto sería hacer que todos los mensajes tengan el mismo 
+tamaño. De esta manera solo tendrías que preguntar 
+``_serialPort.BytesToRead > SIZE``, donde SIZE sería el tamaño fijo; sin 
+embargo, esto le resta flexibilidad al protocolo de comunicación. 
+Nota que esto mismo ocurre en el caso del programa del ESP32 con 
+``Serial.available() > 0``.
+
+¿Cómo podrías solucionar este problema?
 
 ..
   Ejercicio 2: introducción al concepto de hilo
