@@ -8,23 +8,21 @@ En la unidad anterior te has concentrado en
 la construcción de software para sistemas embebidos.
 En esta unidad aprenderás como integrar a una plataforma
 de cómputo interactiva dichos sistemas embebidos mediante
-el uso de HILOS y protocolos de comunicación ASCII.
+el uso de protocolos de comunicación ASCII.
 
 Propósitos de aprendizaje
 *****************************
 
-Construir aplicaciones interactivas utilizando múltiples hilos
-para la producción y el prototipado de experiencias interactivas.
-
-Integrar controladores con aplicaciones interactivas mediante
-el uso de protocolos seriales ASCII.
+Construir aplicaciones interactivas que integren información 
+del mundo exterior mediante el intercambio de información 
+codificada en ASCII.
 
 Temas
 ********
 
-* Repaso rápido de programación orientada a objetos (intro).
-* Concepto de hilo y programación básica.
-* Protocolos de comunicación ASCII.
+* Repaso rápido de algunos concepto de la programación orientada 
+  a objetos.
+* Técnicas de programación del lado del embebidos y el PC.
 * Construcción de aplicaciones interactivas en el computador.
 
 Trayecto de actividades
@@ -519,18 +517,6 @@ Nota que esto mismo ocurre en el caso del programa del ESP32 con
   ejemplo.
 
 
-  Trabajo autónomo 1
-  *********************
-  (Tiempo estima: 1 horas 20 minutos)
-
-  Reproduce el ejercicio 3 y analiza con detenimiento su funcionamiento. Repite 
-  de memoria el ejercicio considerando que cada vez que el PC manda el carácter ``1`` 
-  el microcontrolador debe responder con la cadena ``Hello from ESP32``.
-
-
-  Sesión 2
-  ************
-
   Ejercicio 4: comunicación y operaciones de I/O bloqueantes en el computador
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -850,14 +836,6 @@ Nota que esto mismo ocurre en el caso del programa del ESP32 con
       Task1();
       Task2();
     }
-
-  Trabajo autónomo 2
-  *********************
-  (Tiempo estima: 1 horas 20 minutos)
-
-  Estudia en detalle los dos retos anteriores. Entiende cómo funcionan. Una vez lo hagas,
-  vuelve a hacerlos pero esta vez de memoria, no veas la solución.
-
 
   Evaluación de la unidad
   --------------------------
