@@ -343,7 +343,7 @@ haces para saber que el mensaje enviado está completo o faltan
 bytes por recibir?
 
 Ejercicio 4: eventos externos
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Nota que en los experimentos anteriores el PC primero le pregunta al 
 ESP32 (le manda un ``1``) por datos. ¿Y si el PC no pregunta? Realiza 
@@ -508,160 +508,183 @@ Nota que esto mismo ocurre en el caso del programa del ESP32 con
 
 ¿Cómo podrías solucionar este problema?
 
-..
-  Ejercicio 2: introducción al concepto de hilo
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Ejercicio 5: carácter de fin de mensaje
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Lee `este blog <http://www.albahari.com/threading/>`__ hasta la la sección que dice 
-  Join and Sleep y reproduce los ejemplos que están allí. Analiza con detenimiento cada
-  ejemplo.
+Ahora vas a analizar cómo puedes resolver el problema anterior.
 
+Analiza el siguiente programa del ESP32:
 
-  Ejercicio 4: comunicación y operaciones de I/O bloqueantes en el computador
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: cpp
 
-  Ahora programa tanto el controlador como el PC con los siguientes
-  códigos.
-
-  NO OLVIDES! analiza el código con detenimiento, entiéndelo por favor 
-  antes de ejecutarlo. Escribe qué hace el código, cómo se comunicarán ambos 
-  controladores. Luego ejecuta el código y compara tu hipótesis de funcionamiento 
-  con la ejecución. 
-
-  Este es el código para programar en el arduino:
-
-  .. code-block:: cpp
-
-      void setup() {
-        Serial.begin(115200);
+    String btnState(uint8_t btnState){
+      if(btnState == HIGH){
+        return "OFF";
       }
+      else return "ON";
+    }
 
-      void loop() {
+    void task()
+    {
+      enum class TaskStates
+      {
+        INIT,
+        WAIT_COMMANDS
+      };
+      static TaskStates taskState = TaskStates::INIT;
+      constexpr uint8_t led = 25;
+      constexpr uint8_t button1Pin = 12;
+      constexpr uint8_t button2Pin = 13;
+      constexpr uint8_t button3Pin = 32;
+      constexpr uint8_t button4Pin = 33;
 
-        if(Serial.available()){
-          if(Serial.read() == '1'){
-            delay(1000);
-            Serial.print("Hello from ESP32\n");
+      switch (taskState)
+      {
+      case TaskStates::INIT:
+      {
+        Serial.begin(115200);
+        pinMode(led, OUTPUT);
+        digitalWrite(led, LOW);
+        pinMode(button1Pin, INPUT_PULLUP);
+        pinMode(button2Pin, INPUT_PULLUP);
+        pinMode(button3Pin, INPUT_PULLUP);
+        pinMode(button4Pin, INPUT_PULLUP);
+        taskState = TaskStates::WAIT_COMMANDS;
+        break;
+      }
+      case TaskStates::WAIT_COMMANDS:
+      {
+        if (Serial.available() > 0)
+        {
+          String command = Serial.readStringUntil('\n');
+          if (command == "ledON")
+          {
+            digitalWrite(led, HIGH);
+          }
+          else if (command == "ledOFF")
+          {
+            digitalWrite(led, LOW);
+          }
+          else if (command == "readBUTTONS")
+          {
+            
+            Serial.print("btn1: ");
+            Serial.print(btnState(digitalRead(button1Pin)).c_str());
+            Serial.print(" btn2: ");
+            Serial.print(btnState(digitalRead(button2Pin)).c_str());
+            Serial.print(" btn3: ");
+            Serial.print(btnState(digitalRead(button3Pin)).c_str());
+            Serial.print(" btn4: ");
+            Serial.print(btnState(digitalRead(button4Pin)).c_str());
+            Serial.print('\n');
           }
         }
+        break;
       }
-
-  Este es el código para programar el computador
-
-  .. code-block:: csharp
-
-      using System;
-      using System.IO.Ports;
-      using System.Threading;
-
-      namespace serialTestBlock
+      default:
       {
-      class Program{
-              static void Main(string[] args)
-              {
-                  SerialPort _serialPort = new SerialPort();
-                  _serialPort.PortName = "/dev/ttyUSB0";
-                  _serialPort.BaudRate = 115200;
-                  _serialPort.DtrEnable = true;
-                  _serialPort.Open();
-
-                  byte[] data = {0x31};
-                  byte[] buffer = new byte[20];
-                  int counter = 0;
-
-                  while(true){
-                      if(Console.KeyAvailable == true){
-                          Console.ReadKey(true);
-                          _serialPort.Write(data,0,1);
-                          string message = _serialPort.ReadLine();
-                          Console.WriteLine(message);
-                      }
-                      Console.WriteLine(counter);
-                      counter = (counter + 1) % 100;
-                      Thread.Sleep(100);
-                  } 
-              }   
-          }
+        break;
       }
-
-  * Conecta el controlador.
-  * Modifica el código del computador asignando el puerto
-    serial correcto.
-  * Ejecuta el código del computador.
-  * Al presionar cualquier tecla qué pasa?
-
-  RETO 1: operaciones bloqueantes vs frame rate de la aplicación
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Te diste cuenta que al presionar una tecla, el conteo se detiene
-  un momento?
-
-  Al construir aplicaciones interactivas no te puedes dar este lujo.
-  Piensa en esto: ¿Y si en vez de imprimir un contador estás
-  renderizando una escena? Por tanto, las comunicaciones con el
-  controlador y el proceso de impresión del contador en la pantalla deben
-  ser dos flujos independientes, es decir, dos hilos.
-
-  Regresa al ejercicio 2 donde se introduce el uso de hilos. Ahora trata 
-  tu mismo de crear dos hilos. Uno para imprimir el valor del contador en 
-  pantalla a 10 fps (100 ms por frame) y otro hilo solo para manejar las 
-  comunicaciones seriales.
-
-  .. warning::
-    Alerta de spoiler
-
-    El siguiente código muestra una posible solución al reto
-
-  .. code-block:: csharp
-
-      using System;
-      using System.IO.Ports;
-      using System.Threading;
-
-      namespace SerialTest
-      {
-          class Program
-          {
-              static void Main(string[] args)
-              {
-
-                  int counter = 0;
-
-                  Thread t = new Thread(readKeyboard);
-                  t.Start();
-
-                  while (true)
-                  {
-                      Console.WriteLine(counter);
-                      counter = (counter + 1) % 100;
-                      Thread.Sleep(100);
-                  }
-              }
-
-              static void readKeyboard()
-              {
-
-                  SerialPort _serialPort = new SerialPort(); ;
-                  _serialPort.PortName = "COM4";
-                  _serialPort.BaudRate = 115200;
-                  _serialPort.DtrEnable = true;
-                  _serialPort.Open();
-
-                  byte[] data = { 0x31 };
-
-                  while (true) {     
-                      if (Console.KeyAvailable == true)
-                      {
-                          Console.ReadKey(true);
-                          _serialPort.Write(data, 0, 1);
-                          string message = _serialPort.ReadLine();
-                          Console.WriteLine(message);
-                      }
-                  }
-              }
-          }
       }
+    }
 
+    void setup()
+    {
+      task();
+    }
+
+    void loop()
+    {
+      task();
+    }
+
+Analiza el siguiente programa del PC:
+
+.. code-block:: csharp
+
+    using UnityEngine;
+    using System.IO.Ports;
+    using TMPro;
+
+    enum TaskState
+    {
+        INIT,
+        WAIT_COMMANDS
+    }
+
+    public class Serial : MonoBehaviour
+    {
+        private static TaskState taskState = TaskState.INIT;
+        private SerialPort _serialPort;
+        private byte[] buffer;
+        public TextMeshProUGUI myText;
+        private int counter = 0;
+        
+        void Start()
+        {
+            _serialPort = new SerialPort();
+            _serialPort.PortName = "/dev/ttyUSB0";
+            _serialPort.BaudRate = 115200;
+            _serialPort.DtrEnable = true;
+            _serialPort.NewLine = "\n";
+            _serialPort.Open();
+            Debug.Log("Open Serial Port");
+            buffer = new byte[128];
+        }
+
+        void Update()
+        {
+            myText.text = counter.ToString();
+            counter++;
+            
+            switch (taskState)
+            {
+                case TaskState.INIT:
+                    taskState = TaskState.WAIT_COMMANDS;
+                    Debug.Log("WAIT COMMANDS");
+                    break;
+                case TaskState.WAIT_COMMANDS:
+                    if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        _serialPort.Write("ledON\n");
+                        Debug.Log("Send ledON");
+                    }
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        _serialPort.Write("ledOFF\n");
+                        Debug.Log("Send ledOFF");
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.R))
+                    {
+                        _serialPort.Write("readBUTTONS\n");
+                        Debug.Log("Send readBUTTONS");
+                        
+                    }
+                    if (_serialPort.BytesToRead > 0)
+                    {
+                        string response = _serialPort.ReadLine(); 
+                        Debug.Log(response);
+                    }
+                    
+                    break;
+                default:
+                    Debug.Log("State Error");
+                    break;
+            }
+        }
+    }
+
+Ejercicio 6: retrieval practice
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Con todo lo que has aprendido hasta ahora vas a volver a darle 
+una mirada al material desde el ejercicio 1. Una iteración más. Pero 
+la idea de este ejercicio es que le expliques a un compañero 
+cada ejercicio. Y la misión de tu compañero será hacerte preguntas.
+
+
+..
   RETO 2: protocolo ASCII
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -679,6 +702,7 @@ Nota que esto mismo ocurre en el caso del programa del ESP32 con
   y apagar un LED a una frecuencia de 1Hz. La segunda tarea debe enviar al PC el estado 
   de un sensor digital (pulsador) y modificar una salida digital (LED) con la información 
   recibida desde el PC.
+
 
   Protocolo de comunicación:
 
