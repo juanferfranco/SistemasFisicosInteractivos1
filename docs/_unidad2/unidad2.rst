@@ -209,6 +209,9 @@ Analiza:
 
 Ejercicio 3: experimento
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Si quires ver antes unos videos cortos donde te explico
+un poco más el ejercicio te dejo 
+`este <https://youtube.com/playlist?list=PLX4ZVWZsOgzST9kfU9_ohOUYp_oDo2z48>`__ link).
 
 Ahora realiza este experimento. Modifica la aplicación del PC así:
 
