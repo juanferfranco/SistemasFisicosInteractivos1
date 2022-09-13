@@ -714,7 +714,8 @@ Aplicación para el microcontrolador:
 La aplicación del microcontrolador debe tener dos tareas. La tarea uno 
 debe encender y apagar un LED a una frecuencia de 1Hz. La segunda tarea 
 debe enviar al PC el estado de un sensor digital (pulsador) y modificar 
-una salida digital (LED) con la información recibida desde el PC.
+una salida digital (LED, un segundo LED) con la información recibida 
+desde el PC.
 
 Protocolo de comunicación:
 
