@@ -687,183 +687,56 @@ la idea de este ejercicio es que le expliques a un compañero
 cada ejercicio. Y la misión de tu compañero será hacerte preguntas.
 
 
-..
-  RETO 2: protocolo ASCII
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RETO 1: protocolo ASCII
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
-  el microcontrolador.
+El reto consiste es implementar un sistema que permita, mediante una 
+interfaz gráfica, leer y modificar el estado de unos dispositivos externos 
+a una aplicación interactiva. En este caso los dispositivos serán 
+un pulsador y un LED. Ten presente que aunque este ejercicio usa 
+dispositivos simples los conceptos asociados a su manejo pueden fácilmente 
+extrapolarse a dispositivos y sistemas más complejos. 
 
-  Aplicación para el PC:
+Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
+el microcontrolador.
 
-  * Debe tener dos hilos. Uno de los hilos se debe ejecutar a 10 frames por segundo imprimiendo 
-    el valor de un contador que se incrementará cada 100 ms. El otro hilo se debe encargar de las comunicaciones seriales.
+Aplicación para el PC:
 
-  Aplicación para el microcontrolador:
+* Debes gestionar las comunicaciones seriales y al mismo tiempo mostrar 
+  un contenido digital dinámica que permita observar fácilmente caídas 
+  en el framerate. Si quieres puedes usar la estrategia del contador que 
+  se incremente en cada frame o cambiar por algo que te guste más.
+* Implementa una interfaz de usuario compuesta de botones y cajas de texto 
+  para controlar y visualizar.
 
-  La aplicación del microcontrolador debe tener dos tareas. La tarea uno debe encender 
-  y apagar un LED a una frecuencia de 1Hz. La segunda tarea debe enviar al PC el estado 
-  de un sensor digital (pulsador) y modificar una salida digital (LED) con la información 
-  recibida desde el PC.
+Aplicación para el microcontrolador:
 
+La aplicación del microcontrolador debe tener dos tareas. La tarea uno 
+debe encender y apagar un LED a una frecuencia de 1Hz. La segunda tarea 
+debe enviar al PC el estado de un sensor digital (pulsador) y modificar 
+una salida digital (LED) con la información recibida desde el PC.
 
-  Protocolo de comunicación:
+Protocolo de comunicación:
 
-  * El PC SIEMPRE inicia la comunicación solicitando información al microcontrolador. Es decir, desde 
-    la aplicación del PC siempre se solicita información y el microcontrolador responde.
-  * Desde el PC se enviarán tres solicitudes: ``read``, ``outON``, ``outOFF``.
-  * Para enviar los comandos anteriores se presionará en el PC las teclas r,i,o respectivamente.
-  * El framerate NO DEBE CAERSE al leer las teclas por tanto debes usar la técnica no 
-    bloqueante de lectura del teclado usada en el ejercicio anterior.
-  * El microcontrolador enviará los siguientes mensajes de respuesta a cada solicitud:
+* El PC SIEMPRE inicia la comunicación solicitando información al 
+  microcontrolador. Es decir, desde la aplicación del PC siempre se solicita 
+  información y el microcontrolador responde.
+* Desde el PC se enviarán tres solicitudes: ``read``, ``outON``, ``outOFF``.
+* Para enviar los comandos anteriores usarás los botones 
+  de la interfaz de usuario.
+* El microcontrolador enviará los siguientes mensajes de respuesta a cada solicitud:
+  
+  * Respuesta a ``read``: ``estadoEntrada,estadoSalida``. Donde estadoEntrada y 
+    estadoSalida serán 0 o 1 dependiendo del estado del sensor digital y el estado 
+    actual de la salida.
+  * Respuesta a ``outON`` y ``outOFF``: ``estadoSalida``. Es decir, el 
+    microcontrolador recibe el comando, realiza la orden solicitada y devuelve 
+    el estado en el cual quedó la salida luego de la orden.
     
-    * Respuesta a ``read``: ``estadoPulsador,estadoLED``
-    * Respuesta a ``outON`` y ``outOFF``: ``estadoSalida``. Es decir, el microcontrolador recibe el 
-      el comando, realiza la orden solicitada y devuelve el estado en el cual quedó la salida 
-      luego de la orden.
-      
-  * No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
-    ambas partes sepan que el mensaje está completo.
+* No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
+  ambas partes sepan que el mensaje está completo.
 
-  .. warning:: ALERTA DE SPOILER
-
-    Te dejo aquí una posible solución al problema.
-
-  El código del PC:
-
-  .. code-block:: csharp
-
-      using System;
-      using System.IO.Ports;
-      using System.Threading;
-
-      namespace un2_reto_ej4_2021_20
-      {
-          class Program
-          {
-              static void Main(string[] args)
-              {
-                  int counter = 0;
-
-                  Thread t = new Thread(serialCom);
-                  t.Start();
-
-                  while (true)
-                  {
-                      Console.WriteLine(counter);
-                      counter = (counter + 1);
-                      Thread.Sleep(100);
-                  }
-              }
-
-              static void serialCom()
-              {
-                  SerialPort _serialPort = new SerialPort(); ;
-                  _serialPort.PortName = "/dev/ttyUSB0";
-                  _serialPort.BaudRate = 115200;
-                  _serialPort.DtrEnable = true;
-                  _serialPort.Open();
-
-                  while (true)
-                  {
-                      if (Console.KeyAvailable == true)
-                      {
-                          ConsoleKeyInfo key;
-                          key = Console.ReadKey(true);
-
-                          if (key.Key == ConsoleKey.R)
-                          {
-                              _serialPort.WriteLine("read");
-                              string message = _serialPort.ReadLine();
-                              Console.WriteLine(message);
-                              
-                          }else if (key.Key == ConsoleKey.I)
-                          {
-                              _serialPort.WriteLine("outON");
-                              string message = _serialPort.ReadLine();
-                              Console.WriteLine(message);
-                              
-                          }else if (key.Key == ConsoleKey.O)
-                          {
-                              _serialPort.WriteLine("outOFF");
-                              string message = _serialPort.ReadLine();
-                              Console.WriteLine(message);
-                          }
-                      }
-                  }
-              }
-          }
-      }
-
-
-  El código del microcontrolar:
-
-  .. code-block:: cpp
-
-    #define DIGITAL_IN 32
-    #define DIGITAL_OUT 25
-    #define LED 14
-
-    void setup() {
-
-      Serial.begin(115200);
-      pinMode(DIGITAL_IN, INPUT_PULLUP);
-      digitalWrite(DIGITAL_OUT, true);
-      pinMode(DIGITAL_OUT, OUTPUT);
-      pinMode(LED, OUTPUT);
-    }
-
-
-    void Task1() {
-      static uint32_t previousMillis = 0;
-      const uint32_t interval = 500;
-      static bool ledState = false;
-
-      uint32_t currentMillis = millis();
-
-      if ( (currentMillis - previousMillis) >= interval) {
-        previousMillis = currentMillis;
-
-        if (ledState == false) {
-          ledState = true;
-        } else {
-          ledState = false;
-        }
-        digitalWrite(LED, ledState);
-      }
-    }
-
-    void Task2() {
-      static bool outState = false;
-
-      
-      if (Serial.available() > 0) {
-        String dato = Serial.readStringUntil('\n');
-        if(dato == "read"){
-          Serial.print(digitalRead(DIGITAL_IN)); // se envía un 0 o un 1
-          Serial.print(',');
-          Serial.print(outState);
-          Serial.print('\n');
-                
-        }else if(dato == "outOFF"){
-          outState = false;
-          digitalWrite(DIGITAL_OUT,!outState);
-          Serial.print(outState);
-          Serial.print('\n');
-        }else if(dato == "outON"){
-          outState = true;
-          digitalWrite(DIGITAL_OUT,!outState);
-          Serial.print(outState);
-          Serial.print('\n');
-        }
-      }
-    }
-
-    void loop() {
-      Task1();
-      Task2();
-    }
-
+..
   Evaluación de la unidad
   --------------------------
 
