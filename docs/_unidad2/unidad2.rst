@@ -690,11 +690,11 @@ cada ejercicio. Y la misión de tu compañero será hacerte preguntas.
 RETO 1: protocolo ASCII
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-El reto consiste es implementar un sistema que permita, mediante una 
+El reto consiste en implementar un sistema que permita, mediante una 
 interfaz gráfica, leer y modificar el estado de unos dispositivos externos 
 a una aplicación interactiva. En este caso los dispositivos serán 
 un pulsador y un LED. Ten presente que aunque este ejercicio usa 
-dispositivos simples los conceptos asociados a su manejo pueden fácilmente 
+dispositivos simples, los conceptos asociados a su manejo pueden fácilmente 
 extrapolarse a dispositivos y sistemas más complejos. 
 
 Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
