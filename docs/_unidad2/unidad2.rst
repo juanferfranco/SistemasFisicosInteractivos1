@@ -728,7 +728,7 @@ Protocolo de comunicación:
   
   * Respuesta a ``read``: ``estadoEntrada,estadoSalida``. Donde estadoEntrada y 
     estadoSalida serán 0 o 1 dependiendo del estado del sensor digital y el estado 
-    actual de la salida.
+    actual de la salida. Por tanto, las posibles respuestas serán: 0,0 0,1 1,0 y 1,1.
   * Respuesta a ``outON`` y ``outOFF``: ``estadoSalida``. Es decir, el 
     microcontrolador recibe el comando, realiza la orden solicitada y devuelve 
     el estado en el cual quedó la salida luego de la orden.
