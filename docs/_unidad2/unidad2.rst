@@ -737,6 +737,25 @@ Protocolo de comunicación:
 * No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
   ambas partes sepan que el mensaje está completo.
 
+RETO 2: modificación de una aplicación interactiva
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Acabas de llegar como recién egresado de entretenimiento digital a 
+un estudio que acaba de lanzar uno juego que hará historia. 
+El juego lo puedes clonar de `este <https://github.com/zigurous/unity-snake-tutorial>`__ 
+repositorio.
+
+Tu misión: debes modificar el código del juego para que se pueda jugar 
+usando los 4 pulsadores del ESP32 y/o el teclado del computador. Lo que quieren 
+en el estudio es modificar el juego para que cuatro personas puedan 
+jugarlo interactuando con botones GIGANTES.
+
+.. warning:: CAMBIO DE ÚLTIMA HORA
+
+  Es posible que ya tienes todo funcionando, pero tu jefe te pido 
+  que solo preguntes el estado de los pulsadores 
+  `cada 50 ms <https://docs.unity3d.com/ScriptReference/Time-deltaTime.html>`__.
+
 ..
   Evaluación de la unidad
   --------------------------
