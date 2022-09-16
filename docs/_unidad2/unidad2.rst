@@ -756,6 +756,12 @@ jugarlo interactuando con botones GIGANTES.
   que solo preguntes el estado de los pulsadores 
   `cada 50 ms <https://docs.unity3d.com/ScriptReference/Time-deltaTime.html>`__.
 
+.. tip:: TUTORIAL
+
+  El autor del juego tiene un video tutorial en youtube 
+  `aquí <https://youtu.be/U8gUnpeaMbQ>`__
+
+
 ..
   Evaluación de la unidad
   --------------------------
