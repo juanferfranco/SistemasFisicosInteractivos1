@@ -762,46 +762,32 @@ jugarlo interactuando con botones GIGANTES.
   `aquí <https://youtu.be/U8gUnpeaMbQ>`__
 
 
-..
-  Evaluación de la unidad
-  --------------------------
+Evaluación de la unidad
+--------------------------
 
-  .. warning:: FECHA MÁXIMA DE ENTREGA
+.. warning:: FECHA MÁXIMA DE ENTREGA
 
-      Martes 22 de marzo a las 11:59 p.m.
+    jueves 22 de septiembre en la segunda sesión de clase. La evaluación
+    debe estar en el repositorio y sustentada.
 
-  .. warning:: MONTAJE
+Enunciado 
+**************
 
-      En el archivo de sensores.ino te entregaré un template con la definición de NOMBRE
-      de los puertos y PUERTOS. NO lo modifiques, si llegas a hacerlo hay una penalidad 
-      de 1 unidad en la nota final.
+* Realiza una aplicación interactiva en Unity que te permita controlar 3 LEDs y 
+  leer el estado de 3 pulsadores.
+* La aplicación debe tener la siguiente interfaz de usuario:
 
-  Enunciado 
-  **************
+  .. image:: ../_static/evalUI.png
+    :alt: App UI
+    :align: center
+    :width: 100%
 
-  Debes modificar una aplicación interactiva para permitir que se controle de dos maneras.
-  La forma uno es usando el teclado con las teclas flecha arriba,
-  abajo, izquierda y derecha. Dicha forma ya está implementada. La forma 2 con 4 pulsadores 
-  externos que serán leídos por un microcontrolador. Tu debes implementar esta segunda forma de modo 
-  que ambas formas puedan convivir en la aplicación. DEBES adicionar un pulsador más a tu montaje.  
-  La aplicación que debes modificar es de autoría de `Zachary Patten <https://github.com/ZacharyPatten/dotnet-console-games>`__, 
-  pero le hice unas cuantas modificaciones.
+  |
 
-  ¿Cómo es el protocolo ASCII de comunicación?
+¿Qué debes entregar?
+***********************
 
-  La aplicación interactiva debe enviar el request ``inputs``. 
-  El microcontrolador responde con el estado de cada pulsador 
-  separado por ``,`` y en este orden: 
-  ``estado_UP,estado_DOWN,estado_LEFT,estado_RIGHT``. Estos son 
-  ejemplos de posibles respuestas:
+El código fuente de las aplicaciones para el microcontrolador y para Unity en 
+`este <https://classroom.github.com/a/UBJPVkq9>`__ repositorio.
 
-  * ``1,1,1,1\n`` todos los sensores están relajados.
-  * ``1,1,1,0\n`` todos los sensores están relajados menos RIGHT
-
-  ¿Que debes hacer?
-  *******************
-
-  #. Clona tu repositorio que está `aquí <https://classroom.github.com/a/umNREJE_>`__.
-  #. Modifica SOLO los archivos Program.cs y sensores.ino
-  #. Realiza commits y push frecuentemente.
 
