@@ -752,7 +752,7 @@ jugarlo interactuando con botones GIGANTES.
 
 .. warning:: CAMBIO DE ÚLTIMA HORA
 
-  Es posible que ya tienes todo funcionando, pero tu jefe te pido 
+  Es posible que ya tengas todo funcionando, pero tu jefe te pide 
   que solo preguntes el estado de los pulsadores 
   `cada 50 ms <https://docs.unity3d.com/ScriptReference/Time-deltaTime.html>`__.
 
