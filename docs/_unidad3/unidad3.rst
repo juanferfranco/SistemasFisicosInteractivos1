@@ -26,7 +26,8 @@ Evaluación de la unidad
 Enunciado 
 **************
 
-Considera el siguiente fragmento de `este <https://youtu.be/KMhbV1p3MWk?t=16>`__ video que va desde el segundo 16 hasta el 34.
+Considera el siguiente fragmento de `este <https://youtu.be/KMhbV1p3MWk?t=16>`__ video que va desde el segundo 16 hasta el 34. 
+También puede usar como referencia `este <https://youtu.be/L4WfHT_58Dg>`__ otro video.
 Tu misión será reproducir lo que ves allí bajo estas restricciones:
 
 #. Usa Unity.
@@ -39,8 +40,9 @@ Tu misión será reproducir lo que ves allí bajo estas restricciones:
 ***********************
 
 El código fuente de las aplicaciones para el microcontrolador y para Unity en 
-`este <https://classroom.github.com/a/eWHjsSqp>`__ repositorio.
-
+`este <https://classroom.github.com/a/eWHjsSqp>`__ repositorio. Documentar 
+en el archivo README.md cómo funciona el proceso de integración de los valores 
+que entrega el sensor con el contenido digital de la aplicación interactiva.
 
 Trayecto de Actividades
 -------------------------
