@@ -18,6 +18,12 @@ que requiera la integración de una plataforma de tiempo real con un sistema mic
 Evaluación de la Unidad 4
 ---------------------------
 
+.. warning:: FECHA MÁXIMA DE ENTREGA
+
+    jueves 3 de noviembre de 2022 (semana 16) en la segunda sesión de clase. La evaluación
+    debe estar en el repositorio y sustentada.
+
+
 Enunciado
 ***********
 

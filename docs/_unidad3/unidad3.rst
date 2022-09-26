@@ -20,7 +20,7 @@ Evaluación de la unidad
 
 .. warning:: FECHA MÁXIMA DE ENTREGA
 
-    jueves 13 de octubre en la segunda sesión de clase. La evaluación
+    jueves 13 de octubre de 2022 (semana 13) en la segunda sesión de clase. La evaluación
     debe estar en el repositorio y sustentada.
 
 Enunciado 
