@@ -30,7 +30,8 @@ Considera el siguiente fragmento de `este <https://youtu.be/KMhbV1p3MWk?t=16>`__
 Tu misión será reproducir lo que ves allí bajo estas restricciones:
 
 #. Usa Unity.
-#. Usa el sensor ADXL345 que puedes comprar `aquí <https://www.didacticaselectronicas.com/index.php/sensores/acelerometros-gyros/m%C3%B3dulo-gy-291-tarjetas-sensores-acelerometros-3-ejes-3-grados-3dof-3-dof-adxl345-detail>`__.
+#. Usa el sensor ADXL345 o MPU-6050 que puedes comprar `aquí <https://www.didacticaselectronicas.com/index.php/sensores/acelerometros-gyros/m%C3%B3dulo-gy-291-tarjetas-sensores-acelerometros-3-ejes-3-grados-3dof-3-dof-adxl345-detail>`__ 
+   o `aquí <https://www.didacticaselectronicas.com/index.php/sensores/acelerometros-gyros/acelerometro-y-giroscopio-mpu-6050-mpu6050-tarjetas-sensores-acelerometros-giroscopios-de-6-ejes-imu-mpu6050-mpu-6050-detail>`__.
 #. Debes usar un protocolo de comunicación BINARIO.
 
 
