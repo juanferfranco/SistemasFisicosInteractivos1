@@ -4,70 +4,61 @@ Unidad 4. Plataformas de software interactivas de tiempo real
 Introducción 
 -------------
 
-Hemos llegado al final del curso. En esta unidad
-aplicarás todos los conceptos que has aprendido para la construcción
-de aplicaciones interactivas que integren sistemas embebidos con
-plataformas de cómputo interactivas. En particular vamos a utilizar
-Unity.
+Llegaste al final del curso. En esta unidad aplicarás todos los conceptos que has 
+aprendido para la construcción de aplicaciones interactivas que integren sistemas 
+embebidos con plataformas de cómputo interactivas. 
 
 Propósitos de aprendizaje
 ****************************
 
-Comprender de manera práctica los conceptos que permiten integrar sensores y 
-actuadores a plataformas de software para la construcción de aplicaciones 
-interactivas de tiempo real.
+Aplicar los conceptos y procedimientos aprendidos en el curso para resolver un problema 
+que requiera la integración de una plataforma de tiempo real con un sistema microcontrolado.
 
-Temas
-*******
 
-* Integración de sistemas embebidos a plataformas de cómputo
-  interactivas: hilos, colas, sincronización, protocolos.
-* Repaso de conceptos de programación orientado a objetos: herencia,
-  clases abstractas, manejo de memoria.
+Evaluación de la Unidad 4
+---------------------------
+
+Enunciado
+***********
+
+Acabas de llegar a un nuevo estudio que desarrolla EXPERIENCIAS INTERACTIVAS y te encargan 
+que DISEÑES e IMPLEMENTES una EXPERIENCIA INTERACTIVA que use un acelerómetro (al menos dos ejes) para interactuar 
+con ella.
+
+Tienes las siguientes restricciones:
+
+* El proyecto debe hacerse en Unity.
+* La aplicación debe utilizar un plugin llamado 
+  `Ardity <https://assetstore.unity.com/packages/tools/integration/ardity-arduino-unity-communication-made-easy-123819>`__ 
+  para realizar la integración.
+
+¿Qué debes entregar?
+***********************
+
+El código fuente de las aplicaciones para el microcontrolador y para Unity en 
+`este <https://classroom.github.com/a/iTmZ3w9l>`__ repositorio y la documentación 
+de cómo integraste la información del sensor para modificar el comportamiento de la 
+aplicación. Esta documentación la debes incluir en el archivo README.md.
 
 Trayecto de actividades
 -------------------------
 
-Sesión 1
-**********
+Ejercicios
+*************
 
 Ejercicio 1: caso de estudio-plugin Ardity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Para entender los conceptos que permiten integrar los conceptos estudiados 
-en el curso con la plataforma Unity, vas a estudiar un plugin para Unity llamada
-Ardity. Este plugin permite integrar información de dispositivos externos 
-al motor.
-
-Te propondré que realices la siguiente guía de trabajo que se encuentra 
+Para iniciar con el plugin Ardity te propondré que realices la siguiente guía de trabajo que se encuentra 
 `aquí <https://docs.google.com/presentation/d/1uHoIzJGHLZxLbkMdF1o_Ov14xSD3wP31-MQtsbOSa2E/edit?usp=sharing>`__
 
-Ejercicio 2: evaluación formativa
+Ejercicio 2: análisis del plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Al final de la guía te dejo un MINI-RETO. Este consiste en estudiar a fondo
-el código fuente del plugin. Es un reto grande porque posiblemente tengas que 
-recordar algunas de tus cursos anteriores de programación.
-El mini-reto requiere que repases y estudies algunas cosas nuevas también.
-
-Una vez hagas el paso anterior:
-
-* Crea un proyecto nuevo en Unity.
-* Configura el soporte para el puerto serial tal como lo viste en la guía.
-* OJO, no instales el paquete Ardity. SI YA LO HICISTE, vuelve a comenzar.
-* Ahora toma únicamente LOS SCRIPTS de Ardity necesarios (SOLO LOS NECESARIOS)
-  para hacer que la aplicación de la guía funcione de nuevo.
-
-Trabajo autónomo 1: análisis 
-*********************************
-(Tiempo estimado: 1 horas 20 minutos)
-
-Inicialmente te propongo que repases y/o termines los ejercicios anteriores. 
 
 Ahora, vamos a analizar más detalladamente una de las escenas demo de Ardity:
 DemoScene_UserPoll_ReadWrite
 
-Primero, vamos a analizar rápidamente el código de arduino:
+Primero, vamos a analizar rápidamente el código de arduino (para un protocolo ASCII):
 
 .. code-block:: cpp
 
@@ -582,99 +573,11 @@ Mira con detenimiento el código. La siguiente línea te dará una pista.
     // to complete.
     private const int readTimeout = 100;
 
-Sesión 2
-**********
+Ejercicio 3: evaluación formativa
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Ejercicio 3: excepciones
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-De nuevo vamos a visitar el demo: DemoScene_UserPoll_ReadWrite.
-
-Resuelve las siguientes cuestiones:
-
-* ¿Qué excepciones se están considerando en el código?
-
-* ¿Qué pasa si no reciben datos por el puerto serial durante 100ms?
-
-* ¿Qué pasa si el cable serial se desconecta de manera inesperada?
-
-* ¿Cómo se reestablece el funcionamiento de la aplicación?
-
-* ¿Qué modificación tendríamos que hacer a la aplicación de arduino para
-  reestablecer la comunicación?
-
-Ejercicio 4: ¿Cómo incluir soporte para nuevo protocolo
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Describe detalladamente qué pasos debes realizar para soportar un nuevo
-protocolo de comunicaciones en Ardity.     
-
-Trabajo autónomo 2: reto
-***************************
-(Tiempo estimado: 1 horas 20 minutos)
-
-De nuevo, repasa los ejercicios anteriores y realiza el reto.
-
-RETO: integración con un protocolo binario 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-#. Realiza una aplicación en Arduino que MEDIANTE un protocolo BINARIO
-   envíe el valor de dos variables en punto flotante y una entera con signo 32
-   bits. TODAS LAS VARIABLES deben ir en el mismo paquete de DATOS.
-#. El paquete de datos solo será enviado por SOLICITUD explícita. La SOLICITUD
-   se realizará enviando el byte ``7E``.
-#. Realiza una aplicación en Unity que solicite la variables a Arduino
-   cada 100 ms.
-#. Construye una interfaz de usuario en Unity para visualizar las variables. 
-   RECUERDA: una interfaz de usuario, no la consola de Unity.
-
-Evaluación de la Unidad 4
----------------------------
-
-Enunciado
-***********
-
-Vas a realizar una aplicación interactiva en UNITY que tenga las siguientes características:
-
-#. Debe tener una escena con dos cubos y dos botones: CubeA, CubeB, ButtonA y ButtonB.
-#. Debe estar conectada a dos controladores externos: controlador a y controlador b.
-#. La aplicación se comunicará con el ``controlador a`` mediante un protocolo ascii.
-#. La aplicación se comunicará con el ``controlador b`` mediante un protocolo binario.
-#. DEBES emplear SOLO los scripts de Ardity que necesites, es decir, debes hacer el proyecto siguiendo
-   la metodología FromScratch que empleamos en clase.
-#. En cada controlador debes implementar DOS sensores (dos pulsadores). El pulsador 1 cambiará el tamaño 
-   del cubo. El pulsador 2 cambiará el color. El tamaño y el color estarán determinados por el estado
-   de los pulsadores. Tu debes decidir qué pasará si el pulsador está relajado o presionado.
-#. En cada controlador debes implementar DOS actuadores (dos LEDs). El LED 1 debe encender y apagar a 1Hz.
-   El LED 2 debe ser controlado desde Unity con un botón.
-
-La aplicación se puede ver como en la figura:
-
-.. image:: ../_static/sceneUnit4.png
-
-
-Criterios de evaluación 
-************************
-
-Funcionamiento
-^^^^^^^^^^^^^^^
-
-#. Funcionamiento correcto de la aplicación del controlador a: 1.25
-#. Funcionamiento correcto de la aplicación del controlador b: 1.25
-#. Funcionamiento correcto de la aplicación interactiva para la comunicación con el 
-   controlador a: 1.25
-#. Funcionamiento correcto de la aplicación interactiva para la comunicación con el 
-   controlador b: 1.25
-
-Sustentación
-^^^^^^^^^^^^^^^
-Debes presentar la aplicación en las sesiones de clase de la semana 16 y contestar 
-las preguntas del docente.
-
-Nota
-^^^^^
-
-Estará dada por el producto: CriteriosEvaluación*Sustentación.
-
-
-
+* Crea un proyecto nuevo en Unity.
+* Configura el soporte para el puerto serial.
+* OJO, no instales el paquete Ardity. SI YA LO HICISTE, vuelve a comenzar.
+* Ahora toma únicamente LOS SCRIPTS de Ardity necesarios (SOLO LOS NECESARIOS)
+  para hacer que la aplicación DEMO del ejercicio anterior funcione.
