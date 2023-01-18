@@ -21,10 +21,6 @@ sistemas de cómputo para la construcción de aplicaciones interactivas.
 * `AR Snapdragon <https://youtu.be/de0HgyUBBic>`__ Spaces
 * `Haptic VR Gloves <https://youtu.be/h5WzF1ch3ww>`__
 
-¿Cómo encaja este curso en el diseño de Ingeniería en diseño de entretenimiento digital?
-
-Te lo cuento en el tablero.
-
 Propósito del curso
 ---------------------
 
@@ -43,14 +39,16 @@ Competencias
    para resolver problemas de acuerdo con requerimientos condicionados
    por el contexto (Materialización).
 
-Criterios de competencia
+Resultados de aprendizaje
 -------------------------------------
 
-#. Aplico los conceptos necesarios para el correcto diseño, implementación, funcionamiento y 
-   diagnóstico del software en la producción de sistemas de entretenimiento digital utilizando los 
-   procedimientos y herramientas adecuadas según el contexto (para la competencia 1).
-#. Integro dispositivos de entrada, salida e interfaces mecánicas con sistemas de cómputo para la 
-   creación de sistemas intermediados por el entretenimiento digital (para la competencia 2).
+#. RA1: aplico los conceptos necesarios para el correcto diseño, implementación, 
+   funcionamiento y diagnóstico del software en la producción de sistemas de 
+   entretenimiento digital utilizando los procedimientos y herramientas adecuadas 
+   según el contexto (para la competencia 1).
+#. RA2: integro dispositivos de entrada, salida e interfaces mecánicas con sistemas de 
+   cómputo para la creación de sistemas intermediados por el entretenimiento digital 
+   (para la competencia 2).
 
 Carta descriptiva del curso
 -----------------------------
@@ -58,22 +56,34 @@ Carta descriptiva del curso
 En `este <https://drive.google.com/file/d/1RuKTTdtdDgD3W9p2v3OYsrI4IiEmhkZX/view?usp=sharing>`__ enlace 
 puedes descargar la carta descriptiva del curso.
 
+Proyecto docente
+-----------------
+
+El proyecto docente lo puedes descargar de 
+`este <https://github.com/juanferfranco/SistemasFisicosInteractivos1/blob/main/docs/_static/FormatoPlaneacionInteractivos12023-10.xlsx>`__ 
+enlace.
+
 
 Estructura y metodología del curso
 -----------------------------------
 
-El curso está divido en 4 unidades:
+El curso está divido en 4 unidades más una introducción corta para aprender 
+a entregar las evaluaciones con control de versión:
 
 #. Unidad 1: Software para sistemas embebidos
 #. Unidad 2: Protocolos ASCII
 #. Unidad 3: Protocolos binarios
 #. Unidad 4: Plataformas de software interactivas de tiempo real
 
+La metodología del curso es de aula invertida. En este sitio web está todo el material 
+necesario para que puedas preparar la evaluación de cada unidad. Debes utilizar 
+el tiempo autónomo para preparar el material y resolver los ejercicios y retos en clase 
+con ayuda de tus compañeros de equipo y la asesoría del profesor.
 
 Cronograma
 -----------
 
-* Introducción al curso: semana 1
+* Introducción y control de versión: semana 1
 * Unidad 1: semanas 2 a 6
 * Unidad 2: semanas 7 a 10
 * Unidad 3: semanas 11 a 13
@@ -82,22 +92,17 @@ Cronograma
 Evaluación
 -----------
 
-* Evaluación 1: 25%. Semana 6.
-* Evaluación 2: 25%. Semana 10.
+* Control de versión. Semana 1. 5%
+* Evaluación 1: 25%. Semana 5.
+* Evaluación 2: 25%. Semana 9.
 * Evaluación 3: 25%. Semana 13.
-* Evaluación 4: 25%. Semana 16.
+* Evaluación 4: 20%. Semana 16.
 
 Dedicación
 -----------
 
 Este curso es de 2 créditos con encuentros presenciales semanales de 3 hora 20 minutos y 
 2 hora 40 minutos de trabajo autónomo.
-
-Actividades de cada unidad
-----------------------------
-
-Cada semana nos reuniremos para discutir los conceptos, resolver dudas y trabajar en el proyecto 
-de cada unidad.
 
 Evidencias de evaluación
 -------------------------
@@ -124,16 +129,5 @@ Para realizar el trabajo de cada unidad se espera que hagas lo siguiente:
 Bitácora  
 ------------------------------
 
-Vamos a utilizar dos herramientas para que documentes y organices tu trabajo:
-
 * GitHub
-* `Notion <https://www.notion.so>`__
-
-En GitHub mantendrás todo tu código bajo control de versión.
-
-En Notion llevarás tu bitácora electrónica.
-
-Control de versión
---------------------
-
 * Crea una cuenta en GitHub a menos que ya la tengas.
