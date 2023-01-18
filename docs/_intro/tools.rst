@@ -122,3 +122,5 @@ En este curso vas a conectar dispositivos periféricos a sistemas de cómputo.
 #. 4 resistencias de 1000 ohm.
 #. 4 `pulsadores <https://www.didacticaselectronicas.com/index.php/suiches-y-conectores/suiches/pulsadores/pulsador-peque%C3%B1o-2-pines-2mm-interruptores-botones-switch-suiches-pulsadores-cuadrados-de-2-pines-6mm-x-5mm-momentaneos-moment%C3%A1neo-sw-6x5-2p-sw-057b-de-montaje-through-hole-detail>`__ 
    de patas largas para introducir en el protobard.
+#. El sensor MPU-6050 que puedes comprar 
+   `aquí <https://www.didacticaselectronicas.com/index.php/sensores/acelerometros-gyros/acelerometro-y-giroscopio-mpu-6050-mpu6050-tarjetas-sensores-acelerometros-giroscopios-de-6-ejes-imu-mpu6050-mpu-6050-detail>`__.

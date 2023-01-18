@@ -4,6 +4,51 @@ Introducción al control de versión con git y GitHub
 Con esta guía aprenderás los herramientas básicas para realizar 
 todos los proyectos y ejercicios del curso bajo control de versión.
 
+Evaluación 
+------------
+
+Antes de comenzar:
+
+* Abre el browser e ingresa a `Github <https://github.com/>`__.
+* Si estás en una cuenta que no es la tuya realiza un sign out (esquina superior derecha
+  desplegando el menú).
+* Ingresa a tu cuenta.
+* Ingresa a este `este <https://classroom.github.com/a/6BJ-Suco>`__ sitio para unirte 
+  al classroom del curso. Busca tu nombre y ID. En este paso asociarás tu cuenta 
+  de Github al classroom del curso.
+* Acepta el assigment.
+* Ya estamos listo para comenzar la evaluación.
+
+Enunciado
+^^^^^^^^^^^^
+
+En el repositorio remoto se debe evidenciar:
+
+#. Un commit con la creación de un archivo.
+#. Un commit con la creación de dos archivos.
+#. Un commit con la edición de un archivo ya añadido.
+#. Un commit regresando a una versión anterior del repositorio.
+#. El archivo README.md con:
+
+    * Un título de tipo H1 que diga: EVALUACIÓN CONTROL DE VERSIÓN.
+    * Coloca tu nombre y ID.
+    * Indica qué comandos se requieren para este proceso:
+
+        * Clonar el repositorio.
+        * Autenticar la terminal en Gituhub.
+        * Configurar el nombre de usuario y correo electrónico para 
+          este repositorio.
+        * Hacer los commits solicitados.
+        * Sincronizar el repositorio local con el remoto.
+        * Hacer un logout de Gihub de la terminal.
+        * Salirse de la cuenta de Github en el browser (en este 
+          caso describe qué debes hacer).
+
+.. note:: MUY IMPORTANTE
+
+    Recuerda la condiciones para considerar que la evaluación 
+    está entregada.
+
 Trayecto de actividades
 ---------------------------------
 
@@ -67,10 +112,10 @@ Ejercicio 1: introducción a la terminal
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Para realizar el control de versión de tus programas vas a usar inicialmente 
-la terminal. Una vez estés familiarizado con esta puedes explorar otras herramientas; sin embargo,
-la ventaja de la terminal es su rapidez y que definitivamente te obliga a entender 
-qué estás haciendo. Esto es importante porque luego este conocimiento lo podrás extrapolar 
-a cualquier herramienta gráfica.
+la terminal. Una vez estés familiarizado con esta puedes explorar otras herramientas; 
+sin embargo, la ventaja de la terminal es su rapidez y que definitivamente te 
+obliga a entender qué estás haciendo. Esto es importante porque luego este conocimiento 
+lo podrás extrapolar a cualquier herramienta gráfica.
 
 Es posible que esta sea tu primera experiencia con la terminal. La terminal 
 es un programa que te permite interactuar con el sistema operativo y los programas 

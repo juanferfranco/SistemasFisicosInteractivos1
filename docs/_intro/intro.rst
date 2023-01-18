@@ -93,10 +93,27 @@ Evaluación
 -----------
 
 * Control de versión. Semana 1. 5%
-* Evaluación 1: 25%. Semana 5.
-* Evaluación 2: 25%. Semana 9.
-* Evaluación 3: 25%. Semana 13.
-* Evaluación 4: 20%. Semana 16.
+* Unidad 1: 25%. Semana 5.
+* Unidad 2: 25%. Semana 9.
+* Unidad 3: 25%. Semana 13.
+* Unidad 4: 20%. Semana 16.
+
+¿Cuándo se consideran entregada una unidad?
+--------------------------------------------------
+
+Cuando cumplas TODAS las condiciones siguientes:
+
+* Incluye toda la documentación solicitada.
+* Incluye los enlaces a videos públicos en youtube donde se muestre 
+  la evaluación funcionado (unidades 1 a 4).
+* El aval de unidad entregada por parte del profesor.
+
+.. warning:: IMPORTANTE
+
+  No hay entregas parciales. Repito. No hay entregas parciales. Si tu trabajo está 
+  incompleto el docente simplemente no te dará el aval de entregado.
+  Recuerda que una vez tengas el aval la nota en el sistema 
+  de la unidad será 5.
 
 Dedicación
 -----------
