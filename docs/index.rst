@@ -20,8 +20,8 @@ Créditos y horas totales del curso: 2 créditos - 96 horas totales
    :maxdepth: 1
    :caption: UNIDADES
 
-   Unidad 1: Software para sistemas embebidos <_unidad1/unidad1>
 ..
+   Unidad 1: Software para sistemas embebidos <_unidad1/unidad1>
    Unidad 2: Protocolos ASCII <_unidad2/unidad2>
    Unidad 3: Protocolos binarios <_unidad3/unidad3>
    Unidad 4: Proyecto <_unidad4/unidad4>
