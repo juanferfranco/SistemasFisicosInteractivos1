@@ -740,6 +740,17 @@ estado del proyecto en el commit ``1f2009f``.
 Ejercicio 13: configura GitHub
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. warning:: NECESITAS TENER INSTALADO UN PROGRAMA 
+
+    Para realizar este ejercicio necesitas instalar un programa 
+    llamado `Github CLI <https://cli.github.com/>`__. Es posible 
+    que este programa no esté instalada en los computadores 
+    de la U. Lo puedes probar escribiendo en la terminal el comando 
+    gh auth logout. Si no funciona, no vas a poder realizar el 
+    ejercicio como te lo propongo y en ese caso salta al 
+    ejercicio 14a para probar una alternativa.
+
+
 Ahora te pediré que compartas el repositorio local ``project1`` con el mundo. 
 Para hacerlo necesitarás usar GitHub. 
 
@@ -800,6 +811,56 @@ al servidor remoto, en este caso ``origin``.
 Ingresa al sitio: https://github.com/TU_USUARIO/project1 para observar tu repositorio 
 en GitHub. NO OLVIDES modificar la cadena ``TU_USUARIO`` con tu nombre de usuario 
 en GitHub.
+
+Ejercicio 14a: creación manual del repositor en GitHub
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. warning:: TEN CUIDADO CON ESTE EJERCICIO 
+    
+    Este ejercicio solo tendrás que hacerlo si los ejercicios 
+    13 y 14 no los pudiste hacer porque el programa gh no está 
+    instalado.
+
+La idea de este ejercicio es que aprendas a publicar y sincronizar 
+un repositorio local con un repositorio en GitHub.
+
+* Ingresa a tu cuenta en Github.
+* Selecciona la pestaña (tab) repositorios.
+* Crea un nuevo repositorio con el botón NEW. Github te pedirá 
+  unos datos. Por ahora, solo coloca el nombre del repositorio, déjalo 
+  público y salta hasta el botón Create repository.
+* Se debe crear un repositorio vacío. Busca la sección 
+  ``or push an existing repository from the command line```. 
+* Escribe en la terminal el primer comando que comienza con 
+  git remote. Aquí lo que estás haciendo es decirle a tu Git 
+  local que guarde en tu repositorio local una referencia 
+  a un repositorio remoto, la dices donde está ese repositorio 
+  y además le colocas un nombre corto llamado ``origin`` para 
+  no tener que estar escribiendo siempre la URL larga.
+* Escribe el segundo comando que comienza con git branch. Este 
+  comando cambia el nombre de la rama actual. Posiblemente 
+  tu rama actual se llame master. Luego del comando se llamará
+  main.
+* Finalmente, escribe el comando que comienza con git push. Ahora 
+  le dirás a tu sistema de control de versión local que sincronice 
+  el repositorio local con el remoto u origin en este caso.
+
+.. warning:: ESTE ÚLTIMO PASO PUEDE PEDIRTE QUE TE AUTENTIQUES 
+
+    Sigue los pasos que te proponen para autenticarte.
+    Ten presente que en este paso Git te pedirá que te autentiques 
+    con el servidor Github para certificar que eres el dueño 
+    del repositorio.
+
+.. warning:: ANTES DE TERMINAR UNA SESIÓN DE TRABAJO 
+
+    Esto es muy importante y SOLO AL TERMINAL una sesión de trabajo. 
+    Si el equipo de cómputo en el que estás 
+    trabajando no es de tu propiedad, es muy importante que antes 
+    de apagarlo, elimines tus credenciales. Para hacerlo, escribe 
+    en el buscador de windows, credential managener. Selecciona 
+    las credenciales de windows. Busca la credencial de git con 
+    tus datos y elimina dicha credencial. 
 
 Ejercicio 15: actualiza tu repositorio remoto
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
