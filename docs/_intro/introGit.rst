@@ -1001,187 +1001,24 @@ debe dar acceso.
     antes de abordar el TRABAJO EN EQUIPO usando Git. PERO OJO, TE RUEGO que más adelante 
     lo aprendas porque será tu día a día cuando estés trabajando en la industria.
 
-
-Ejercicio 18: repasa (evaluación formativa)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Ha llegado la hora de volver a repasar TODOS los comandos que has aprendido. 
-Actualiza tu lista de comandos y escribe al frente de cada uno, con tus palabras,  
-qué hace. En este punto ya deberías tener más claridades. Por tanto, revisa de nuevo 
-la redacción de los comandos que ya tenías.
-
-Ejercicio 19: entrega de evaluaciones usando GitHub
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-(El framework de pruebas para este ejercicio está tomado de 
-`aquí <https://github.com/remzi-arpacidusseau/ostep-projects>`__)
-
-Te voy a proponer un ejercicio que será muy importante para el curso 
-porque será la manera típica como entregarás las evaluaciones.
-
-Para la entrega de las evaluaciones utilizarás GitHub. Para cada evaluación 
-te enviaré un enlace con una invitación para la evaluación. Cuando aceptes la 
-invitación, automáticamente se creará un repositorio para ti con la estructura 
-de directorios y archivos necesarios para comenzar a realizar la evaluación. Ten 
-en cuenta que tu tendrás permisos para editar el nuevo repositorio. Podrás aplicar 
-todo lo que trabajaste en esta guía.
-
-Entonces vamos a simular una invitación a una evaluación en la cual tendrás que 
-escribir un programa. En este caso deberás completar el programa wcat.c al cual 
-se le aplicarán automáticamente unos vectores de prueba para verificar si es 
-correcta la implementación.
-
-Por ahora, los detalles del programa y las pruebas no importan. Lo importante es 
-que puedas practicar el flujo de trabajo usando Git y GitHub.
-
-Sigue estos pasos:
-
-* Abre un browser e ingresa a tu cuenta de GitHub. ASEGÚRATE POR FAVOR que estás 
-  en tu cuenta.
-* Abre una nueva pestaña e ingresa a `este <https://classroom.github.com/a/sXNRDAEb>`__ sitio.
-* Busca y selecciona tu nombre y ID. Esta operación ENLAZARÁ tu cuenta de GitHub con tu nombre 
-  y ID.
-* Por último acepta la tarea.
-* Espera un momento y refresca (con F5) el browser.
-* Abre tu nuevo repositorio en otra pestaña.
-* Selecciona el menú Actions y dale click al botón ``Enable Actions on this 
-  repository``. Si no aparece el botón es porque ya están habilitadas las acciones.
-* CLONA el repositorio a tu computador. En tu repositorio despliega el botón ``Code``, selecciona 
-  la pestaña http y copia la URL de tu repositorio. Usa esta URL con el comando git clone. Recuerda 
-  NO CLONAR el respositorio dentro de otro repositorio LOCAL.
-* Ingresa al directorio ``dirTest/project``.
-* Lee el archivo ``README.md``. Lo puedes hacer en tu computador y en Internet. Cuando 
-  lo leas en tu computador verás que está escrito en un lenguaje llamado 
-  `Markdown <https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax>`__. 
-  Ve mirando este lenguaje porque lo usarás para escribir la documentación de las evaluaciones. PERO 
-  no te preocupes es muy fácil. Además, en un rato te propondré un ejercicio para que practiques. Por 
-  otro lado, cuando leas el archivo README.md en GitHub notarás que este lo renderiza para que se 
-  vea bonito.
-* Observa el archivo wcat.c inicial:
-
-  .. code-block:: c 
-
-        #include <stdio.h>
-        #include <stdlib.h>
-
-
-        int main(int argc, char *argv[]){
-            exit(EXIT_SUCCESS);
-        }
-
-* Modifica wcat.c con este código:
-
-  .. code-block:: c 
-
-    #include <stdio.h>
-    #include <stdlib.h>
-
-
-    int main(int argc, char *argv[]){
-
-        //printf("arc: %d\n",argc);
-
-        if(argc <= 1){
-            exit(EXIT_SUCCESS);
-        }
-
-        FILE *inFile = NULL;
-        char buffer[256];
-        char *status =  NULL;
-
-
-        for(int i = 1 ; i < argc; i++){
-
-            inFile = fopen(argv[i],"r");
-            if (inFile == NULL){
-                printf("wcat: cannot open file");
-                printf("\n");
-                exit(EXIT_FAILURE);
-            }
-            do{
-                status = fgets(buffer, sizeof(buffer),inFile);
-                if(status != NULL){
-                    printf("%s",buffer);
-                    //printf("hola mundo cruel");
-                }
-            }while (status !=NULL);
-
-            fclose(inFile);
-        }
-        
-        exit(EXIT_SUCCESS);
-    }
-
-* Salva wcat.c y realiza un commit.
-* Luego sincroniza con el repositorio remoto (push). Esto hará que se disparen 
-  las pruebas (acciones) en GitHub.
-* Ingresa de nuevo al repositorio en GitHub. Ingresa al menú Actions. 
-  Espera un minuto y refresca la página. Si todo está bien verás 
-  una marca verde al lado izquierdo del commit que enviaste.
-* Dale click al mensaje al lado de la marca verde. Luego dale click a 
-  Autograding para observar todos los pasos que se realizaron para verificar 
-  tu trabajo.
-
-Ejercicio 20: documentación de las evaluaciones
+Ejercicio 18: documentación de las evaluaciones
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Todas las entregas que realices deben estar acompañadas de una documentación 
 que explique los aspectos técnicos (y otros que te pediré) de la solución que 
 propongas a los problemas que te plantearé para las evaluaciones. Lo interesante 
 de GitHub es que te permite almacenar repositorios no solo para el código, sino 
-también para la documentación. En el ejercicio anterior te hablé del lenguaje con el 
-cual se escribió el archivo README.md. Se trata del lenguaje Markdown que será 
-el mismo que utilizarás para escribir la documentación de tus entregas. Como 
-te comenté antes, no tienes de qué preocuparte, realmente es muy fácil.
+también para la documentación. Para documentar un repositorio lo único 
+que debes tener es un archivo README.md en el repositorio.
 
-#. Crea un directorio llamado project4. Ten presente cambiarte 
-   primero al directorio padre donde están almacenados los projects anteriores.
-#. Inicia un repositorio allí.
-#. Crea unos cuantos archivos.
-#. Dile a Git que haga tracking de esos archivos.
-#. Realiza un primer commit.
-#. Crea un repositorio remoto en GitHub que esté sincronizado con 
-   tu repositorio local. No olvides comprobar su creación.
+Te voy a proponer que practique de nuevo lo que hemos trabajado juntos.
 
-   .. note:: RECUERDA cómo crear el repositorio
+Crea un repositorio local y sincroniza ese repositorio con uno remoto.
+Añade la documentación adicionando el archivo README.
 
-       .. code-block:: bash 
+Para crear la documentación, debes escribir en un lenguaje de marcado 
+conocido como markdown. Visita `este <https://www.markdownguide.org/cheat-sheet/>`__ 
+sitio para que explores algunas etiquetas de marcado.
 
-          gh repo create NOMBRE --public --source=. --push --remote=origin
-
-#. Modifica los archivos creados.
-#. Realiza un par de commits más.
-#. Sincroniza los cambios con el repositorio remoto.
-
-Hasta aquí nada nuevo, ¿Verdad? 
-
-#. Ingresa a GitHub y selecciona la opción Create New File en el botón ``Add file``.
-#. Le vas a poner de nombre ``README.md``.
-#. Verás que se abre un editor en el cual podrás añadir tu documentación. Además 
-   podrás formatearlo en lenguaje Markdown.
-#. En `este <https://www.markdownguide.org/cheat-sheet/>`__ sitio puedes encontrar una 
-   cheat sheet del lenguaje.
-#. Cambia el título del documento por ``DOCUMENTACIÓN DEL PROJECT 4``.
-#. Indica que ese texto tendrá formato ``h1`` colocando el símbolo ``#`` seguido de un espacio antes del título.
-#. Puedes hacer click en el menú ``preview`` para que puedas ver cómo te va quedando el 
-   documento.
-#. Ahora te pediré que insertes una imagen, un hipervínculo, un título de tipo h2 y otro tipo h3, 
-   escribas unas cuantas líneas de texto y coloques una palabra en negrita, itálica y resaltada,
-   crea una lista ordenada y una lista no ordenada.
-#. A medida que experimentas ve observando en preview cómo te queda.
-#. Una vez termines, dale click al botón ``Commit changes``.
-#. Regresa al inicio del repositorio para que veas tu obra de arte.
-#. En este ejercicio creaste un archivo en GitHub que no tienes en tu computador local. Escribe 
-   en tu repositorio local los comando::
-    
-    git fetch
-    git status
-    git pull
-    git status
-
-   ¿Qué puedes ver en el primer status y luego en el segundo? ¿Alguna diferencia?
-
-.. note:: ESCRIBIR documentos en GitHub
-
-    En `este <https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax>`__ 
-    enlace puedes encontrar más información.
+Escribe lo que quieras en el archivo README.md, experimenta. No olvides 
+sincronizar el repositorio local con el remoto para que puedas ver los resultados.
