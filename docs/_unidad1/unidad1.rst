@@ -242,7 +242,7 @@ que aceptar la evaluación `aquí <https://classroom.github.com/a/MMdNOCa1>`__.
 
 En el repositorio de la evaluación solo debes adicionar un archivo README.md 
 con el nombre del equipo, integrantes y ID y un enlace a un repositorio 
-``PUBLICO`` donde harás lo siguiente:
+``PÚBLICO`` donde harás lo siguiente:
 
 * Crea un proyecto para el raspberry pi.
 * En el código modifica el 500 por 1000.
