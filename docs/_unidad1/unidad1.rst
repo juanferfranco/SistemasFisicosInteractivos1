@@ -12,35 +12,86 @@ de la aplicación interactiva.
 Propósito de aprendizaje
 ***************************
 
-Modelar el software del controlador, mediante el uso de máquinas
-de estado, para poder establecer escenarios que permitan
-documentar y verificar su funcionamiento.
+Modelar el software del controlador, mediante estados, eventos 
+y acciones.
 
 Implementar el software del controlador mediante las técnicas de
 programación adecuadas que permitan sacarle el máximo provecho a
 dicho controlador.
 
-Verificar el software del controlador por medio de la
-comparación de resultados de funcionamiento con los posibles
-escenarios o vectores de prueba definidos en el modelado.
-
-Temas
-*******
-
-* Introducción a la programación NO BLOQUEANTE.
-* Técnicas de programación: encapsulamiento mediante tareas, programación
-  concurrente.
-* Modelamiento y programación utilizando máquinas de estado.
-* Manejo del puerto serial, medidas de tiempo y retardos
-  utilizando técnicas de programación no bloqueantes.
-
 Evaluación
 ---------------------------
 
-.. warning:: REGRESA AQUÍ EN UNOS DÍAS 
+Para realizar la evaluación vas a utilizar 
+`este <https://classroom.github.com/a/oSPO_9kn>`__ repositorio.
 
-    Regresa a esta sección en unos días para que consultes la evaluación.
+Recuerda entregar la documentación solicitada en el archivo 
+README.md
 
+En un escape room se requiere construir una aplicación para controlar 
+una bomba temporizada.La siguiente figura ilustra la interfaz de la bomba. 
+El circuito de control de la bomba está compuesto por tres sensores digitales,
+en este caso pulsadores, denominados UP, DOWN, ARM,
+un display (simulado con el serial), un LED que indica si la bomba está 
+armada o no y un LED que simula la activación de la bomba.
+
+.. image:: ../_static/bomb.png
+  :alt: bomba
+
+El controlador funciona así:
+
+* Inicia en modo de ``configuración``, es decir, sin hacer cuenta regresiva aún, 
+  la bomba está ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
+* En el modo de configuración, los pulsadores UP y DOWN permiten
+  aumentar o disminuir el tiempo inicial de la bomba. El LED de bomba armada  
+  está PERMANENTEMENTE apagado.
+* El tiempo se puede programar entre 10 y 30 segundos con cambios de 1 segundo.
+* El tiempo de configuración se debe visualizar enviando 
+  el valor del conteo ``SOLO`` cada que cambie.
+* El pulsador ARM arma la bomba.
+* Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
+  por el serial por medio de una cuenta regresiva en segundos. El LED 
+  de bomba armada funciona a una frecuencia de 1 Hz.
+* La bomba explotará (se activa la salida de activación de la bomba) cuando
+  el tiempo llegue a cero. 
+* Cuando la bomba explote el LED que simula la activación de la bomba 
+  funcionará a 5 Hz durante 5 segundos. 
+* Luego de los 5 segundos el control regresará al modo de
+  configuración.
+* Una vez la bomba esté armada es posible desactivarla ingresando un código
+  de seguridad. El código será la siguiente secuencia de pulsadores
+  presionados uno después de otro:  UP, DOWN, UP, DOWN, UP, UP, ARM. Ten 
+  presente que el controlador solo debe verificar si la secuencia es correcta 
+  una vez la reciba completa.
+* Si la secuencia se ingresa correctamente la bomba pasará de nuevo
+  al modo de configuración de lo contrario continuará la fatal cuenta
+  regresiva.
+* Debes almacenar la clave de desarmado de la bomba en un arreglo.
+* Debes definir una función a la cual le pasarás la dirección en memoria 
+  de dos arreglos: uno con la clave recibida y otro con la clave correcta. 
+  La función deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
+  así: true si la clave recibida es igual a la clave almacenada o 
+  false si las claves no coinciden.
+
+Arquitectura del software:
+
+Tu aplicación debe tener dos tareas:
+
+* La tarea del controlador.
+* Una tarea que controle un LED a una frecuencia de 0.5 Hz.
+
+Ten presente las siguientes restricciones:
+
+* Para la lectura de los botones ``DEBES`` usar la biblioteca 
+  `ezButton <https://github.com/ArduinoGetStarted/button>`__.
+
+Para la documentación:
+
+* Define y explica los estados que usaste para resolver el problema.
+* Define y explica los eventos que usaste.
+* Define y explica las acciones.
+* Explica cómo probaste el funcionamiento correcto de la aplicación.
+* Explica cómo resolviste el problema de la clave.
 
 Trayecto de actividades
 ---------------------------
@@ -261,1057 +312,709 @@ Algunos sitios que pueden serte de utilidad son:
 * `Port para raspberry pi pico del API de arduino <https://arduino-pico.readthedocs.io/en/latest/#>`__.
 *  `Sitio oficial del raspberry pi pico <https://www.raspberrypi.com/products/raspberry-pi-pico/>`__.
 
+Ejercicio 6: montaje
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-..
-  Ejercicio 6: RETO montaje
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+El siguiente ejercicio es un reto. Te voy a dar dos cosas. Unos materiales y un programa 
+de prueba. El objetivo es que hagas el montaje de prueba correctamente y lo pruebes 
+con el programa de prueba. ¿Qué debes hacer? Busca en Internet cómo conectar 
+LEDs y pulsadores (push buttons) a un raspberry pi pico en un protoboard.
 
-  Ahora vas a realizar el siguiente montaje en el protoboard. Si no recuerdas 
-  qué es un protoboard o cómo lo puedes trabajar, te dejaré este par de recursos:
+El montaje tendrá 4 sensores y 4 actuadores que estarán conectados al 
+raspberry pi pico así:
 
-  * Un video `aquí <https://youtu.be/6WReFkfrUIk>`__.
-  * Una lectura con imágenes `aquí <https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard>`__.
+====================== ====================
+Puerto del raspberry     dispositivo
+====================== ====================
+GP2                     button1   
+GP3                     button2
+GP4                     button3
+GP5                     button4
+GP18                    LED RED
+GP19                    LED GREEN
+GP20                    LED BLUE
+GP21                    LED YELLOW    
+====================== ====================
 
-  .. image:: ../_static/montaje.png
-    :alt: montaje
-    :align: center
-    :width: 75%
+Ten presente `este <https://datasheets.raspberrypi.com/pico/Pico-R3-A4-Pinout.pdf>`__ 
+documento para identificar los puertos del raspberry pi pico.
 
-  |
+.. code-block:: cpp
 
-  Ejercicio 7: prueba tu montaje 
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  void task1()
+  {
+      // Definición de estados y variable de estado
+      enum class Task1States
+      {
+          INIT,
+          WAIT_TIMEOUT
+      };
+      static Task1States task1State = Task1States::INIT;
 
-  Con este programa vas a verificar que tu montaje esté correcto.
+      // Definición de variables static (conservan
+      // su valor entre llamadas a task1)
+      static uint32_t lasTime = 0;
 
-  .. code-block:: cpp
+      // Constantes
+      constexpr uint32_t INTERVAL = 1000;
+      constexpr uint8_t button1Pin = 2;
+      constexpr uint8_t button2Pin = 3;
+      constexpr uint8_t button3Pin = 4;
+      constexpr uint8_t button4Pin = 5;
+      constexpr uint8_t ledRed = 18;
+      constexpr uint8_t ledGreen = 19;
+      constexpr uint8_t ledBlue = 20;
+      constexpr uint8_t ledYellow = 21;
 
-    void task1()
-    {
-        // Definición de estados y variable de estado
-        enum class Task1States
-        {
-            INIT,
-            WAIT_TIMEOUT
-        };
-        static Task1States task1State = Task1States::INIT;
+      // MÁQUINA de ESTADOS
 
-        // Definición de variables static (conservan
-        // su valor entre llamadas a task1)
-        static uint32_t lasTime = 0;
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
+          Serial.begin(115200);
+          pinMode(button1Pin, INPUT_PULLUP);
+          pinMode(button2Pin, INPUT_PULLUP);
+          pinMode(button3Pin, INPUT_PULLUP);
+          pinMode(button4Pin, INPUT_PULLUP);
+          pinMode(ledRed, OUTPUT);
+          pinMode(ledGreen, OUTPUT);
+          pinMode(ledBlue, OUTPUT);
+          pinMode(ledYellow, OUTPUT);
+          lasTime = millis();
+          task1State = Task1States::WAIT_TIMEOUT;
 
-        // Constantes
+          break;
+      }
+      case Task1States::WAIT_TIMEOUT:
+      {
+          uint8_t btn1State = digitalRead(button1Pin);
+          uint8_t btn2State = digitalRead(button2Pin);
+          uint8_t btn3State = digitalRead(button3Pin);
+          uint8_t btn4State = digitalRead(button4Pin);
+          uint32_t currentTime = millis();
 
-        constexpr uint32_t INTERVAL = 1000;
-        constexpr uint8_t button1Pin = 12;
-        constexpr uint8_t button2Pin = 13;
-        constexpr uint8_t button3Pin = 32;
-        constexpr uint8_t button4Pin = 33;
-        constexpr uint8_t ledRed = 14;
-        constexpr uint8_t ledGreen = 25;
-        constexpr uint8_t ledBlue = 26;
-        constexpr uint8_t ledYellow = 27;
-
-        // MÁQUINA de ESTADOS
-
-        switch (task1State)
-        {
-        case Task1States::INIT:
-        {
-            Serial.begin(115200);
-            pinMode(button1Pin, INPUT_PULLUP);
-            pinMode(button2Pin, INPUT_PULLUP);
-            pinMode(button3Pin, INPUT_PULLUP);
-            pinMode(button4Pin, INPUT_PULLUP);
-            pinMode(ledRed, OUTPUT);
-            pinMode(ledGreen, OUTPUT);
-            pinMode(ledBlue, OUTPUT);
-            pinMode(ledYellow, OUTPUT);
-            lasTime = millis();
-            task1State = Task1States::WAIT_TIMEOUT;
-
-            break;
-        }
-        case Task1States::WAIT_TIMEOUT:
-        {
-            uint8_t btn1State = digitalRead(button1Pin);
-            uint8_t btn2State = digitalRead(button2Pin);
-            uint8_t btn3State = digitalRead(button3Pin);
-            uint8_t btn4State = digitalRead(button4Pin);
-            uint32_t currentTime = millis();
-
-            // Evento 1:
-            if ((currentTime - lasTime) >= INTERVAL)
-            {   
-                lasTime = currentTime;
-                printf("btn1: %d,btn2: %d, btn3: %d, btn4: %d\n", btn1State, btn2State, btn3State, btn4State);
-            }
-
-            // Evento 2
-            if (btn1State == LOW)
-                digitalWrite(ledRed, HIGH);
-            // Evento 3
-            if (btn2State == LOW)
-                digitalWrite(ledGreen, HIGH);
-            // Evento 4
-            if (btn3State == LOW)
-                digitalWrite(ledBlue, HIGH);
-            // Evento 5
-            if (btn4State == LOW)
-                digitalWrite(ledYellow, HIGH);
-
-            break;
-        }
-        default:
-        {
-            Serial.println("Error");
-        }
-        }
-    }
-
-    void setup()
-    {
-        task1();
-    }
-
-    void loop()
-    {
-        task1();
-    }
-
-  Te en cuenta lo siguiente:
-
-  * Los programas los dividiremos en tareas. En este caso 
-    solo tenemos una. Las tareas son una manera de distribuir 
-    el trabajo para poder realizar el programa en equipo. Lo 
-    ideal es que las tareas sean independientes, pero no siempre 
-    se logra. Por tanto, será necesario definir mecanismos de 
-    comunicación entre ellas. Más adelante te enseño cómo.
-  * Este programa tiene un pseudo estado y un estado, pero 
-    desde ahora diremos que tiene 2 estados: 
-
-    .. code-block:: cpp
-    
-        enum class Task1States
-        {
-            INIT,
-            WAIT_TIMEOUT
-        };
-
-  * ¿Qué son los estados? Son condiciones de espera. Son momentos 
-    en los cuales tu programa está esperando a que algo ocurra. En este 
-    caso en ``Task1States::INIT`` realmente no ``ESPERAMOS`` nada, por eso 
-    decimos que es un pseudo estado. Este estado SIEMPRE lo usaremos 
-    para configurar las condiciones INICIALES de tu programa.
-  * Nota cómo se pasa de un estado a otro:: 
-    
-      task1State = Task1States::WAIT_TIMEOUT;
-
-  * En el estado `Task1States::WAIT_TIMEOUT` si estamos esperando a 
-    que ocurran varios ``EVENTOS``. En este caso los eventos los 
-    identificamos mediante los ``IF``. Por tanto, en un estado tu 
-    programa estará siempre preguntando por la ocurrencia de algunos 
-    eventos.
-  * Cuando la condición de un evento se produce entonces tu programa 
-    ejecuta ACCIONES. Por ejemplo aquí:
-
-    .. code-block:: c
-
-      if (btn4State == LOW)
-        digitalWrite(ledYellow, HIGH);
-    
-    Si el evento ``if (btn4State == LOW)`` ocurre, el programa 
-    ejecutará una sola acción que será ``digitalWrite(ledYellow, HIGH);``.
-    Ten presente que si requieres ejecutar más acciones en este evento, 
-    tendrás que encerrarlas por llaves ``{}``.
-
-  Ejercicio 8: retrieval practice (evaluación formativa)
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Lo primero que debes hacer es aceptar 
-  `esta <https://classroom.github.com/a/w0LJZNMN>`__ evaluación e 
-  ingresar a tu equipo de trabajo (el mismo de la evaluación 
-  anterior).
-
-  * Entra al repositorio y copia la url para clonarlo en tu 
-    computador local.
-  * Mira, en este momento TODOS tienen acceso al repositorio del equipo,
-    pero por lo pronto, la idea es que solo suban al repositorio 
-    el trabajo desde una de las cuentas, a menos
-    que ya sepan como trabajar en equipo con control de versión.
-    (Si quieres aprender mira la guía de trabajo en equipo 
-    que está antes de las unidades del curso).
-
-  Realiza un programa que lea el estado de dos pulsadores en los puertos 
-  12 y 13 y encienda solo uno de 4 LEDs. El programa debe enviar 
-  por el puerto serial cuál de los LED se encendió, PERO DEBE HACERLO 
-  solo una vez, es decir, tu programa NO DEBE quedarse enviando por 
-  el puerto serial qué LED está encendido y tampoco se debe quedar 
-  enciendo el LED. Por tanto, enviar el mensaje y encender el LED 
-  solo se debe hacer una vez, es decir, cada que se detecte una combinación 
-  nueva de los pulsadores.
-
-  =====  =====  =======
-  12     13     LED
-  =====  =====  =======
-  LOW    LOW    14
-  LOW    HIGH   25
-  HIGH   LOW    26
-  HIGH   HIGH   27
-  =====  =====  =======
-
-  Antes de comenzar a programar:
-
-  * ¿Cuáles son los estados de tu programa?
-  * ¿Cuáles serían los eventos?
-  * ¿Cuáles serían las acciones?
-
-  Ejercicio 9: template para trabajo en equipo por tareas
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Como sé que sé o sé quieres comenzar a trabajar en equipo, 
-  te voy a dejar `un repositorio <https://github.com/juanferfranco/arduinoTeamTemplate.git>`__ 
-  que puedes usar como un template para trabajar con otros compañeros.
-
-  El template tiene un archivo .ino que usarás para llamar las 
-  diferentes tareas que componen tu aplicación. Por tanto, cuando 
-  tengas un problema de programación a resolver, lo primero 
-  que deberás hacer es dividirlo por tareas.
-
-  .. code-block:: cpp
-
-    #include "task1.h"
-    #include "task2.h"
-    #include "task3.h"
-
-    void setup()
-    {
-        task1();
-        task2();
-        task3();
-    }
-
-    void loop()
-    {
-        task1();
-        task2();
-        task3();
-    }
-
-  Luego, cada tarea estará compuesta de un archivo .h y un archivo cpp.
-  En el archivo .h publicarás el API de tu tarea, por ejemplo, el prototipo 
-  del método que define la tarea (el tipo de retorno, el tipo de los 
-  argumentos). En el archivo .cpp estará la implementación de la tarea en sí.
-
-  Ejercicio 10: RETO
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  Este es un RETO para que resuelvas en equipo. Te voy a indicar una 
-  serie de pasos que puedes seguir para comenzar y luego te invitaré 
-  a pensar con tus compañeros los pasos finales del reto.
-
-  #. Clona el `template <https://github.com/juanferfranco/arduinoTeamTemplate.git>`__ 
-    de trabajo en equipo.
-  #. Ingresa a la carpeta con el repositorio y borra el directorio .git::
-
-      rm -r -f .git
-
-    ¿Por qué es necesario que hagas esto? porque la carpeta .git contiene toda 
-    la información del repositorio que clonaste. Al borrar la carpeta, estás 
-    borrando el repositorio. De esta manera, tu puedes iniciar un nuevo 
-    repositorio.
-
-  #. Crea tu propio repositorio::
-
-      git init
-      git add --all
-      git commit -m "Init project"
-
-  #. Ahora abre el browser e ingresa a tu cuenta de GitHub.
-  #. Luego en la terminal autoriza el acceso a tu cuenta de Github::
-
-      gh auth logout 
-      gh auth login
-
-  #. Crea el repositorio en Github con el cual sincronizarás el repositorio 
-    local::
-
-      gh repo create PROJECT_NAME --public --source=. --push --remote=origin
-
-  #. Verifica que el repositorio se ha creado y que tienes los mismos archivos 
-    que en el repositorio local.
-
-  #. Te voy a mostrar el código para la task1 y luego con tu equipo vas 
-    a construir las demás tareas. La frecuencia del LED rojo será de 5 Hz
-
-    .. code-block:: cpp
-    
-      #include <Arduino.h>
-      #include "task1.h"
-
-
-      void task1(){
-          enum class Task1States{
-              INIT,
-              WAIT_TO_TOGGLE_LED
-          };
-          static Task1States task1State = Task1States::INIT;
-          static uint32_t lasTime;
-          static constexpr uint32_t INTERVAL = 100;
-          static constexpr uint8_t ledRed = 14;
-          static bool ledStatus = false;
-
-          switch(task1State){
-              case Task1States::INIT:{
-                  pinMode(ledRed,OUTPUT);
-                  lasTime = millis();
-                  task1State = Task1States::WAIT_TO_TOGGLE_LED;
-                  break;
-              }
-
-              case Task1States::WAIT_TO_TOGGLE_LED:{
-                  // evento 1:
-                  uint32_t currentTime = millis();
-                  if( (currentTime - lasTime) >= INTERVAL ){
-                      lasTime = currentTime;
-                      digitalWrite(ledRed,ledStatus);
-                      ledStatus = !ledStatus;
-                  }
-                  break;
-              }
-
-              default:{
-                  break;
-              }
+          // Evento 1:
+          if ((currentTime - lasTime) >= INTERVAL)
+          {   
+              lasTime = currentTime;
+              printf("btn1: %d,btn2: %d, btn3: %d, btn4: %d\n", btn1State, btn2State, btn3State, btn4State);
           }
 
-      }  
-
-  Los pasos que harás con tus compañeros serán estos:
-
-  #. Piensa con tus compañeros la construcción de tres 
-    tareas más que modifiquen los LED restantes (25, 26, 27) a 
-    una frecuencia de 4 Hz, 3 Hz, 2 Hz respectivamente.
-
-  #. No olvides realizar commit y push a medida que vas trabajando::
-
-      git commit -am "update taskX file with..."
-      git push
-
-  Ejercicio 11: RETO
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  Usando las tareas definidas en el reto anterior vas a realizar 
-  este ejercicio de trabajo en equipo bajo control de versión 
-  como lo harías en el mundo real. Ten presente que en tu equipo 
-  de trabajo es posible que solo tengas un sistema de desarrollo.
-  No importa, como la idea es practicar, lo que puedes hacer es 
-  rotar entre todos el uso del sistema de desarrollo. Incluso, pueden 
-  trabajar en el mismo computador. Lo que cambiará es la cuenta de GitHub 
-  que usará cada persona cuando le toque su turno. MIRA, es 
-  muy importante que SE ACOMPAÑEN entre todos, es decir, cuando 
-  llegue el turno de un compañero, la idea es que los otros 
-  estén atentos para ayudarle y corregir errores. ¿Me prometes que harás 
-  el ejercicio como te lo propongo?
-
-  #. Clona de nuevo el template y borra el repositorio. Vas a crear 
-    tu propio repositorio.
-  #. Divide las tareas entre tus compañeros, por ejemplo, si son 4 personas, 
-    cada uno puedo hacer una tarea.
-  #. Dale acceso al repositorio, como colaborador, a cada uno de tus compañeros::
-
-      gh api -X PUT repos/TU-GITHUB-USER/EL-NOMBRE-DEL-REPO/collaborators/EL-GITHUB-USER-DE-TU-COMPA
-    
-  #. Cada compañero debe iniciar sesión en GitHub (puede ser desde el celular o 
-    una pestaña incógnita). Luego abrir el correo y aceptar la invitación a 
-    trabajar como colaborador en el repositorio.
-
-  #. Ahora ha llegado el turno de que cada uno haga la tarea que le tocó. Te 
-    voy a mostrar paso a paso lo que debe hacer cada uno de tus compañeros. PERO 
-    recuerda hacer el ejercicio por turnos para que todos practiquen y repasen 
-    a la vez.
-
-  #. Crea un nuevo directorio (si estás trabajando en el mismo computador) por 
-    fuera del repositorio. 
-    
-  #. Clona el proyecto.
-
-  #. Crea una nueva rama para desarrollar tu tarea (cada uno tendrá un valor 
-    diferente para X)::
-
-      git switch -c taskX
-
-  #. Inicializa un proyecto de Arduino (CRTL+SHIFT+P, Arduino Initialize, selecciona
-    el sistema de desarrollo).
-
-  #. Desarrolla tu tarea, compila, realiza pruebas.
-  #. Realiza commit y push. Para crear el push::
-
-      git push -u origin taskX
-
-  #. Realiza un pull request. La idea es que uno de los miembros del 
-    equipo sea el encargado de hacer las pruebas de integración con todas 
-    las tareas de los compañeros. Ese miembro del equipo será el responsable 
-    de aceptar los pull request y de mezclar las contribuciones de todos 
-    en la rama principal (master en este caso o main si le cambiaste 
-    el nombre)::
-
-      gh pr create --title "Termine la taskX"
-
-  #. Ahora tu debes verificar el pull request de tu compañero, verifica 
-    que todo funciona correctamente y acepta el trabajo (por ahora). 
-
-  #. Ingresa de nuevo a tu cuenta de GitHub si están trabajando en el mismo 
-    computador. Vas a descargar a tu local TODOS los metadatos 
-    desde repositorio de GitHub::
-
-      git fetch --all --prune
-      git log --oneline --all
-
-  #. Ya puedes ver la rama en el remoto de uno de tus compañeros. Ahora 
-    mira las ramas locales y remotas::
-
-      git branch -a
-
-  #. Descarga la rama remota de tu compañero (a tu local)::
-
-      gh pr checkout 1
-
-  #. Verifica, compila, realiza pruebas y si todo está bien acepta el pull 
-    request::
-
-      gh pr merge -d -s
-
-    Te explico qué hace el comando. Acepta el pull request (merge), borra 
-    la rama task2 local y la remota (-d) y realiza un Squash merge (-s). 
-
-  #. Verifica que todo quedó bien::
-
-      git fetch --all --prune
-      git branch -a
-
-  #. Repite los pasos anteriores con los demás compañeros.
-
-  Ejercicio 12: monitor serial
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  Para profundizar un poco más en el funcionamiento de los programas 
-  vas a usar una herramienta muy interesante llamada terminal serial.
-  En este curso vas a utilizar ScriptCommunicator. La aplicación 
-  la encuentras en la carpeta Apps o apps del directorio del usuario.
-  Si estás usando otro sistema operativo diferente a Linux puedes 
-  descargar la aplicación `aquí <https://sourceforge.net/projects/scriptcommunicator/>`__
-
-  Para lanzar la aplicación abre el directorio ScriptCommunicator en la terminal 
-  y ejecuta::
-
-    ./ScriptCommunicator &
-
-  Ingresa al menu Settings, selecciona la pestaña serial port y elige 
-  el puerto (el puerto asignado por el sistema operativo a tu sistema 
-  de desarrollo) y la BaudRate a 115200. Los demás parámetros los puedes 
-  dejar igual.
-
-  Selecciona la pestaña console options y allí marca ÚNICAMENTE las opciones: 
-  utf8, receive, hex, mixed.
-
-  En la pestaña serial port ve a la sección general, selecciona como 
-  current interface serial port. Cierra la ventana de configuración.
-
-  .. warning:: IMPORTANTE
-
-    No olvides que para DEBES TENER conectado el sistema de desarrollo 
-    al computador para poder seleccionar el Port correcto.
-
-  Para conectar ScriptCommunicator al microcontrolador, solo tienes que 
-  dar click en Connect y para desconectar Disconnect.
-
-  .. warning:: ESTO ES CRÍTICO
-
-    SOLO UNA APLICACIÓN puede comunicarse a la vez con el microcontrolador.
-    Por tanto SOLO una aplicación puede abrir o conectarse al puerto 
-    serial que el sistema operativo le asigna al sistema de desarrollo.
-
-  Ejercicio 13: retrieval practice
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Ahora vas a probar ScriptCommunicator con el sistema de desarrollo.
-
-  Usa el template para trabajar en equipo y crea una tarea con 
-  este código:
-
-  .. code-block:: cpp
-
-    #include <Arduino.h>
-    #include "task1.h"
-
-    void task1()
-    {
-        enum class Task1States
-        {
-            INIT,
-            WAIT_DATA
-        };
-        static Task1States task1State = Task1States::INIT;
-
-        switch (task1State)
-        {
-        case Task1States::INIT:
-        {
-            Serial.begin(115200);
-            task1State = Task1States::WAIT_DATA;
-            break;
-        }
-
-        case Task1States::WAIT_DATA:
-        {
-            // evento 1:
-            // Ha llegado al menos un dato por el puerto serial?
-            if (Serial.available() > 0)
-            {                  
-                Serial.read();
-                Serial.print("Hola computador\n"); 
-            }
-            break;
-        }
-
-        default:
-        {
-            break;
-        }
-        }
-    }
-
-  Ahora abre ScriptCommunicator:
-
-  * Presiona el botón Connect.
-  * Selecciona la pestaña Mixed.
-  * Luego escribe una letra en la caja de texto que está debajo del botón 
-    ``send``. Si quiere coloca la letra `s`.
-  * Al lado del botón send selecciona la opción utf8.
-  * Dale click a send.
-  * Deberías recibir el mensaje ``Hola computador``.
-
-  Ahora PIENSA:
-
-  #. Analiza el programa.
-  #. `Abre <https://www.asciitable.com/>`__ esta tabla.
-  #. Analiza los números que se ven debajo de las letras. Nota 
-    que luego de la r, abajo, hay un número. ¿Qué es ese número?
-  #. ¿Qué relación encuentras entre las letras y los números?
-
-  Ejercicio 14: punteros
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  Vas a explorar un concepto fundamental de los lenguajes de programación 
-  C y C++. Se trata de los punteros. Para ello, te voy a proponer que 
-  escribas el siguiente programa (es una tarea). Para probarlo usa ScriptCommunicator. 
-
-  .. code-block:: cpp
-
-    #include <Arduino.h>
-    #include "task1.h"
-
-    void task1()
-    {
-        enum class Task1States
-        {
-            INIT,
-            WAIT_DATA
-        };
-        static Task1States task1State = Task1States::INIT;
-
-        switch (task1State)
-        {
-        case Task1States::INIT:
-        {
-            Serial.begin(115200);
-            task1State = Task1States::WAIT_DATA;
-            break;
-        }
-
-        case Task1States::WAIT_DATA:
-        {
-            // evento 1:
-            // Ha llegado al menos un dato por el puerto serial?
-            if (Serial.available() > 0)
-            {                  
-                // DEBES leer ese dato, sino se acumula y el buffer de recepción
-                // del serial se llenará.            
-                Serial.read(); 
-                uint32_t var = 0;
-                // Almacena en pvar la dirección de var.
-                uint32_t *pvar = &var;         
-                // Envía por el serial el contenido de var usando 
-                // el apuntador pvar.
-                printf("var content: %d\n", *pvar); 
-                // ESCRIBE el valor de var usando pvar
-                *pvar = 10;                    
-                printf("var content: %d\n", *pvar); 
-            }
-            break;
-        }
-
-        default:
-        {
-            break;
-        }
-        }
-    }
-
-  La variable ``pvar`` se conoce como puntero. Simplemente es una variable 
-  en la cual se almacenan direcciones de otras variables. En este caso, 
-  en pvar se almacena la dirección de ``var``. Nota que debes decirle al 
-  compilador el tipo de la variable (uint32_t en este caso) 
-  cuya dirección será almacenada en pvar. 
-
-  Ahora responde las siguientes preguntas:
-
-  * ¿Cómo se declara un puntero?
-  * ¿Cómo se define un puntero? (cómo se inicializa)
-  * ¿Cómo se obtiene la dirección de una variable?
-  * ¿Cómo se puede leer el contenido de una variable por medio de un 
-    puntero?
-  * ¿Cómo se puede escribir el contenido de una variable por medio 
-    de un puntero?
-
-  .. warning:: IMPORTANTE
-
-    No avances hasta que este ejercicio no lo tengas claro.
-
-  Ejercicio 15: punteros y funciones 
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Vas a escribir el siguiente programa, pero antes de ejecutarlo vas 
-  a tratar de lanzar una HIPÓTESIS de qué hace. Luego lo vas a 
-  ejecutar y compararás el resultado con lo que creías. Si el 
-  resultado no es el esperado, no deberías seguir al siguiente 
-  ejercicio hasta que no experimentes y salgas de la duda.
-
-  .. code-block:: cpp
-
-    #include <Arduino.h>
-    #include "task1.h"
-
-    static void changeVar(uint32_t *pdata)
-    {
-        *pdata = 10;
-    }
-
-    static void printVar(uint32_t value)
-    {
-        printf("var content: %d\n", value);
-    }
-
-    void task1()
-    {
-        enum class Task1States
-        {
-            INIT,
-            WAIT_DATA
-        };
-        static Task1States task1State = Task1States::INIT;
-
-        switch (task1State)
-        {
-        case Task1States::INIT:
-        {
-            Serial.begin(115200);
-            task1State = Task1States::WAIT_DATA;
-            break;
-        }
-
-        case Task1States::WAIT_DATA:
-        {
-            // evento 1:
-            // Ha llegado al menos un dato por el puerto serial?
-            if (Serial.available() > 0)
-            {
-                Serial.read();
-                uint32_t var = 0;
-                uint32_t *pvar = &var;
-                printVar(*pvar);
-                changeVar(pvar);
-                printVar(var);
-            }
-            break;
-        }
-
-        default:
-        {
-            break;
-        }
-        }
-    }
-
-  Ejercicio 16: retrieval practice (evaluación formativa)
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  Realiza un programa que intercambie mediante una función 
-  el valor de dos variables. Clona `este <https://classroom.github.com/a/DpmeuO2p>`__ 
-  repositorio para que trabajes con tus compañeros.
-
-  Ejercicio 17: punteros y arreglos
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Escribe el siguiente programa (como siempre te doy la tarea). ``ANALIZA`` qué 
-  hace, cómo funciona y qué necesitas para probarlo. No olvides revisar de nuevo 
-  una tabla ASCII. Para hacer las pruebas usa ScriptCommunicator y abre la pestaña 
-  Utf8. 
-
-  .. code-block:: cpp
-
-    #include <Arduino.h>
-    #include "task1.h"
-
-    static void processData(uint8_t *pData, uint8_t size, uint8_t *res)
-    {
-
-        uint8_t sum = 0;
-        for (int i = 0; i < size; i++)
-        {
-            sum = sum + (pData[i] - 0x30);
-        }
-        *res = sum;
-    }
-
-    void task1()
-    {
-        enum class Task1States
-        {
-            INIT,
-            WAIT_DATA
-        };
-        static Task1States task1State = Task1States::INIT;
-        static uint8_t rxData[5];
-        static uint8_t dataCounter = 0;
-
-        switch (task1State)
-        {
-        case Task1States::INIT:
-        {
-            Serial.begin(115200);
-            task1State = Task1States::WAIT_DATA;
-            break;
-        }
-
-        case Task1States::WAIT_DATA:
-        {
-            // evento 1:
-
-            if (Serial.available() > 0)
-            {
-                rxData[dataCounter] = Serial.read();
-                dataCounter++;
-                if (dataCounter == 5)
-                {
-                    uint8_t result = 0;
-                    processData(rxData, dataCounter, &result);
-                    dataCounter = 0;
-                    printf("result: %d\n",result);
-                }
-            }
-            break;
-        }
-
-        default:
-        {
-            break;
-        }
-        }
-    }
-
-
-  Piensa en las siguientes cuestiones:
-
-  * ¿Por qué es necesario declarar ``rxData`` static?
-  * dataCounter se define static y se inicializa en 0. Cada 
-    vez que se ingrese a la función loop dataCounter se inicializa 
-    a 0? ¿Por qué es necesario declararlo static?
-  * Observa que el nombre del arreglo corresponde a la dirección 
-    del primer elemento del arreglo. Por tanto, usar en una expresión 
-    el nombre rxData (sin el operador []) equivale a &rxData[0].
-  * En la expresión ``sum = sum + (pData[i] - 0x30);`` observa que 
-    puedes usar el puntero pData para indexar cada elemento del 
-    arreglo mediante el operador [].
-  * Finalmente, la constante ``0x30`` en ``(pData[i] - 0x30)`` ¿Por qué 
-    es necesaria? 
-    
-    
-  .. tip:: ALERTA DE SPOILER
-
-    Con respecto a la pregunta anterior. Al enviar un carácter numérico desde 
-    ScriptCommunicator este se envía codificado, es decir, se envía 
-    un byte codificado en ASCII que representa al número. Por tanto, 
-    es necesario decodificar dicho valor. El código ASCII que 
-    representa los valores del 0 al 9 es respectivamente: 0x30, 0x31, 
-    0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39. De esta manera, 
-    si envías el ``1`` recibirás el valor 0x31. Si restas de 0x31 el 
-    0x30 obtendrás el número 1.
-
-    Repite el ejercicio anterior pero esta vez usa la pestaña Mixed.
-
-  Ejercicio 18: análisis del api serial (investigación: hipótesis-pruebas)
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Para responder estas preguntas 
-  Qué crees que ocurre cuando:
-
-  * ¿Qué pasa cuando hago un `Serial.available() <https://www.arduino.cc/reference/en/language/functions/communication/serial/available/>`__?
-  * ¿Qué pasa cuando hago un `Serial.read() <https://www.arduino.cc/reference/en/language/functions/communication/serial/read/>`__?
-  * ¿Qué pasa cuando hago un Serial.read() y no hay nada en el buffer de
-    recepción?
-  * Un patrón común al trabajar con el puerto serial es este:
-
-  .. code-block:: cpp
-
-      if(Serial.available() > 0){
-          int dataRx = Serial.read() 
+          // Evento 2
+          if (btn1State == LOW)
+              digitalWrite(ledRed, HIGH);
+          // Evento 3
+          if (btn2State == LOW)
+              digitalWrite(ledGreen, HIGH);
+          // Evento 4
+          if (btn3State == LOW)
+              digitalWrite(ledBlue, HIGH);
+          // Evento 5
+          if (btn4State == LOW)
+              digitalWrite(ledYellow, HIGH);
+
+          break;
       }
+      default:
+      {
+          Serial.println("Error");
+      }
+      }
+  }
 
-  * ¿Cuántos datos lee Serial.read()?
-  * ¿Y si quiero leer más de un dato? No olvides que no se pueden leer más datos
-    de los disponibles en el buffer de recepción porque no hay
-    más datos que los que tenga allí.
-  * ¿Qué pasa si te envían datos por serial y se te olvida llamar Serial.read()?
+  void setup()
+  {
+      task1();
+  }
 
-  .. warning:: NO AVANCES SIN ACLARAR LAS PREGUNTAS ANTERIORES
+  void loop()
+  {
+      task1();
+  }
 
-    Te pido que resuelvas las preguntas anteriores antes de avanzar. 
-    ES MUY IMPORTANTE.  
+Ejercicio 7: análisis del programa de prueba  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Ejercicio 19: buffer de recepción
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Miremos algunos aspectos del programa:
 
-  Así se pueden leer 3 datos que han llegado al puerto serial:
+* Los programas los dividiremos en tareas. En este caso 
+  solo tenemos una. Las tareas son una manera de distribuir 
+  el trabajo para poder realizar el programa en equipo. Lo 
+  ideal es que las tareas sean independientes, pero no siempre 
+  se logra. Por tanto, será necesario definir mecanismos de 
+  comunicación entre ellas.
+* Este programa tiene un pseudo estado y un estado, pero 
+  desde ahora diremos que tiene 2 estados: 
 
   .. code-block:: cpp
+  
+      enum class Task1States
+      {
+          INIT,
+          WAIT_TIMEOUT
+      };
 
-      if(Serial.available() >= 3){
-          int dataRx1 = Serial.read()
-          int dataRx2 = Serial.read() 
-          int dataRx3 = Serial.read() 
-      }
+* ¿Qué son los estados? Son condiciones de espera. Son momentos 
+  en los cuales tu programa está esperando a que algo ocurra. En este 
+  caso en ``Task1States::INIT`` realmente no ``ESPERAMOS`` nada, por eso 
+  decimos que es un pseudo estado. Este estado SIEMPRE lo usaremos 
+  para configurar las condiciones INICIALES de tu programa.
+* Nota cómo se pasa de un estado a otro:: 
+  
+    task1State = Task1States::WAIT_TIMEOUT;
 
-  ¿Qué escenarios podría tener en este caso?
+* En el estado `Task1States::WAIT_TIMEOUT` estamos esperando a 
+  que ocurran varios ``EVENTOS``. En este caso los eventos los 
+  identificamos mediante los ``IF``. Por tanto, en un estado tu 
+  programa estará siempre preguntando por la ocurrencia de algunos 
+  eventos.
+* Cuando la condición de un evento se produce entonces tu programa 
+  ejecuta ACCIONES. Por ejemplo aquí:
 
-  .. code-block:: cpp
+  .. code-block:: c
 
-      if(Serial.available() >= 2){
-          int dataRx1 = Serial.read()
-          int dataRx2 = Serial.read() 
-          int dataRx3 = Serial.read() 
-      }
+    if (btn4State == LOW)
+      digitalWrite(ledYellow, HIGH);
+  
+  Si el evento ``if (btn4State == LOW)`` ocurre, el programa 
+  ejecutará una sola acción que será ``digitalWrite(ledYellow, HIGH);``.
+  Ten presente que si requieres ejecutar más acciones en este evento, 
+  tendrás que encerrarlas con llaves ``{}``.
 
-  Para responder, es necesario que experimentes. ESTOS son los ejercicios 
-  que realmente te ayudarán a aprender.
+Ejercicio 8: retrieval practice (evaluación formativa)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Ejercicio 20: miniRETO
-  ^^^^^^^^^^^^^^^^^^^^^^^
+Lo primero que debes hacer es aceptar 
+`esta <https://classroom.github.com/a/m7LkASpg>`__ evaluación e 
+ingresar a tu equipo de trabajo. 
 
-  Piense cómo podrías hacer lo siguiente:
+* Entra al repositorio y copia la url para clonarlo en tu 
+  computador local.
+* Realiza un programa que implemente la lógica que muestra la siguiente 
+  tabla: 
 
-  * Crea una aplicación con una tarea.
-  * La tarea debe tener su propio buffer de recepción y una capacidad 
-    para 32 bytes.
-  * La tarea almacena los datos del serial en su propio buffer de recepción
-    (el buffer será un arreglo).
-  * El buffer debe estar encapsulado en la tarea.
-  * Los datos almacenados en el buffer no se pueden perder
-    entre llamados a la tarea.
-  * La tarea debe tener algún mecanismo para ir contando 
-    la cantidad de datos que han llegado. ¿Cómo lo harías?
+  ==========  ==========  ==============
+  button1     button2     LED
+  ==========  ==========  ==============
+  LOW         LOW         LED RED
+  LOW         HIGH        LED GREEN
+  HIGH        LOW         LED BLUE
+  HIGH        HIGH        LED YELLOW
+  ==========  ==========  ==============
 
-  Inventa un programa que ilustre todo lo anterior.
+Antes de comenzar a programar:
 
-  Ejercicio 21: CASO DE ESTUDIO
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* ¿Entiendes el problema?
+* ¿Cuáles son los estados de tu programa?
+* ¿Cuáles serían los eventos?
+* ¿Cuáles serían las acciones?
 
-  Una aplicación interactiva posee un sensor que produce ruido eléctrico al
-  cambiar de estado. La siguiente figura, capturada con un osciloscopio
-  , muestra la señal del sensor.
+En el README.md del repositorio contesta las preguntas anteriores.
 
-  .. image:: ../_static/bounce.jpg
-    :alt: bounce
+Ejercicio 9: tareas concurrentes (evaluación formativa)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  En la figura se observa el ruido generado en la transición de la señal
-  al pasar del estado alto al estado bajo; sin embargo, el
-  mismo fenómeno ocurre al cambiar del estado bajo al alto. Nota que
-  además pueden ocurrir falsos positivos en la señal, que se manifiestan
-  como pulsos de muy corta duración.
-  Un ingeniero electrónica experto nos indica que podemos considerar un
-  cambio de estado en el sensor siempre que la señal esté estable por
-  lo menos durante 100 ms, es decir, sin ruido y sin falsos positivos.
-  Se debe realizar una aplicación que filtre el comportamiento ruidoso
-  del sensor y reporte por un puerto serial únicamente los valores
-  estables de la señal.
+Para sacar el máximo provecho a la CPU de tu microcontrolador lo 
+ideal es dividir el problema en varias tareas que se puedan 
+ejecutar de manera concurrente. La arquitectura de software 
+que te voy a proponer es esta:
 
-  Para este ejercicio debes:
+.. code-block:: cpp
 
-  * Realizar un diagrama con el modelo en máquinas de estado para la aplicación
-  * Definir escenarios de prueba usando diagramas de secuencias.
-  * Implementar el modelo.
-  * Verificar los escenarios definidos
+  #include "task1.h"
+  #include "task2.h"
+  #include "task3.h"
 
-  Te muestro un posible montaje en el protoboard para ilustrar este problema. 
-  Para este montaje elegí como puerto de entrada el número 19. Tu debes 
-  seleccionar el puerto que más te convenga en un tu microcontrolador.
+  void setup()
+  {
+      task1();
+      task2();
+      task3();
+  }
 
-  .. image:: ../_static/debounceCircuit.png
-    :alt: circuito
+  void loop()
+  {
+      task1();
+      task2();
+      task3();
+  }
 
-  Mira un posible diagrama de estados y un video corto 
-  donde te explico el diagrama:
+Nota entonces que tu programa está dividido en tres tareas. La función setup 
+se ejecuta una sola vez y ahí se llama por primera vez cada tarea. La función 
+loop se ejecuta cada que las tareas terminan, es como un ciclo infinito.
 
-  .. image:: ../_static/debounceStateDiagram.png
-    :alt: state machine
+Te voy a mostrar el código para la task1 y luego con tu equipo vas 
+a construir las demás tareas. La frecuencia del LED rojo será de 5 Hz
 
-  .. raw:: html
+Acepta `esta <https://classroom.github.com/a/t-YZPz7J>`__ evaluación.
 
-    <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/DTSqhBkYbJQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+El objetivo es que hagas un programa donde tengas 4 tareas y cada 
+una controle un LED a 0.5 Hz, 1 Hz, 2 Hz y 4 Hz.
 
-  Definición de los escenarios de prueba:
+Te voy a dejar como el ejemplo el programa de una de las tareas 
+que controlará el LED ROJO a 0.5 Hz. Te queda entonces el retor de realizar 
+las tareas para los otros LEDs. No olvides sincronizar tu repositorio 
+local con el remoto donde está la evaluación.
 
-  .. image:: ../_static/debounceEscenarios.png
-    :alt: Escenarios de prueba
+.. code-block:: cpp
 
-  .. raw:: html
-    
-      <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/FSfR9sLR3v4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+  void task1(){
+      enum class Task1States{
+          INIT,
+          WAIT_TO_TOGGLE_LED
+      };
+      static Task1States task1State = Task1States::INIT;
+      static uint32_t lasTime;
+      static constexpr uint32_t INTERVAL = 1000;
+      static constexpr uint8_t ledRed = 18;
+      static bool ledStatus = false;
 
-  El código de la solución será este:
-
-  .. code-block:: cpp
-
-      void setup() {
-        Serial.begin(115200);
-      }
-
-      void task() {
-        enum class DebounceStates {INIT, WAITING_CHANGE, WAITING_STABLE};
-        static DebounceStates debounceState =  DebounceStates::INIT;
-        static uint8_t inputPinStableValue;
-        static uint32_t referenceTime;
-        const uint8_t INPUTPIN = 19;
-        const uint32_t STABLETIMEOUT = 100;
-
-        switch (debounceState) {
-
-          case DebounceStates::INIT: {
-              pinMode(INPUTPIN, INPUT_PULLUP);
-              inputPinStableValue = digitalRead(INPUTPIN);
-              debounceState = DebounceStates::WAITING_CHANGE;
-              Serial.println("DebounceStates::INIT");
+      switch(task1State){
+          case Task1States::INIT:{
+              pinMode(ledRed,OUTPUT);
+              lasTime = millis();
+              task1State = Task1States::WAIT_TO_TOGGLE_LED;
               break;
-            }
-          case DebounceStates::WAITING_CHANGE: {
-              if (digitalRead(INPUTPIN) != inputPinStableValue) {
-                referenceTime = millis();
-                debounceState = DebounceStates::WAITING_STABLE;
-                Serial.println("pin changes");
-              }
+          }
 
-              break;
-            }
-          case DebounceStates::WAITING_STABLE: {
-              uint8_t pinState = digitalRead(INPUTPIN);
-              if ( pinState == inputPinStableValue) {
-                debounceState = DebounceStates::WAITING_CHANGE;
-              }
-              else if ( (millis() - referenceTime) >= STABLETIMEOUT) {
-                inputPinStableValue = pinState;
-                debounceState = DebounceStates::WAITING_CHANGE;
-                Serial.print("pinState:");
-                Serial.println(inputPinStableValue);
+          case Task1States::WAIT_TO_TOGGLE_LED:{
+              // evento 1:
+              uint32_t currentTime = millis();
+              if( (currentTime - lasTime) >= INTERVAL ){
+                  lasTime = currentTime;
+                  ledStatus = !ledStatus;
+                  digitalWrite(ledRed,ledStatus);
+                  
               }
               break;
-            }
+          }
 
-          default:
-            Serial.println("Error");
-            break;
-        }
+          default:{
+              break;
+          }
       }
 
+  }  
 
-      void loop() {
-        task();
+Ejercicio 10: monitor serial
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Para profundizar un poco más en el funcionamiento de los programas 
+vas a usar una herramienta muy interesante llamada terminal serial.
+En este curso vas a utilizar ScriptCommunicator. La aplicación 
+la puedes descargar de `este <https://sourceforge.net/projects/scriptcommunicator/>`__
+sitio. Al instalarla en los computadores de la Universidad usa un directorio 
+del usuario y deshabilita la creación de accesos directos en el escritorio y 
+no asocies los archivos .js con ScriptCommunicator.
+
+Para lanzar la aplicación abre el directorio donde la instalaste y lanza 
+el programa ScriptCommunicator.exe
+
+Ingresa al menu Settings, selecciona la pestaña serial port y elige 
+el puerto (el puerto asignado por el sistema operativo a tu sistema 
+de desarrollo) y el BaudRate a 115200. Los demás parámetros los puedes 
+dejar igual.
+
+Selecciona la pestaña console options y allí marca ÚNICAMENTE las opciones: 
+utf8, receive, hex, mixed.
+
+En la pestaña serial port ve a la sección general, selecciona como 
+current interface ``serial port``. Cierra la ventana de configuración.
+
+.. warning:: IMPORTANTE
+
+  No olvides que para DEBES TENER conectado el sistema de desarrollo 
+  al computador para poder seleccionar el Port correcto.
+
+Para conectar ScriptCommunicator al microcontrolador, solo tienes que 
+dar click en Connect y para desconectar Disconnect.
+
+.. warning:: ESTO ES CRÍTICO
+
+  SOLO UNA APLICACIÓN puede comunicarse a la vez con el microcontrolador.
+  Por tanto SOLO una aplicación puede abrir o conectarse al puerto 
+  serial que el sistema operativo le asigna al sistema de desarrollo.
+
+  Esto quiere decir que no puedes programar el raspberry mientras tienes 
+  abierto ScriptCommunicator conectado al puerto serial.
+
+Ejercicio 11: realiza algunas pruebas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ahora vas a probar ScriptCommunicator con el sistema de desarrollo.
+
+Utiliza el siguiente programa:
+
+.. code-block:: cpp
+
+  void task1()
+  {
+      enum class Task1States
+      {
+          INIT,
+          WAIT_DATA
+      };
+      static Task1States task1State = Task1States::INIT;
+
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
+          Serial.begin(115200);
+          task1State = Task1States::WAIT_DATA;
+          break;
       }
 
+      case Task1States::WAIT_DATA:
+      {
+          // evento 1:
+          // Ha llegado al menos un dato por el puerto serial?
+          if (Serial.available() > 0)
+          {                  
+              Serial.read();
+              Serial.print("Hola computador\n"); 
+          }
+          break;
+      }
 
-  Explicación del código:
+      default:
+      {
+          break;
+      }
+      }
+  }
 
-  .. raw:: html
+Ahora abre ScriptCommunicator:
 
-    <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/Gdc2VvRwwBM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+* Presiona el botón Connect.
+* Selecciona la pestaña Mixed.
+* Luego escribe una letra en la caja de texto que está debajo del botón 
+  ``send``. Si quiere coloca la letra `s`.
+* Al lado del botón send selecciona la opción utf8.
+* Dale click a send.
+* Deberías recibir el mensaje ``Hola computador``.
+
+Ahora PIENSA:
+
+#. Analiza el programa.
+#. `Abre <https://www.asciitable.com/>`__ esta tabla.
+#. Analiza los números que se ven debajo de las letras. Nota 
+   que luego de la r, abajo, hay un número. ¿Qué es ese número?
+#. ¿Qué relación encuentras entre las letras y los números?
+
+Ejercicio 12: punteros
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Vas a explorar un concepto fundamental de los lenguajes de programación 
+C y C++. Se trata de los punteros. Para ello, te voy a proponer que 
+escribas el siguiente programa (es una tarea). Para probarlo usa ScriptCommunicator. 
+
+.. code-block:: cpp
+
+  void task1()
+  {
+      enum class Task1States
+      {
+          INIT,
+          WAIT_DATA
+      };
+      static Task1States task1State = Task1States::INIT;
+
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
+          Serial.begin(115200);
+          task1State = Task1States::WAIT_DATA;
+          break;
+      }
+
+      case Task1States::WAIT_DATA:
+      {
+          // evento 1:
+          // Ha llegado al menos un dato por el puerto serial?
+          if (Serial.available() > 0)
+          {                  
+              // DEBES leer ese dato, sino se acumula y el buffer de recepción
+              // del serial se llenará.            
+              Serial.read(); 
+              uint32_t var = 0;
+              // Almacena en pvar la dirección de var.
+              uint32_t *pvar = &var;         
+              // Envía por el serial el contenido de var usando 
+              // el apuntador pvar.
+              printf("var content: %d\n", *pvar); 
+              // ESCRIBE el valor de var usando pvar
+              *pvar = 10;                    
+              printf("var content: %d\n", *pvar); 
+          }
+          break;
+      }
+
+      default:
+      {
+          break;
+      }
+      }
+  }
+
+La variable ``pvar`` se conoce como puntero. Simplemente es una variable 
+en la cual se almacenan direcciones de otras variables. En este caso, 
+en pvar se almacena la dirección de ``var``. Nota que debes decirle al 
+compilador el tipo de la variable (uint32_t en este caso) 
+cuya dirección será almacenada en pvar. 
+
+Ejecuta el programa. Observa lo que hace. Ahora responde las siguientes 
+preguntas mediante un ejercicio de ingeniería inversa:
+
+* ¿Cómo se declara un puntero?
+* ¿Cómo se define un puntero? (cómo se inicializa)
+* ¿Cómo se obtiene la dirección de una variable?
+* ¿Cómo se puede leer el contenido de una variable por medio de un 
+  puntero?
+* ¿Cómo se puede escribir el contenido de una variable por medio 
+  de un puntero?
+
+.. warning:: IMPORTANTE
+
+  No avances hasta que este ejercicio no lo tengas claro.
+
+Ejercicio 13: punteros y funciones 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Vas a escribir el siguiente programa, pero antes de ejecutarlo vas 
+a tratar de lanzar una HIPÓTESIS de qué hace. Luego lo vas a 
+ejecutar y compararás el resultado con lo que creías. Si el 
+resultado no es el esperado, no deberías seguir al siguiente 
+ejercicio hasta que no experimentes y salgas de la duda.
+
+.. code-block:: cpp
+
+  static void changeVar(uint32_t *pdata)
+  {
+      *pdata = 10;
+  }
+
+  static void printVar(uint32_t value)
+  {
+      printf("var content: %d\n", value);
+  }
+
+  void task1()
+  {
+      enum class Task1States
+      {
+          INIT,
+          WAIT_DATA
+      };
+      static Task1States task1State = Task1States::INIT;
+
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
+          Serial.begin(115200);
+          task1State = Task1States::WAIT_DATA;
+          break;
+      }
+
+      case Task1States::WAIT_DATA:
+      {
+          // evento 1:
+          // Ha llegado al menos un dato por el puerto serial?
+          if (Serial.available() > 0)
+          {
+              Serial.read();
+              uint32_t var = 0;
+              uint32_t *pvar = &var;
+              printVar(*pvar);
+              changeVar(pvar);
+              printVar(var);
+          }
+          break;
+      }
+
+      default:
+      {
+          break;
+      }
+      }
+  }
+
+Ejercicio 14: retrieval practice (evaluación formativa)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Realiza un programa que intercambie mediante una función 
+el valor de dos variables. 
+
+`Aquí <https://classroom.github.com/a/pWkF_5LT>`__ está el enlace 
+de la evaluación.
 
 
-  Verificación de los escenarios de prueba:
+Ejercicio 15: punteros y arreglos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    .. raw:: html
-    
-      <div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/dyONJlylaBo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+Escribe el siguiente programa (como siempre te doy la tarea). ``ANALIZA`` qué 
+hace, cómo funciona y qué necesitas para probarlo. No olvides revisar de nuevo 
+una tabla ASCII. Para hacer las pruebas usa ScriptCommunicator y abre la pestaña 
+Utf8. 
 
-  Ejercicio 22: RETO
-  ^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: cpp
 
-  Vas a crear y configurar tu proyecto para trabajar en equipo 
-  en `este <https://classroom.github.com/a/DJ4VeJ3m>`__ repositorio. Ten 
-  en cuenta que SOLO debes subir al repositorio estos archivos: .ino, .cpp, 
-  .h, .gitignore y README.md.
+  static void processData(uint8_t *pData, uint8_t size, uint8_t *res)
+  {
 
-  Vas a documentar la solución al problema en README.md.
+      uint8_t sum = 0;
+      for (int i = 0; i < size; i++)
+      {
+          sum = sum + (pData[i] - 0x30);
+      }
+      *res = sum;
+  }
 
-  En un escape room se requiere construir una aplicación para controlar 
-  una bomba temporizada.La siguiente figura ilustra la interfaz de la bomba. 
-  El circuito de control de la bomba está compuesto por tres sensores digitales,
-  en este caso pulsadores, denominados UP, DOWN, ARM,
-  un display (simulado con el serial), un LED que indica si la bomba está 
-  contando o no y una salida digital para simular la activación de la bomba, 
-  de nuevo otro LED.
+  void task1()
+  {
+      enum class Task1States
+      {
+          INIT,
+          WAIT_DATA
+      };
+      static Task1States task1State = Task1States::INIT;
+      static uint8_t rxData[5];
+      static uint8_t dataCounter = 0;
 
-  El controlador funciona así:
+      switch (task1State)
+      {
+      case Task1States::INIT:
+      {
+          Serial.begin(115200);
+          task1State = Task1States::WAIT_DATA;
+          break;
+      }
 
-  .. image:: ../_static/bomb.png
-    :alt: bomba
+      case Task1States::WAIT_DATA:
+      {
+          // evento 1:
 
-  * Inicia en modo de ``configuración``, es decir, sin hacer cuenta regresiva aún, 
-    la bomba está ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
-  * En el modo de configuración, los pulsadores UP y DOWN permiten
-    aumentar o disminuir el tiempo inicial de la bomba. El LED de bomba contando 
-    está PERMANENTEMENTE encendido.
-  * El tiempo se puede programar entre 10 y 60 segundos con cambios de 1 segundo.
-  * El tiempo de configuración se debe visualizar por el serial.
-  * El pulsador ARM arma la bomba.
-  * Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
-    por el serial por medio de una cuenta regresiva en segundos. El LED que 
-    indica que la bomba está contando enciende y apaga a una frecuencia de 1Hz.
-  * La bomba explotará (se activa la salida de activación de la bomba) cuando
-    el tiempo llegue a cero. En este punto el control regresará al modo de
-    configuración.
-  * Una vez la bomba esté armada es posible desactivarla ingresando un código
-    de seguridad. El código será la siguiente secuencia de pulsadores
-    presionados uno después de otro:  UP, DOWN, UP, DOWN, UP, UP, ARM.
-  * Si la secuencia se ingresa correctamente la bomba pasará de nuevo
-    al modo de configuración de lo contrario continuará la fatal cuenta
-    regresiva.
-  * Debes almacenar la clave de desarmado de la bomba en un arreglo.
-  * Debes definir una función a la cual le pasarás la dirección en memoria 
-    de dos arreglos: uno con la clave recibida y otro con la clave correcta. 
-    La función deberá devolver un `bool <https://www.arduino.cc/reference/en/language/variables/data-types/bool/>`__ 
-    así: true si la clave recibida es igual a la clave almacenada o 
-    false si las claves no coinciden.
+          if (Serial.available() > 0)
+          {
+              rxData[dataCounter] = Serial.read();
+              dataCounter++;
+              if (dataCounter == 5)
+              {
+                  uint8_t result = 0;
+                  processData(rxData, dataCounter, &result);
+                  dataCounter = 0;
+                  printf("result: %d\n",result);
+              }
+          }
+          break;
+      }
+
+      default:
+      {
+          break;
+      }
+      }
+  }
 
 
-  .. warning:: ALERTA DE SPOILER
+Piensa en las siguientes cuestiones:
 
-    Te voy a dejar dos recursos para que les des una mirar.
-    El `código <https://github.com/juanferfranco/ex22-bomb-2022-20>`__ y un 
-    `video <https://youtu.be/ZYu_O1PJutA?t=22>`__ capturado en clase donde se explica parte de la solución.
+* ¿Por qué es necesario declarar ``rxData`` static?
+* dataCounter se define static y se inicializa en 0. Cada 
+  vez que se ingrese a la función loop dataCounter se inicializa 
+  a 0? ¿Por qué es necesario declararlo static?
+* Observa que el nombre del arreglo corresponde a la dirección 
+  del primer elemento del arreglo. Por tanto, usar en una expresión 
+  el nombre rxData (sin el operador []) equivale a &rxData[0].
+* En la expresión ``sum = sum + (pData[i] - 0x30);`` observa que 
+  puedes usar el puntero pData para indexar cada elemento del 
+  arreglo mediante el operador [].
+* Finalmente, la constante ``0x30`` en ``(pData[i] - 0x30)`` ¿Por qué 
+  es necesaria? 
+  
+.. tip:: ALERTA DE SPOILER
 
+  Con respecto a la pregunta anterior. Al enviar un carácter numérico desde 
+  ScriptCommunicator este se envía codificado, es decir, se envía 
+  un byte codificado en ASCII que representa al número. Por tanto, 
+  es necesario decodificar dicho valor. El código ASCII que 
+  representa los valores del 0 al 9 es respectivamente: 0x30, 0x31, 
+  0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39. De esta manera, 
+  si envías el ``1`` recibirás el valor 0x31. Si restas de 0x31 el 
+  0x30 obtendrás el número 1.
+
+  Repite el ejercicio anterior pero esta vez usa la pestaña Mixed.
+
+Ejercicio 16: análisis del api serial (investigación: hipótesis-pruebas)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Qué crees que ocurre cuando:
+
+* ¿Qué pasa cuando hago un `Serial.available() <https://www.arduino.cc/reference/en/language/functions/communication/serial/available/>`__?
+* ¿Qué pasa cuando hago un `Serial.read() <https://www.arduino.cc/reference/en/language/functions/communication/serial/read/>`__?
+* ¿Qué pasa cuando hago un Serial.read() y no hay nada en el buffer de
+  recepción?
+* Un patrón común al trabajar con el puerto serial es este:
+
+.. code-block:: cpp
+
+    if(Serial.available() > 0){
+        int dataRx = Serial.read() 
+    }
+
+* ¿Cuántos datos lee Serial.read()?
+* ¿Y si quiero leer más de un dato? No olvides que no se pueden leer más datos
+  de los disponibles en el buffer de recepción porque no hay
+  más datos que los que tenga allí.
+* ¿Qué pasa si te envían datos por serial y se te olvida llamar Serial.read()?
+
+.. warning:: NO AVANCES SIN ACLARAR LAS PREGUNTAS ANTERIORES
+
+  Te pido que resuelvas las preguntas anteriores antes de avanzar. 
+  ES MUY IMPORTANTE.  
+
+Ejercicio 17: buffer de recepción
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Así se pueden leer 3 datos que han llegado al puerto serial:
+
+.. code-block:: cpp
+
+    if(Serial.available() >= 3){
+        int dataRx1 = Serial.read()
+        int dataRx2 = Serial.read() 
+        int dataRx3 = Serial.read() 
+    }
+
+¿Qué escenarios podría tener en este caso?
+
+.. code-block:: cpp
+
+    if(Serial.available() >= 2){
+        int dataRx1 = Serial.read()
+        int dataRx2 = Serial.read() 
+        int dataRx3 = Serial.read() 
+    }
+
+Para responder, es necesario que experimentes. ESTOS son los ejercicios 
+que realmente te ayudarán a aprender.
+
+Ejercicio 18: miniRETO
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Piense cómo podrías hacer lo siguiente:
+
+* Crea una aplicación con una tarea.
+* La tarea debe tener su propio buffer de recepción y una capacidad 
+  para 32 bytes.
+* La tarea almacena los datos del serial en su propio buffer de recepción
+  (el buffer será un arreglo).
+* El buffer debe estar encapsulado en la tarea.
+* Los datos almacenados en el buffer no se pueden perder
+  entre llamados a la tarea.
+* La tarea debe tener algún mecanismo para ir contando 
+  la cantidad de datos que han llegado. ¿Cómo lo harías?
+
+Inventa un programa que ilustre todo lo anterior.
