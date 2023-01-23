@@ -27,7 +27,7 @@ README.md
 En un escape room se requiere construir una aplicación para controlar 
 una bomba temporizada.La siguiente figura ilustra la interfaz de la bomba. 
 El circuito de control de la bomba está compuesto por tres sensores digitales o 
-en este caso botones, que serán simulados usando el puerto serial.
+en este caso botones que serán simulados usando el puerto serial.
 Los botones los llamaremos UP, DOWN y ARM. La bomba tiene un display que simularemos 
 mediante el puerto serial. 
 
@@ -148,7 +148,7 @@ En esta unidad vas a programar un microcontrolador similar al que tienen
 los dispositivos de captura de movimiento. En las unidades 2 y 3 vas 
 experimentar con dos tipos de protocolos de comunicación. Finalmente, 
 en la unidad 4 construirás una aplicación simple que integre todos los 
-elementos. 
+elementos y lo que aprendiste en las unidades previas.
 
 .. warning:: ESTO ES MUY IMPORTANTE 
 
@@ -158,8 +158,8 @@ elementos.
 
 .. note:: hay otro curso en el programa para seguir profundizando  
 
-    En el programa encontrarás otro curso llamado sistemas físicos 
-    interactivos 2. Es una curso de la línea de experiencias interactivas 
+    En el plan de estudios de la carrera encontrarás otro curso llamado 
+    sistemas físicos interactivos 2. Es una curso de la línea de experiencias interactivas 
     que puedes tomar como optativa del ciclo profesional si no estás en 
     la línea de experiencias. En este curso vas a construir una aplicación 
     usando todo lo que aprenderás en sistemas físicos interactivos 1. 
@@ -173,8 +173,9 @@ Un microcontrolador es un computador dedicado a ejecutar una aplicación
 específica para resolver un problema muy concreto. Por ejemplo, leer la información 
 de un sensor y transmitir esa información a un computador. 
 
-En este curso vas a utilizar el sistema 
-`raspberry pi pico <https://www.raspberrypi.com/products/raspberry-pi-pico/>`__. 
+En este curso vas a utilizar un sistema de desarrollo llamado  
+`raspberry pi pico <https://www.raspberrypi.com/products/raspberry-pi-pico/>`__ que 
+cuanta con un microcontrolador que podrás programar. 
 
 Ejercicio 3: ¿Cómo puedes programar el microcontrolador? 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -203,8 +204,9 @@ Ahora vas a probar que puedes programar el raspberry pi pico:
 * Conecta al computador el raspberry pi pico.
 * En el menú Herramientas/Placa/Raspberry PI selecciona la tarjeta 
   Raspberry Pi Pico.
-* En el menú Herramientas/Puerto selecciona asignado por el sistema 
-  operativo al raspberry. 
+* En el menú Herramientas/Puerto selecciona el puerto asignado por el sistema 
+  operativo al raspberry pi pico. Toma nota del nombre porque este mismo nombre 
+  lo usarás con otras aplicaciones (en mi caso es el COM5).
 
 Ingresa el siguiente programa:
 
@@ -232,7 +234,7 @@ superior izquierda. Al hacer esto ocurrirán varias cosas:
 
 * Se transformará el programa de código C++ a lenguaje de máquina.
 * Se enviará el código de máquina del computador a la memoria flash del 
-  raspberry pi a través del puerto que el sistema operativo le asignó 
+  raspberry pi a través del puerto serial que el sistema operativo le asignó 
   a la tarjeta.
 
 Deberás ver el LED ubicado al lado del conectar USB enciendo y apagando 
@@ -300,32 +302,13 @@ Algunos sitios que pueden serte de utilidad son:
 * `Port para raspberry pi pico del API de arduino <https://arduino-pico.readthedocs.io/en/latest/#>`__.
 *  `Sitio oficial del raspberry pi pico <https://www.raspberrypi.com/products/raspberry-pi-pico/>`__.
 
-Ejercicio 6: montaje
+Ejercicio 6: caso de estudio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-El siguiente ejercicio es un reto. Te voy a dar dos cosas. Unos materiales y un programa 
-de prueba. El objetivo es que hagas el montaje de prueba correctamente y lo pruebes 
-con el programa de prueba. ¿Qué debes hacer? Busca en Internet cómo conectar 
-LEDs y pulsadores (push buttons) a un raspberry pi pico en un protoboard.
-
-El montaje tendrá 4 sensores y 4 actuadores que estarán conectados al 
-raspberry pi pico así:
-
-====================== ====================
-Puerto del raspberry     dispositivo
-====================== ====================
-GP2                     button1   
-GP3                     button2
-GP4                     button3
-GP5                     button4
-GP18                    LED RED
-GP19                    LED GREEN
-GP20                    LED BLUE
-GP21                    LED YELLOW    
-====================== ====================
-
-Ten presente `este <https://datasheets.raspberrypi.com/pico/Pico-R3-A4-Pinout.pdf>`__ 
-documento para identificar los puertos del raspberry pi pico.
+Programa la siguiente aplicación en el controlador y analiza su funcionamiento. 
+Para descubrir lo que hace debes dar click en el ícono que queda en la esquina 
+superior derecha (Monitor Serie). Los números que vez allí son enviados desde 
+el microcontrolador al computador por medio del puerto USB.
 
 .. code-block:: cpp
 
@@ -341,18 +324,10 @@ documento para identificar los puertos del raspberry pi pico.
 
       // Definición de variables static (conservan
       // su valor entre llamadas a task1)
-      static uint32_t lasTime = 0;
+      static uint32_t lastTime = 0;
 
       // Constantes
       constexpr uint32_t INTERVAL = 1000;
-      constexpr uint8_t button1Pin = 2;
-      constexpr uint8_t button2Pin = 3;
-      constexpr uint8_t button3Pin = 4;
-      constexpr uint8_t button4Pin = 5;
-      constexpr uint8_t ledRed = 18;
-      constexpr uint8_t ledGreen = 19;
-      constexpr uint8_t ledBlue = 20;
-      constexpr uint8_t ledYellow = 21;
 
       // MÁQUINA de ESTADOS
 
@@ -360,48 +335,31 @@ documento para identificar los puertos del raspberry pi pico.
       {
       case Task1States::INIT:
       {
-          Serial.begin(115200);
-          pinMode(button1Pin, INPUT_PULLUP);
-          pinMode(button2Pin, INPUT_PULLUP);
-          pinMode(button3Pin, INPUT_PULLUP);
-          pinMode(button4Pin, INPUT_PULLUP);
-          pinMode(ledRed, OUTPUT);
-          pinMode(ledGreen, OUTPUT);
-          pinMode(ledBlue, OUTPUT);
-          pinMode(ledYellow, OUTPUT);
-          lasTime = millis();
+          // Acciones: 
+          
+          Serial.begin();
+
+          // Garantiza los valores iniciales 
+          // para el siguiente estado.
+          lastTime = millis();
           task1State = Task1States::WAIT_TIMEOUT;
+
+          Serial.print("Task1States::WAIT_TIMEOUT\n");
 
           break;
       }
       case Task1States::WAIT_TIMEOUT:
       {
-          uint8_t btn1State = digitalRead(button1Pin);
-          uint8_t btn2State = digitalRead(button2Pin);
-          uint8_t btn3State = digitalRead(button3Pin);
-          uint8_t btn4State = digitalRead(button4Pin);
           uint32_t currentTime = millis();
 
-          // Evento 1:
-          if ((currentTime - lasTime) >= INTERVAL)
+          // Evento
+          if ((currentTime - lastTime) >= INTERVAL)
           {   
-              lasTime = currentTime;
-              printf("btn1: %d,btn2: %d, btn3: %d, btn4: %d\n", btn1State, btn2State, btn3State, btn4State);
+              // Acciones:
+              lastTime = currentTime;
+              Serial.print(currentTime);
+              Serial.print('\n');
           }
-
-          // Evento 2
-          if (btn1State == LOW)
-              digitalWrite(ledRed, HIGH);
-          // Evento 3
-          if (btn2State == LOW)
-              digitalWrite(ledGreen, HIGH);
-          // Evento 4
-          if (btn3State == LOW)
-              digitalWrite(ledBlue, HIGH);
-          // Evento 5
-          if (btn4State == LOW)
-              digitalWrite(ledYellow, HIGH);
-
           break;
       }
       default:
@@ -421,17 +379,16 @@ documento para identificar los puertos del raspberry pi pico.
       task1();
   }
 
+Una pregunta. Pudiste ver este mensaje: ``Serial.print("Task1States::WAIT_TIMEOUT\n");``. 
+¿Por qué crees que ocurre esto?
+
 Ejercicio 7: análisis del programa de prueba  
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Miremos algunos aspectos del programa:
 
 * Los programas los dividiremos en tareas. En este caso 
-  solo tenemos una. Las tareas son una manera de distribuir 
-  el trabajo para poder realizar el programa en equipo. Lo 
-  ideal es que las tareas sean independientes, pero no siempre 
-  se logra. Por tanto, será necesario definir mecanismos de 
-  comunicación entre ellas.
+  solo tenemos una. Los programas más complejos tendrán muchas más.
 * Este programa tiene un pseudo estado y un estado, pero 
   desde ahora diremos que tiene 2 estados: 
 
@@ -462,13 +419,17 @@ Miremos algunos aspectos del programa:
 
   .. code-block:: c
 
-    if (btn4State == LOW)
-      digitalWrite(ledYellow, HIGH);
+    lastTime = currentTime;
+    Serial.print(currentTime);
+    Serial.print('\n');
   
-  Si el evento ``if (btn4State == LOW)`` ocurre, el programa 
-  ejecutará una sola acción que será ``digitalWrite(ledYellow, HIGH);``.
-  Ten presente que si requieres ejecutar más acciones en este evento, 
-  tendrás que encerrarlas con llaves ``{}``.
+  Si el evento ``if ((currentTime - lastTime) >= INTERVAL)`` ocurre, 
+  el programa ejecutará las acciones.
+
+* La línea ``Serial.print(currentTime);`` te permite enviar mensaje 
+  por USB. Estos mensajes los puedes ver usando un programa como el Monitor Serie.
+* Observa la función ``millis();`` ¿Para qué sirve? Recuerda que puedes 
+  buscar en `Internet <https://www.arduino.cc/reference/en/language/functions/time/millis/>`__.
 
 Ejercicio 8: retrieval practice (evaluación formativa)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -479,26 +440,15 @@ ingresar a tu equipo de trabajo.
 
 * Entra al repositorio y copia la url para clonarlo en tu 
   computador local.
-* Realiza un programa que implemente la lógica que muestra la siguiente 
-  tabla: 
+* Realiza un programa que envíe un mensaje al pasar un segundo, dos 
+  segundos y tres segundos. Luego de esto debe volver a comenzar.
 
-  ==========  ==========  ==============
-  button1     button2     LED
-  ==========  ==========  ==============
-  LOW         LOW         LED RED
-  LOW         HIGH        LED GREEN
-  HIGH        LOW         LED BLUE
-  HIGH        HIGH        LED YELLOW
-  ==========  ==========  ==============
+En el README.md del repositorio responde:
 
-Antes de comenzar a programar:
+* ¿Cuáles son los estados del programa?
+* ¿Cuáles son los eventos?
+* ¿Cuáles son las acciones?
 
-* ¿Entiendes el problema?
-* ¿Cuáles son los estados de tu programa?
-* ¿Cuáles serían los eventos?
-* ¿Cuáles serían las acciones?
-
-En el README.md del repositorio contesta las preguntas anteriores.
 
 Ejercicio 9: tareas concurrentes (evaluación formativa)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -510,9 +460,17 @@ que te voy a proponer es esta:
 
 .. code-block:: cpp
 
-  #include "task1.h"
-  #include "task2.h"
-  #include "task3.h"
+  void task1(){
+
+  }
+
+  void task2(){
+
+  }
+
+  void task3(){
+
+  }
 
   void setup()
   {
@@ -533,47 +491,42 @@ se ejecuta una sola vez y ahí se llama por primera vez cada tarea. La función
 loop se ejecuta cada que las tareas terminan, es como un ciclo infinito.
 
 Te voy a mostrar el código para la task1 y luego con tu equipo vas 
-a construir las demás tareas. La frecuencia del LED rojo será de 5 Hz
+a construir las demás tareas. La frecuencia del mensaje será de 1 Hz
 
 Acepta `esta <https://classroom.github.com/a/t-YZPz7J>`__ evaluación.
 
-El objetivo es que hagas un programa donde tengas 4 tareas y cada 
-una controle un LED a 0.5 Hz, 1 Hz, 2 Hz y 4 Hz.
+El objetivo es que hagas un programa donde tengas 4 tareas. La tarea 
+1 enviará un mensaje a 1 Hz. La tarea 2 a 0.5 Hz. La tarea 3 a 0.25 Hz
 
-Te voy a dejar como el ejemplo el programa de una de las tareas 
-que controlará el LED ROJO a 0.5 Hz. Te queda entonces el retor de realizar 
-las tareas para los otros LEDs. No olvides sincronizar tu repositorio 
-local con el remoto donde está la evaluación.
+Te voy a dejar como el ejemplo el programa de una de las tareas. 
+Te queda entonces el retor de realizar las otras tareas. 
+No olvides sincronizar tu repositorio local con el remoto donde está la evaluación.
 
 .. code-block:: cpp
 
   void task1(){
       enum class Task1States{
           INIT,
-          WAIT_TO_TOGGLE_LED
+          WAIT_FOR_TIMEOUT
       };
+
       static Task1States task1State = Task1States::INIT;
-      static uint32_t lasTime;
+      static uint32_t lastTime;
       static constexpr uint32_t INTERVAL = 1000;
-      static constexpr uint8_t ledRed = 18;
-      static bool ledStatus = false;
 
       switch(task1State){
           case Task1States::INIT:{
-              pinMode(ledRed,OUTPUT);
-              lasTime = millis();
-              task1State = Task1States::WAIT_TO_TOGGLE_LED;
+              lastTime = millis();
+              task1State = Task1States::WAIT_FOR_TIMEOUT;
               break;
           }
 
-          case Task1States::WAIT_TO_TOGGLE_LED:{
+          case Task1States::WAIT_FOR_TIMEOUT:{
               // evento 1:
               uint32_t currentTime = millis();
-              if( (currentTime - lasTime) >= INTERVAL ){
-                  lasTime = currentTime;
-                  ledStatus = !ledStatus;
-                  digitalWrite(ledRed,ledStatus);
-                  
+              if( (currentTime - lastTime) >= INTERVAL ){
+                  lastTime = currentTime;
+                  Serial.print("mensaje a 1Hz\n");
               }
               break;
           }
@@ -583,7 +536,17 @@ local con el remoto donde está la evaluación.
           }
       }
 
-  }  
+  }
+
+  void setup()
+  {
+      task1();
+  }
+
+  void loop()
+  {
+      task1();
+  }
 
 Ejercicio 10: monitor serial
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -604,7 +567,8 @@ de desarrollo) y el BaudRate a 115200. Los demás parámetros los puedes
 dejar igual.
 
 Selecciona la pestaña console options y allí marca ÚNICAMENTE las opciones: 
-utf8, receive, hex, mixed.
+utf8, receive, hex, mixed. En new line at byte coloca Nono y en Send on enter 
+key coloca None.
 
 En la pestaña serial port ve a la sección general, selecciona como 
 current interface ``serial port``. Cierra la ventana de configuración.
@@ -648,7 +612,7 @@ Utiliza el siguiente programa:
       {
       case Task1States::INIT:
       {
-          Serial.begin(115200);
+          Serial.begin();
           task1State = Task1States::WAIT_DATA;
           break;
       }
@@ -672,6 +636,16 @@ Utiliza el siguiente programa:
       }
   }
 
+  void setup()
+  {
+      task1();
+  }
+
+  void loop()
+  {
+      task1();
+  }
+
 Ahora abre ScriptCommunicator:
 
 * Presiona el botón Connect.
@@ -681,6 +655,8 @@ Ahora abre ScriptCommunicator:
 * Al lado del botón send selecciona la opción utf8.
 * Dale click a send.
 * Deberías recibir el mensaje ``Hola computador``.
+* Al final del mensaje hay un 0a ¿Qué es eso? ¿Por qué crees 
+  que puede ser importante?
 
 Ahora PIENSA:
 
@@ -731,10 +707,14 @@ escribas el siguiente programa (es una tarea). Para probarlo usa ScriptCommunica
               uint32_t *pvar = &var;         
               // Envía por el serial el contenido de var usando 
               // el apuntador pvar.
-              printf("var content: %d\n", *pvar); 
+              Serial.print("var content: ");
+              Serial.print(*pvar);
+              Serial.print('\n');
               // ESCRIBE el valor de var usando pvar
               *pvar = 10;                    
-              printf("var content: %d\n", *pvar); 
+              Serial.print("var content: ");
+              Serial.print(*pvar);
+              Serial.print('\n');
           }
           break;
       }
@@ -745,6 +725,17 @@ escribas el siguiente programa (es una tarea). Para probarlo usa ScriptCommunica
       }
       }
   }
+
+  void setup()
+  {
+      task1();
+  }
+
+  void loop()
+  {
+      task1();
+  }
+
 
 La variable ``pvar`` se conoce como puntero. Simplemente es una variable 
 en la cual se almacenan direcciones de otras variables. En este caso, 
@@ -785,7 +776,9 @@ ejercicio hasta que no experimentes y salgas de la duda.
 
   static void printVar(uint32_t value)
   {
-      printf("var content: %d\n", value);
+      Serial.print("var content: ");
+      Serial.print(value);
+      Serial.print('\n');
   }
 
   void task1()
@@ -828,6 +821,17 @@ ejercicio hasta que no experimentes y salgas de la duda.
       }
       }
   }
+
+  void setup()
+  {
+      task1();
+  }
+
+  void loop()
+  {
+      task1();
+  }
+
 
 Ejercicio 14: retrieval practice (evaluación formativa)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -893,7 +897,9 @@ Utf8.
                   uint8_t result = 0;
                   processData(rxData, dataCounter, &result);
                   dataCounter = 0;
-                  printf("result: %d\n",result);
+                  Serial.print("result: ");
+                  Serial.print(result);
+                  Serial.print('\n');
               }
           }
           break;
@@ -906,6 +912,16 @@ Utf8.
       }
   }
 
+
+  void setup()
+  {
+      task1();
+  }
+
+  void loop()
+  {
+      task1();
+  }
 
 Piensa en las siguientes cuestiones:
 
@@ -989,8 +1005,10 @@ Así se pueden leer 3 datos que han llegado al puerto serial:
 Para responder, es necesario que experimentes. ESTOS son los ejercicios 
 que realmente te ayudarán a aprender.
 
-Ejercicio 18: miniRETO
-^^^^^^^^^^^^^^^^^^^^^^^
+Ejercicio 18: retrieval practice (evaluación formativa)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Acepta la evaluación que está `aquí <https://classroom.github.com/a/ywGmlgl5>`__.
 
 Piense cómo podrías hacer lo siguiente:
 
@@ -1005,4 +1023,5 @@ Piense cómo podrías hacer lo siguiente:
 * La tarea debe tener algún mecanismo para ir contando 
   la cantidad de datos que han llegado. ¿Cómo lo harías?
 
-Inventa un programa que ilustre todo lo anterior.
+Inventa un programa que ilustre todo lo anterior y en el archivo README.md 
+escribe cómo solucionaste el problema.
