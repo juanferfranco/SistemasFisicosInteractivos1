@@ -4,20 +4,16 @@ Unidad 1. Software para sistemas embebidos
 Introducción
 --------------
 
-En esta unidad vas a aprender técnicas para programar 
-los sistemas embebidos (controladores) que permitirán capturar y/o generar 
-la información que fluye desde y hacia el mundo exterior 
-de la aplicación interactiva.
+En esta unidad vas a familiarizarte con el funcionamiento del computador 
+que permite interactuar directamente con los actuadores y sensores de 
+una aplicaciones interactiva que utiliza dispositivos externos.
 
 Propósito de aprendizaje
 ***************************
 
-Modelar el software del controlador, mediante estados, eventos 
-y acciones.
-
-Implementar el software del controlador mediante las técnicas de
-programación adecuadas que permitan sacarle el máximo provecho a
-dicho controlador.
+Aprenderás algunas técnicas de programación muy útiles 
+para resolver problemas con sistemas de cómputo reactivos. 
+Usarás estados, eventos y acciones.
 
 Evaluación
 ---------------------------
@@ -30,10 +26,16 @@ README.md
 
 En un escape room se requiere construir una aplicación para controlar 
 una bomba temporizada.La siguiente figura ilustra la interfaz de la bomba. 
-El circuito de control de la bomba está compuesto por tres sensores digitales,
-en este caso pulsadores, denominados UP, DOWN, ARM,
-un display (simulado con el serial), un LED que indica si la bomba está 
-armada o no y un LED que simula la activación de la bomba.
+El circuito de control de la bomba está compuesto por tres sensores digitales o 
+en este caso botones, que serán simulados usando el puerto serial.
+Los botones los llamaremos UP, DOWN y ARM. La bomba tiene un display que simularemos 
+mediante el puerto serial. 
+
+Los dispositivos simulados funcionan así:
+
+* Si se presiona UP envías: u.
+* Si se presiona DOWN envías: d.
+* Si se presiona ARM envías: a.
 
 .. image:: ../_static/bomb.png
   :alt: bomba
@@ -42,25 +44,21 @@ El controlador funciona así:
 
 * Inicia en modo de ``configuración``, es decir, sin hacer cuenta regresiva aún, 
   la bomba está ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
-* En el modo de configuración, los pulsadores UP y DOWN permiten
-  aumentar o disminuir el tiempo inicial de la bomba. El LED de bomba armada  
-  está PERMANENTEMENTE apagado.
+* El controlador indica SOLO UNA VEZ que está en modo configuración enviando el mensaje 
+  ``CONFIG``.
+* En el modo de configuración, los botones UP y DOWN permiten
+  aumentar o disminuir el tiempo inicial de la bomba.
 * El tiempo se puede programar entre 10 y 30 segundos con cambios de 1 segundo.
-* El tiempo de configuración se debe visualizar enviando 
-  el valor del conteo ``SOLO`` cada que cambie.
+* Cada que modifiques el tiempo debes enviar por el puerto serial el valor 
+  del conteo programado. ``SOLO`` debes enviar el mensaje cuando el tiempo se ajuste.
 * El pulsador ARM arma la bomba.
-* Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
-  por el serial por medio de una cuenta regresiva en segundos. El LED 
-  de bomba armada funciona a una frecuencia de 1 Hz.
-* La bomba explotará (se activa la salida de activación de la bomba) cuando
-  el tiempo llegue a cero. 
-* Cuando la bomba explote el LED que simula la activación de la bomba 
-  funcionará a 5 Hz durante 5 segundos. 
-* Luego de los 5 segundos el control regresará al modo de
-  configuración.
+* Una vez armada la bomba, envía el mensaje ``ARMED`` y comienza la cuenta 
+  regresiva que será visualizada por el serial por medio de una cuenta regresiva.
+* La bomba explotará cuando el tiempo llegue a cero. En ese momento debes enviar 
+  el mensaje BOOM y 5 segundos después volver al modo de configuración.
 * Una vez la bomba esté armada es posible desactivarla ingresando un código
   de seguridad. El código será la siguiente secuencia de pulsadores
-  presionados uno después de otro:  UP, DOWN, UP, DOWN, UP, UP, ARM. Ten 
+  presionados uno después de otro:  UP, DOWN, UP, DOWN, DOWN, DOWN, ARM. Ten 
   presente que el controlador solo debe verificar si la secuencia es correcta 
   una vez la reciba completa.
 * Si la secuencia se ingresa correctamente la bomba pasará de nuevo
@@ -73,17 +71,7 @@ El controlador funciona así:
   así: true si la clave recibida es igual a la clave almacenada o 
   false si las claves no coinciden.
 
-Arquitectura del software:
-
-Tu aplicación debe tener dos tareas:
-
-* La tarea del controlador.
-* Una tarea que controle un LED a una frecuencia de 0.5 Hz.
-
-Ten presente las siguientes restricciones:
-
-* Para la lectura de los botones ``DEBES`` usar la biblioteca 
-  `ezButton <https://github.com/ArduinoGetStarted/button>`__.
+La aplicación debe ser construida usando estados, eventos y acciones.
 
 Para la documentación:
 
@@ -699,7 +687,7 @@ Ahora PIENSA:
 #. Analiza el programa.
 #. `Abre <https://www.asciitable.com/>`__ esta tabla.
 #. Analiza los números que se ven debajo de las letras. Nota 
-  que luego de la r, abajo, hay un número. ¿Qué es ese número?
+   que luego de la r, abajo, hay un número. ¿Qué es ese número?
 #. ¿Qué relación encuentras entre las letras y los números?
 
 Ejercicio 12: punteros
