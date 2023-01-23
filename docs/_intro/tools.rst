@@ -15,5 +15,5 @@ que puedas practicar en casa.
 ¿Hardware para el curso?
 --------------------------
 
-Yo te dará el hardware que requieres y te prestaré un kit por equipo 
-de trabajo para que lo uses durante el curso.
+Requerimos un sistema de desarrollo microcontrolado. Te daré más 
+detalles en clase para contarte qué necesitarás.
