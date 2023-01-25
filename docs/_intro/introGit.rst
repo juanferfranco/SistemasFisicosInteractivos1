@@ -830,7 +830,7 @@ un repositorio local con un repositorio en GitHub.
   unos datos. Por ahora, solo coloca el nombre del repositorio, déjalo 
   público y salta hasta el botón Create repository.
 * Se debe crear un repositorio vacío. Busca la sección 
-  ``or push an existing repository from the command line```. 
+  ``or push an existing repository from the command line``. 
 * Escribe en la terminal el primer comando que comienza con 
   git remote. Aquí lo que estás haciendo es decirle a tu Git 
   local que guarde en tu repositorio local una referencia 
