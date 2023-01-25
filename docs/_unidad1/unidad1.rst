@@ -744,6 +744,8 @@ escribas el siguiente programa. Para probarlo usa ScriptCommunicator.
       task1();
   }
 
+¿No te está funcionando? No olvides que en un ESTADO siempre esperas 
+eventos. Si estás enviando el evento?
 
 La variable ``pvar`` se conoce como puntero. Simplemente es una variable 
 en la cual se almacenan direcciones de otras variables. En este caso, 
