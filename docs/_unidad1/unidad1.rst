@@ -156,7 +156,7 @@ elementos y lo que aprendiste en las unidades previas.
     te darás cuenta que contienen todos los elementos necesarios para que 
     entiendas cómo funcionan las aplicaciones que te mostré en los videos.
 
-.. note:: hay otro curso en el programa para seguir profundizando  
+.. note:: Hay otro curso en el programa para seguir profundizando  
 
     En el plan de estudios de la carrera encontrarás otro curso llamado 
     sistemas físicos interactivos 2. Es una curso de la línea de experiencias interactivas 
