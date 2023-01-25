@@ -652,7 +652,7 @@ Ahora abre ScriptCommunicator:
 * Presiona el botón Connect.
 * Selecciona la pestaña Mixed.
 * Luego escribe una letra en la caja de texto que está debajo del botón 
-  ``send``. Si quiere coloca la letra `s`.
+  ``send``. Si quieres coloca la letra `s`.
 * Al lado del botón send selecciona la opción utf8.
 * Dale click a send.
 * Deberías recibir el mensaje ``Hola computador``.
@@ -666,6 +666,7 @@ Ahora PIENSA:
 #. Analiza los números que se ven debajo de las letras. Nota 
    que luego de la r, abajo, hay un número. ¿Qué es ese número?
 #. ¿Qué relación encuentras entre las letras y los números?
+#. ¿Qué es el 0a al final del mensaje y para qué crees que sirva?
 
 Ejercicio 12: punteros
 ^^^^^^^^^^^^^^^^^^^^^^^
