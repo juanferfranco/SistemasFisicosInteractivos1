@@ -35,12 +35,14 @@ En el repositorio remoto se debe evidenciar:
     * Indica qué comandos se requieren para este proceso:
 
         * Clonar el repositorio.
-        * Autenticar la terminal en Gituhub.
+        * Autenticar la terminal en Github.
         * Configurar el nombre de usuario y correo electrónico para 
           este repositorio.
         * Hacer los commits solicitados.
-        * Sincronizar el repositorio local con el remoto.
-        * Hacer un logout de Gihub de la terminal.
+        * Enviar los cambios del repositorio local al remoto.
+        * Hacer un logout del cliente Github de la terminal si tienes gh, si 
+          no tienes gh entonces qué debes hacer con el credetial manager 
+          de windows.
         * Salirse de la cuenta de Github en el browser (en este 
           caso describe qué debes hacer).
 
