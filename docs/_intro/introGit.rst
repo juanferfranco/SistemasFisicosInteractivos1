@@ -831,17 +831,17 @@ un repositorio local con un repositorio en GitHub.
   público y salta hasta el botón Create repository.
 * Se debe crear un repositorio vacío. Busca la sección 
   ``or push an existing repository from the command line``. 
-* Escribe en la terminal el primer comando que comienza con 
-  git remote. Aquí lo que estás haciendo es decirle a tu Git 
+* Escribe en la terminal el primer comando. El que comienza con 
+  ``git remote``. Aquí lo que estás haciendo es decirle a tu Git 
   local que guarde en tu repositorio local una referencia 
-  a un repositorio remoto, la dices donde está ese repositorio 
+  a un repositorio remoto, le dices donde está ese repositorio 
   y además le colocas un nombre corto llamado ``origin`` para 
   no tener que estar escribiendo siempre la URL larga.
-* Escribe el segundo comando que comienza con git branch. Este 
+* Escribe el segundo comando que comienza con ``git branch``. Este 
   comando cambia el nombre de la rama actual. Posiblemente 
   tu rama actual se llame master. Luego del comando se llamará
   main.
-* Finalmente, escribe el comando que comienza con git push. Ahora 
+* Finalmente, escribe el comando que comienza con ``git push``. Ahora 
   le dirás a tu sistema de control de versión local que sincronice 
   el repositorio local con el remoto u origin en este caso.
 
@@ -854,11 +854,11 @@ un repositorio local con un repositorio en GitHub.
 
 .. warning:: ANTES DE TERMINAR UNA SESIÓN DE TRABAJO 
 
-    Esto es muy importante y SOLO AL TERMINAL una sesión de trabajo. 
+    Esto es muy importante y SOLO AL TERMINAR una sesión de trabajo. 
     Si el equipo de cómputo en el que estás 
     trabajando no es de tu propiedad, es muy importante que antes 
     de apagarlo, elimines tus credenciales. Para hacerlo, escribe 
-    en el buscador de windows, credential managener. Selecciona 
+    en el buscador de windows, ``credential managener``. Selecciona 
     las credenciales de windows. Busca la credencial de git con 
     tus datos y elimina dicha credencial. 
 
