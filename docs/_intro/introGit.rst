@@ -41,7 +41,7 @@ En el repositorio remoto se debe evidenciar:
         * Hacer los commits solicitados.
         * Enviar los cambios del repositorio local al remoto.
         * Hacer un logout del cliente Github de la terminal si tienes gh, si 
-          no tienes gh entonces qué debes hacer con el credetial manager 
+          no tienes gh entonces qué debes hacer con el credential manager 
           de windows.
         * Salirse de la cuenta de Github en el browser (en este 
           caso describe qué debes hacer).
