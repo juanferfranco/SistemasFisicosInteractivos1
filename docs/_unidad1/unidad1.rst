@@ -5,8 +5,8 @@ Introducción
 --------------
 
 En esta unidad vas a familiarizarte con el funcionamiento del computador 
-que permite interactuar directamente con los actuadores y sensores de 
-una aplicaciones interactiva que utiliza dispositivos externos.
+(microcontrolador) que permite interactuar directamente con los actuadores y 
+sensores de una aplicaciones interactiva que utiliza dispositivos externos.
 
 Propósito de aprendizaje
 ***************************
