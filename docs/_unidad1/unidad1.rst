@@ -856,7 +856,7 @@ de la evaluación.
 Ejercicio 15: punteros y arreglos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Escribe el siguiente programa (como siempre te doy la tarea). ``ANALIZA`` qué 
+Escribe el siguiente programa. ``ANALIZA`` qué 
 hace, cómo funciona y qué necesitas para probarlo. No olvides revisar de nuevo 
 una tabla ASCII. Para hacer las pruebas usa ScriptCommunicator y abre la pestaña 
 Utf8. 
@@ -935,7 +935,8 @@ Utf8.
 
 Piensa en las siguientes cuestiones:
 
-* ¿Por qué es necesario declarar ``rxData`` static?
+* ¿Por qué es necesario declarar ``rxData`` static? y si no es 
+  static ¿Qué pasa? ESTO ES IMPORTANTE, MUCHO.
 * dataCounter se define static y se inicializa en 0. Cada 
   vez que se ingrese a la función loop dataCounter se inicializa 
   a 0? ¿Por qué es necesario declararlo static?
