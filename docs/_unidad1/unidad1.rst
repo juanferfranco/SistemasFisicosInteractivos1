@@ -93,7 +93,7 @@ Ejercicio 1: introducción
 .. warning:: RECUERDA LO QUE APRENDERÁS EN ESTE CURSO
 
     En este curso aprenderás a construir aplicaciones interactivas 
-    que lean información del mundo exterior y lo modifiquen.
+    que integren y envíen información desde y hacia el mundo exterior.
 
 ¿Recuerdas que te mostré al iniciar el curso un trabajo de grado realizado 
 por estudiantes del programa? Te voy a pedir que veas algunos segundos del 
