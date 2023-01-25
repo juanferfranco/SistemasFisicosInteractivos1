@@ -552,7 +552,7 @@ No olvides sincronizar tu repositorio local con el remoto donde está la evaluac
 Ejercicio 10: monitor serial
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Para profundizar un poco más en el funcionamiento de los programas 
-vas a usar una herramienta muy interesante llamada terminal serial.
+vas a usar una herramienta muy interesante llamada monitor o terminal serial.
 En este curso vas a utilizar ScriptCommunicator. La aplicación 
 la puedes descargar de `este <https://sourceforge.net/projects/scriptcommunicator/>`__
 sitio. Al instalarla en los computadores de la Universidad usa un directorio 
@@ -568,7 +568,7 @@ de desarrollo) y el BaudRate a 115200. Los demás parámetros los puedes
 dejar igual.
 
 Selecciona la pestaña console options y allí marca ÚNICAMENTE las opciones: 
-utf8, receive, hex, mixed. En new line at byte coloca Nono y en Send on enter 
+utf8, receive, hex, mixed. En new line at byte coloca None y en Send on enter 
 key coloca None.
 
 En la pestaña serial port ve a la sección general, selecciona como 
@@ -585,7 +585,7 @@ dar click en Connect y para desconectar Disconnect.
 .. warning:: ESTO ES CRÍTICO
 
   SOLO UNA APLICACIÓN puede comunicarse a la vez con el microcontrolador.
-  Por tanto SOLO una aplicación puede abrir o conectarse al puerto 
+  Por tanto, SOLO una aplicación puede abrir o conectarse al puerto 
   serial que el sistema operativo le asigna al sistema de desarrollo.
 
   Esto quiere decir que no puedes programar el raspberry mientras tienes 
