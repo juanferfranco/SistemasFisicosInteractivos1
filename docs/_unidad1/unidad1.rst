@@ -273,7 +273,7 @@ introducción de control de versión.
   de los integrantes y el ID. Coloca en el archivo el resultado del cambio de 
   100 a 500. Describe lo que viste.
 * Realiza un segundo commit para incluir el archivo README.md con la documentación. 
-* Sincroniza el repositorio local con el remoto.
+* Envía los cambios del repositorio local al remoto.
 
 Ejercicio 4: retrieval practice (evaluación formativa)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
