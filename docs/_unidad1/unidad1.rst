@@ -411,8 +411,8 @@ Miremos algunos aspectos del programa:
     task1State = Task1States::WAIT_TIMEOUT;
 
 * En el estado `Task1States::WAIT_TIMEOUT` estamos esperando a 
-  que ocurran varios ``EVENTOS``. En este caso los eventos los 
-  identificamos mediante los ``IF``. Por tanto, en un estado tu 
+  que ocurran un ``EVENTO``. En este caso el evento lo 
+  identificamos mediante el ``IF``. Por tanto, en un estado tu 
   programa estará siempre preguntando por la ocurrencia de algunos 
   eventos.
 * Cuando la condición de un evento se produce entonces tu programa 
