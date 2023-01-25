@@ -656,8 +656,8 @@ Ahora abre ScriptCommunicator:
 * Al lado del botón send selecciona la opción utf8.
 * Dale click a send.
 * Deberías recibir el mensaje ``Hola computador``.
-* Al final del mensaje hay un 0a ¿Qué es eso? ¿Por qué crees 
-  que puede ser importante?
+* Nota que al final del mensaje hay un 0a ¿A qué letra 
+  corresponde?
 
 Ahora PIENSA:
 
