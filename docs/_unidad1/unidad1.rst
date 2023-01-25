@@ -25,7 +25,7 @@ Recuerda entregar la documentación solicitada en el archivo
 README.md
 
 En un escape room se requiere construir una aplicación para controlar 
-una bomba temporizada.La siguiente figura ilustra la interfaz de la bomba. 
+una bomba temporizada. La siguiente figura ilustra la interfaz de la bomba. 
 El circuito de control de la bomba está compuesto por tres sensores digitales o 
 en este caso botones que serán simulados usando el puerto serial.
 Los botones los llamaremos UP, DOWN y ARM. La bomba tiene un display que simularemos 
@@ -33,9 +33,9 @@ mediante el puerto serial.
 
 Los dispositivos simulados funcionan así:
 
-* Si se presiona UP envías: u.
-* Si se presiona DOWN envías: d.
-* Si se presiona ARM envías: a.
+* Para presionar UP envías por el serial la letra u.
+* Para presionar DOWN envías por el serial la letra d.
+* Para presionar ARM envías por el serial la letra a.
 
 .. image:: ../_static/bomb.png
   :alt: bomba
@@ -53,12 +53,12 @@ El controlador funciona así:
   del conteo programado. ``SOLO`` debes enviar el mensaje cuando el tiempo se ajuste.
 * El pulsador ARM arma la bomba.
 * Una vez armada la bomba, envía el mensaje ``ARMED`` y comienza la cuenta 
-  regresiva que será visualizada por el serial por medio de una cuenta regresiva.
+  regresiva que será enviado por el puerto serial.
 * La bomba explotará cuando el tiempo llegue a cero. En ese momento debes enviar 
   el mensaje BOOM y 5 segundos después volver al modo de configuración.
 * Una vez la bomba esté armada es posible desactivarla ingresando un código
   de seguridad. El código será la siguiente secuencia de pulsadores
-  presionados uno después de otro:  UP, DOWN, UP, DOWN, DOWN, DOWN, ARM. Ten 
+  presionados uno después de otro:  DOWN, DOWN, UP, UP, DOWN, UP, ARM. Ten 
   presente que el controlador solo debe verificar si la secuencia es correcta 
   una vez la reciba completa.
 * Si la secuencia se ingresa correctamente la bomba pasará de nuevo
