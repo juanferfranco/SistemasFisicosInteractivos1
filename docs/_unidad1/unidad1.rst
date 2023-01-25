@@ -378,8 +378,10 @@ el microcontrolador al computador por medio del puerto USB.
       task1();
   }
 
-Una pregunta. Pudiste ver este mensaje: ``Serial.print("Task1States::WAIT_TIMEOUT\n");``. 
-¿Por qué crees que ocurre esto?
+* ¿Cómo se ejecuta este programa?
+* Pudiste ver este mensaje: ``Serial.print("Task1States::WAIT_TIMEOUT\n");``. 
+  ¿Por qué crees que ocurre esto?
+* ¿Cuántas veces se ejecuta el código en el case Task1States::INIT?
 
 Ejercicio 7: análisis del programa de prueba  
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
