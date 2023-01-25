@@ -661,19 +661,25 @@ Ahora abre ScriptCommunicator:
 
 Ahora PIENSA:
 
-#. Analiza el programa.
+#. Analiza el programa. ¿Por qué enviaste la letra con el botón send?
+   ¿Qué evento verifica si ha llegado algo por el puerto serial?
 #. `Abre <https://www.asciitable.com/>`__ esta tabla.
 #. Analiza los números que se ven debajo de las letras. Nota 
    que luego de la r, abajo, hay un número. ¿Qué es ese número?
 #. ¿Qué relación encuentras entre las letras y los números?
 #. ¿Qué es el 0a al final del mensaje y para qué crees que sirva?
+#. Nota que luego de verificar si hay datos en el puerto serial 
+   se DEBE HACER UNA LECTURA del puerto. Esto se hace para retirar 
+   del puerto el dato que llegó. Si esto no se hace entonces 
+   parecerá que siempre tiene un datos disponible en el serial para leer.
+   ¿Tiene sentido esto? Si no es así habla con el profe.
 
 Ejercicio 12: punteros
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Vas a explorar un concepto fundamental de los lenguajes de programación 
 C y C++. Se trata de los punteros. Para ello, te voy a proponer que 
-escribas el siguiente programa (es una tarea). Para probarlo usa ScriptCommunicator. 
+escribas el siguiente programa. Para probarlo usa ScriptCommunicator. 
 
 .. code-block:: cpp
 
