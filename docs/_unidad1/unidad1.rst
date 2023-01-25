@@ -229,7 +229,7 @@ Ingresa el siguiente programa:
       }
     }
 
-Por último presiona el ícono Subir, el segundo ubicado en la esquina }
+Por último presiona el ícono Subir, el segundo ubicado en la esquina 
 superior izquierda. Al hacer esto ocurrirán varias cosas:
 
 * Se transformará el programa de código C++ a lenguaje de máquina.
