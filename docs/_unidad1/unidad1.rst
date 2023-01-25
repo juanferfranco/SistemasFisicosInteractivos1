@@ -499,8 +499,8 @@ Acepta `esta <https://classroom.github.com/a/t-YZPz7J>`__ evaluación.
 El objetivo es que hagas un programa donde tengas 3 tareas. La tarea 
 1 enviará un mensaje a 1 Hz. La tarea 2 a 0.5 Hz. La tarea 3 a 0.25 Hz
 
-Te voy a dejar como el ejemplo el programa de una de las tareas. 
-Te queda entonces el retor de realizar las otras tareas. 
+Te voy a dejar como ejemplo el programa de una de las tareas. 
+Te queda entonces el reto de realizar las otras tareas. 
 No olvides sincronizar tu repositorio local con el remoto donde está la evaluación.
 
 .. code-block:: cpp
