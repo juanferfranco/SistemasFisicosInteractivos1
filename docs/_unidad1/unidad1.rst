@@ -278,8 +278,7 @@ introducción de control de versión.
 Ejercicio 4: retrieval practice (evaluación formativa)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-En este punto tu equipo de trabajo ya debe estar creado. Solo tendrás 
-que aceptar la evaluación `aquí <https://classroom.github.com/a/MMdNOCa1>`__.
+Acepta la evaluación `aquí <https://classroom.github.com/a/MMdNOCa1>`__.
 
 En el repositorio de la evaluación solo debes adicionar un archivo README.md 
 con el nombre del equipo, integrantes y ID y un enlace a un repositorio 
