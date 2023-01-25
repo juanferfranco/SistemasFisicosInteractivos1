@@ -304,7 +304,7 @@ Algunos sitios que pueden serte de utilidad son:
 Ejercicio 6: caso de estudio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Programa la siguiente aplicación en el controlador y analiza su funcionamiento. 
+Programa la siguiente aplicación en el raspberry y analiza su funcionamiento. 
 Para descubrir lo que hace debes dar click en el ícono que queda en la esquina 
 superior derecha (Monitor Serie). Los números que vez allí son enviados desde 
 el microcontrolador al computador por medio del puerto USB.
