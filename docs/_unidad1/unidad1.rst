@@ -336,7 +336,7 @@ el microcontrolador al computador por medio del puerto USB.
       {
           // Acciones: 
           
-          Serial.begin();
+          Serial.begin(115200);
 
           // Garantiza los valores iniciales 
           // para el siguiente estado.
@@ -517,6 +517,7 @@ No olvides sincronizar tu repositorio local con el remoto donde está la evaluac
 
       switch(task1State){
           case Task1States::INIT:{
+              Serial.begin(115200);
               lastTime = millis();
               task1State = Task1States::WAIT_FOR_TIMEOUT;
               break;
@@ -613,7 +614,7 @@ Utiliza el siguiente programa:
       {
       case Task1States::INIT:
       {
-          Serial.begin();
+          Serial.begin(115200);
           task1State = Task1States::WAIT_DATA;
           break;
       }
