@@ -190,7 +190,7 @@ Para programar el microcontrolador vas a necesitar:
 
 Sigue estos pasos:
 
-* Descarga la versión .ZIP del IDE de arduino versión 1.8.19
+* Descarga la versión .ZIP del IDE de arduino `versión 1.8.19 <https://downloads.arduino.cc/arduino-1.8.19-windows.zip>`__
 * Descomprime el archivo .ZIP
 * Busca la carpeta donde está el archivo arduino.exe y crea 
   allí el carpeta portable.
