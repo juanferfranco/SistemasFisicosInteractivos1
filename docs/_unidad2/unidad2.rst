@@ -642,57 +642,59 @@ una mirada al material desde el ejercicio 1. Una iteración más. Pero
 la idea de este ejercicio es que le expliques a un compañero 
 cada ejercicio. Y la misión de tu compañero será hacerte preguntas.
 
-..
-  RETO 1: protocolo ASCII
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RETO 1: protocolo ASCII
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  El reto consiste en implementar un sistema que permita, mediante una 
-  interfaz gráfica, leer y modificar el estado de unos dispositivos externos 
-  a una aplicación interactiva. En este caso los dispositivos serán 
-  un pulsador y un LED. Ten presente que aunque este ejercicio usa 
-  dispositivos simples, los conceptos asociados a su manejo pueden fácilmente 
-  extrapolarse a dispositivos y sistemas más complejos. 
+El reto consiste en implementar un sistema que permita, mediante una 
+interfaz gráfica en Unity interactuar con el controlador. La idea 
+será que puedas leer el estado de una variable que estará 
+cambiando en el controlador y cambiar el estado del LED verde del 
+controlador. Ten presente que aunque este ejercicio usa 
+un controlador simple, los conceptos asociados a su manejo pueden fácilmente 
+extrapolarse a dispositivos y sistemas más complejos. 
 
-  Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
-  el microcontrolador.
+Este reto está compuesto por dos partes: aplicación para el PC y aplicación para 
+el controlador.
 
-  Aplicación para el PC:
+Aplicación para el PC:
 
-  * Debes gestionar las comunicaciones seriales y al mismo tiempo mostrar 
-    un contenido digital dinámica que permita observar fácilmente caídas 
-    en el framerate. Si quieres puedes usar la estrategia del contador que 
-    se incremente en cada frame o cambiar por algo que te guste más.
-  * Implementa una interfaz de usuario compuesta de botones y cajas de texto 
-    para controlar y visualizar.
+* Debes gestionar las comunicaciones seriales y al mismo tiempo mostrar 
+  un contenido digital dinámica que permita observar fácilmente caídas 
+  en el framerate. Si quieres puedes usar la estrategia del contador que 
+  se incremente en cada frame o cambiar por algo que te guste más.
+* Implementa una interfaz de usuario compuesta por botones y cajas de texto 
+  para controlar y visualizar.
 
-  Aplicación para el microcontrolador:
+Aplicación para el controlador:
 
-  La aplicación del microcontrolador debe tener dos tareas. La tarea uno 
-  debe encender y apagar un LED a una frecuencia de 1Hz. La segunda tarea 
-  debe enviar al PC el estado de un sensor digital (pulsador) y modificar 
-  una salida digital (LED, un segundo LED) con la información recibida 
-  desde el PC.
+* Programa un tarea que espere solicitudes de datos por parte de la aplicación 
+  interactiva. Por favor, recuerda de los ejercicios del trayecto de actividades 
+  cómo se hace esto.
+* La tarea debe incrementar cada segundo un contador.
+* La tarea debe poder modificar el estado del LED por solicitud de la aplicación 
+  interactiva.
 
-  Protocolo de comunicación:
+Protocolo de comunicación:
 
-  * El PC SIEMPRE inicia la comunicación solicitando información al 
-    microcontrolador. Es decir, desde la aplicación del PC siempre se solicita 
-    información y el microcontrolador responde.
-  * Desde el PC se enviarán tres solicitudes: ``read``, ``outON``, ``outOFF``.
-  * Para enviar los comandos anteriores usarás los botones 
-    de la interfaz de usuario.
-  * El microcontrolador enviará los siguientes mensajes de respuesta a cada solicitud:
+* El PC SIEMPRE inicia la comunicación solicitando información al 
+  controlador. Es decir, desde la aplicación del PC siempre se solicita 
+  información y el controlador responde.
+* Desde el PC se enviarán tres solicitudes: ``read``, ``outON``, ``outOFF``.
+* Para enviar los comandos anteriores usarás los botones 
+  de la interfaz de usuario.
+* El controlador enviará los siguientes mensajes de respuesta a cada solicitud:
+  
+  * Respuesta a ``read``: ``estadoContador,estadoLED``. Por ejemplo, una posible 
+    respuesta será: ``235,OFF```. Quiere decir que el contador está en 235 y el LED 
+    está apagado.
+  * Respuesta a ``outON`` y ``outOFF``: ``estadoLED``. Es decir, el 
+    controlador recibe el comando, realiza la orden solicitada y devuelve 
+    el estado en el cual quedó el LED luego de la orden.
     
-    * Respuesta a ``read``: ``estadoEntrada,estadoSalida``. Donde estadoEntrada y 
-      estadoSalida serán 0 o 1 dependiendo del estado del sensor digital y el estado 
-      actual de la salida. Por tanto, las posibles respuestas serán: 0,0 0,1 1,0 y 1,1.
-    * Respuesta a ``outON`` y ``outOFF``: ``estadoSalida``. Es decir, el 
-      microcontrolador recibe el comando, realiza la orden solicitada y devuelve 
-      el estado en el cual quedó la salida luego de la orden.
-      
-  * No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
-    ambas partes sepan que el mensaje está completo.
+* No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
+  ambas partes sepan que el mensaje está completo.
 
+..
   RETO 2: modificación de una aplicación interactiva
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
