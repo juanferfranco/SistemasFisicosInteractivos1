@@ -642,7 +642,7 @@ una mirada al material desde el ejercicio 1. Una iteración más. Pero
 la idea de este ejercicio es que le expliques a un compañero 
 cada ejercicio. Y la misión de tu compañero será hacerte preguntas.
 
-RETO 1: protocolo ASCII
+RETO: protocolo ASCII
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 El reto consiste en implementar un sistema que permita, mediante una 
@@ -693,59 +693,3 @@ Protocolo de comunicación:
     
 * No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
   ambas partes sepan que el mensaje está completo.
-
-..
-  RETO 2: modificación de una aplicación interactiva
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Acabas de llegar como recién egresado de entretenimiento digital a 
-  un estudio que acaba de lanzar uno juego que hará historia. 
-  El juego lo puedes clonar de `este <https://github.com/zigurous/unity-snake-tutorial>`__ 
-  repositorio.
-
-  Tu misión: debes modificar el código del juego para que se pueda jugar 
-  usando los 4 pulsadores del ESP32 y/o el teclado del computador. Lo que quieren 
-  en el estudio es modificar el juego para que cuatro personas puedan 
-  jugarlo interactuando con botones GIGANTES.
-
-  .. warning:: CAMBIO DE ÚLTIMA HORA
-
-    Es posible que ya tengas todo funcionando, pero tu jefe te pide 
-    que solo preguntes el estado de los pulsadores 
-    `cada 50 ms <https://docs.unity3d.com/ScriptReference/Time-deltaTime.html>`__.
-
-  .. tip:: TUTORIAL
-
-    El autor del juego tiene un video tutorial en youtube 
-    `aquí <https://youtu.be/U8gUnpeaMbQ>`__
-
-
-  Evaluación de la unidad
-  --------------------------
-
-  .. warning:: FECHA MÁXIMA DE ENTREGA
-
-      jueves 22 de septiembre en la segunda sesión de clase. La evaluación
-      debe estar en el repositorio y sustentada.
-
-  Enunciado 
-  **************
-
-  * Realiza una aplicación interactiva en Unity que te permita controlar 3 LEDs y 
-    leer el estado de 3 pulsadores.
-  * La aplicación debe tener la siguiente interfaz de usuario:
-
-    .. image:: ../_static/evalUI.png
-      :alt: App UI
-      :align: center
-      :width: 100%
-
-    |
-
-  ¿Qué debes entregar?
-  ***********************
-
-  El código fuente de las aplicaciones para el microcontrolador y para Unity en 
-  `este <https://classroom.github.com/a/UBJPVkq9>`__ repositorio.
-
-
