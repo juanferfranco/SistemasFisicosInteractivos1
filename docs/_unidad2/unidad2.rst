@@ -17,108 +17,17 @@ Construir aplicaciones interactivas que integren información
 del mundo exterior mediante el intercambio de información 
 codificada en ASCII.
 
-Temas
-********
-
-* Repaso rápido de algunos concepto de la programación orientada 
-  a objetos.
-* Técnicas de programación del lado del embebidos y el PC.
-* Construcción de aplicaciones interactivas en el computador.
-
 Trayecto de actividades
 ---------------------------
 
 Ejercicios
 ***********
 
-Ejercicio 1: repaso rápido de POO
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Piensa en las siguientes preguntas:
-
-* ¿Cuál es la diferencia entre una clase y un objeto?
-
-* Asume que dentro de un método tienes lo siguiente:
-
-  .. code-block:: csharp 
-
-    classType var= new classType()
-
-  * ¿En qué parte de la memoria queda almacenada var?
-  * ¿En qué parte de la memoria queda almacenado el objeto?
-  * ¿Para qué sirve new?
-  * ¿Para qué sirve el constructor de una clase?
-
-Considera el siguiente código donde crearemos dos perros Huskies. 
-Uno se llamará Pepe y el otro Tom. El color de los ojos de Pepe 
-será azul. A Tom lo crearemos copiando a Pepe y luego le cambiaremos el 
-color de los ojos a café.
-
-Al ejecutar el código el resultado es:
-
-.. code-block:: bash
-
-    pepe has a brown color on his right eye, and a brown color on his left eye.                                                                                                            
-    tom has a brown color on his right eye, and a brown color on his left eye.
-
-* ¿Por qué ocurre esto?
-* ¿Cómo podrías independizar los objetos?
-
-.. warning:: ALERTA DE SPOLIER
-
-    Una posible solución al problema de una mala clonación de perritos.
-
-.. code-block:: csharp
-
-      using System;
-        
-      public class Eye
-      {
-          public string Color;
-      }
-  
-      public class Husky
-      {
-          public string Name;
-          public Eye RightEye;
-          public Eye LeftEye;
-            
-          public Husky CopyHusky()
-          {
-              var newDog = new Husky {Name = Name, LeftEye = LeftEye, RightEye = RightEye};
-              return newDog;
-          }
-  
-          public string ToStringDog()
-          {
-                return String.Format("{0} has a {1} color on his right eye, and a {2} color on his left eye.", Name,RightEye.Color,LeftEye.Color);
-          }
-      }
-  
-      static class MainClass
-      {
-          public static void Main()
-          {
-              var pepe = new Husky {Name = "Pepe", LeftEye = new Eye(), RightEye = new Eye()};
-              pepe.LeftEye.Color = pepe.RightEye.Color = "blue";
-              
-              var tom = pepe.CopyHusky();
-              tom.Name = "Tom";
-              tom.LeftEye.Color = tom.RightEye.Color = "brown";
-              
-              
-              Console.WriteLine(pepe.ToStringDog());
-              Console.WriteLine(tom.ToStringDog());
-              Console.ReadKey();
-      
-          }
-      }
-
-Ejercicio 2: comunicación computador-controlador
+Ejercicio 1: comunicación computador-controlador
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La idea de este ejercicio es comunicar a través del puerto serial
-un computador con un controlador, en este caso un ESP32. La aplicación del computador 
+un computador con un controlador. La aplicación del computador 
 la construirás usando una plataforma de creación de contenido digital interactivo llamada 
 Unity 2021 LTS.
 
@@ -127,7 +36,7 @@ de todas las funciones usadas en la documentación de Arduino y de Microsoft.
 
 * ¿Quién debe comenzar primero, el computador o el controlador? ¿Por qué?
 
-Programa el ESP32 con este código:
+Programa el controlador con este código:
 
 .. code-block:: cpp
 
@@ -149,14 +58,19 @@ Ahora crea un proyecto en Unity 2021 LTS. Antes de continuar
 con la escritura del código configura:
 
 * La herramienta que usarás para editar tus programas. En este caso 
-  usarás Rider. Recuerda que este paso lo puedes hacer en el menú 
-  Edit, Preferences, External Tools y seleccionar Rider en la opción 
-  External Script Editor. Si estás trabajando en Windows puedes seleccionar 
-  Visual Studio.
+  usarás Visual Studio. Recuerda que este paso lo puedes hacer en el menú 
+  Edit, Preferences, External Tools y seleccionar Visual Studio en la opción 
+  External Script Editor.
 * Configura un scripting backend que permita soportar las comunicaciones 
   seriales con el controlador. Ve al menú Edit, Project Settings, Player, 
   Other Settings, busca la opción Scripting backend y selecciona Mono, luego 
   busca API Compatibility Level y seleccionar .NET Framework.  
+
+.. warning:: MUY IMPORTANTE
+
+  Siempre que trabajes con comunicaciones seriales y Unity es necesario 
+  seleccionar .NET Framework como el Scripting backend de lo contrario tendrás 
+  un error de compilación relacionado con el puerto Serial.
 
 Crea un nuevo C# Script y un Game Object. Añade el Script al GameObject. 
 Ve al menu Assets y luego selecciona Open C# Project. 
@@ -205,10 +119,18 @@ Ve al menu Assets y luego selecciona Open C# Project.
 Analiza:
 
 * ¿Por qué es importante considerar las propiedades PortName y BaudRate?
-* ¿Qué relación tienen las propiedades anteriores con el ESP32?
+* ¿Qué relación tienen las propiedades anteriores con el controlador?
 
-Ejercicio 3: experimento
+Ejercicio 2: experimento
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. warning:: ESTE SEMESTRE CAMBIAMOS DE controlador
+
+  Los videos que te mostraré utilizan un controlador y editor diferente para 
+  escribir los programas de este. NO HAY PROBLEMA. Puedes usar el mismo 
+  código para experimentar con el controlador que tienes ahora y con el IDE 
+  de Arduino.
+
 (Si quires ver antes unos videos cortos donde te explico
 un poco más el ejercicio te dejo 
 `este <https://youtube.com/playlist?list=PLX4ZVWZsOgzST9kfU9_ohOUYp_oDo2z48>`__ link).
@@ -255,11 +177,21 @@ Ahora realiza este experimento. Modifica la aplicación del PC así:
         }
     }
 
+.. warning:: Ojo con el puerto serial
+
+  Ten cuidado con el programa anterior. Nota esta línea:
+
+    _serialPort.PortName = "/dev/ttyUSB0";
+  
+  En tu sistema operativo debes averiguar en qué puerto está el controlador 
+  y cómo se llama. En Windows se usa COMx donde x es el número del puerto 
+  serial asignado por el sistema operartivo a tu controlador.
+
 Debe adicionar a la aplicación un elemento de GUI tipo Text - TextMeshPro y 
 y luego arrastrar una referencia a este elemento a myText (si no sabes 
 cómo hacerlo llama al profe).
 
-Y la aplicación del ESP32:
+Y la aplicación del controlador:
 
 .. code-block:: cpp
 
@@ -271,7 +203,7 @@ Y la aplicación del ESP32:
     if(Serial.available()){
       if(Serial.read() == '1'){
         delay(3000);
-        Serial.print("Hello from ESP32");
+        Serial.print("Hello from Raspi");
       }
     }
   }
@@ -287,7 +219,8 @@ la pantalla Game). ¿Qué pasa? ¿Por qué crees que ocurra esto?
 
 ¿Cómo podemos corregir el comportamiento anterior?
 
-Prueba con el siguiente código, luego ANALIZA CON DETENIMIENTO.
+Prueba con el siguiente código, luego ANALIZA CON DETENIMIENTO (no olvides) 
+cambiar el puerto serial. 
 
 .. code-block:: csharp
 
@@ -341,15 +274,21 @@ saber que ya tiene el mensaje completo?
 ¿Cómo podrías garantizar que antes de hacer la operación Read tengas 
 los 16 bytes listos para ser leídos?
 
-Y si los mensajes que envía el ESP32 tienen tamaños diferentes ¿Cómo 
+Y si los mensajes que envía el controlador tienen tamaños diferentes ¿Cómo 
 haces para saber que el mensaje enviado está completo o faltan 
 bytes por recibir?
 
-Ejercicio 4: eventos externos
+.. tip:: Piensa antes de continuar
+
+  Por favor piensa antes de continuar; sin embargo, no te preocupes 
+  porque te voy a contar en un momento qué puedes hacer para 
+  responder las preguntas anteriores.
+
+Ejercicio 3: eventos externos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Nota que en los experimentos anteriores el PC primero le pregunta al 
-ESP32 (le manda un ``1``) por datos. ¿Y si el PC no pregunta? Realiza 
+controlador (le manda un ``1``) por datos. ¿Y si el PC no pregunta? Realiza 
 el siguiente experimento. Programa ambos códigos y analiza su funcionamiento.
 
 .. code-block:: cpp
@@ -506,17 +445,21 @@ para resolver esto sería hacer que todos los mensajes tengan el mismo
 tamaño. De esta manera solo tendrías que preguntar 
 ``_serialPort.BytesToRead > SIZE``, donde SIZE sería el tamaño fijo; sin 
 embargo, esto le resta flexibilidad al protocolo de comunicación. 
-Nota que esto mismo ocurre en el caso del programa del ESP32 con 
+Nota que esto mismo ocurre en el caso del programa del controlador con 
 ``Serial.available() > 0``.
 
 ¿Cómo podrías solucionar este problema?
 
-Ejercicio 5: carácter de fin de mensaje
+.. tip:: PIENSA primero
+
+   El siguiente ejercicio te servirá para responder esta pregunta.
+
+Ejercicio 4: carácter de fin de mensaje
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ahora vas a analizar cómo puedes resolver el problema anterior.
 
-Analiza el siguiente programa del ESP32:
+Analiza el siguiente programa del controlador:
 
 .. code-block:: cpp
 
@@ -678,7 +621,7 @@ Analiza el siguiente programa del PC:
         }
     }
 
-Ejercicio 6: retrieval practice
+Ejercicio 5: retrieval practice
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Con todo lo que has aprendido hasta ahora vas a volver a darle 
@@ -686,108 +629,108 @@ una mirada al material desde el ejercicio 1. Una iteración más. Pero
 la idea de este ejercicio es que le expliques a un compañero 
 cada ejercicio. Y la misión de tu compañero será hacerte preguntas.
 
+..
+  RETO 1: protocolo ASCII
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-RETO 1: protocolo ASCII
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  El reto consiste en implementar un sistema que permita, mediante una 
+  interfaz gráfica, leer y modificar el estado de unos dispositivos externos 
+  a una aplicación interactiva. En este caso los dispositivos serán 
+  un pulsador y un LED. Ten presente que aunque este ejercicio usa 
+  dispositivos simples, los conceptos asociados a su manejo pueden fácilmente 
+  extrapolarse a dispositivos y sistemas más complejos. 
 
-El reto consiste en implementar un sistema que permita, mediante una 
-interfaz gráfica, leer y modificar el estado de unos dispositivos externos 
-a una aplicación interactiva. En este caso los dispositivos serán 
-un pulsador y un LED. Ten presente que aunque este ejercicio usa 
-dispositivos simples, los conceptos asociados a su manejo pueden fácilmente 
-extrapolarse a dispositivos y sistemas más complejos. 
+  Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
+  el microcontrolador.
 
-Este reto está compuesto de dos partes: aplicación para el PC y aplicación para 
-el microcontrolador.
+  Aplicación para el PC:
 
-Aplicación para el PC:
+  * Debes gestionar las comunicaciones seriales y al mismo tiempo mostrar 
+    un contenido digital dinámica que permita observar fácilmente caídas 
+    en el framerate. Si quieres puedes usar la estrategia del contador que 
+    se incremente en cada frame o cambiar por algo que te guste más.
+  * Implementa una interfaz de usuario compuesta de botones y cajas de texto 
+    para controlar y visualizar.
 
-* Debes gestionar las comunicaciones seriales y al mismo tiempo mostrar 
-  un contenido digital dinámica que permita observar fácilmente caídas 
-  en el framerate. Si quieres puedes usar la estrategia del contador que 
-  se incremente en cada frame o cambiar por algo que te guste más.
-* Implementa una interfaz de usuario compuesta de botones y cajas de texto 
-  para controlar y visualizar.
+  Aplicación para el microcontrolador:
 
-Aplicación para el microcontrolador:
+  La aplicación del microcontrolador debe tener dos tareas. La tarea uno 
+  debe encender y apagar un LED a una frecuencia de 1Hz. La segunda tarea 
+  debe enviar al PC el estado de un sensor digital (pulsador) y modificar 
+  una salida digital (LED, un segundo LED) con la información recibida 
+  desde el PC.
 
-La aplicación del microcontrolador debe tener dos tareas. La tarea uno 
-debe encender y apagar un LED a una frecuencia de 1Hz. La segunda tarea 
-debe enviar al PC el estado de un sensor digital (pulsador) y modificar 
-una salida digital (LED, un segundo LED) con la información recibida 
-desde el PC.
+  Protocolo de comunicación:
 
-Protocolo de comunicación:
-
-* El PC SIEMPRE inicia la comunicación solicitando información al 
-  microcontrolador. Es decir, desde la aplicación del PC siempre se solicita 
-  información y el microcontrolador responde.
-* Desde el PC se enviarán tres solicitudes: ``read``, ``outON``, ``outOFF``.
-* Para enviar los comandos anteriores usarás los botones 
-  de la interfaz de usuario.
-* El microcontrolador enviará los siguientes mensajes de respuesta a cada solicitud:
-  
-  * Respuesta a ``read``: ``estadoEntrada,estadoSalida``. Donde estadoEntrada y 
-    estadoSalida serán 0 o 1 dependiendo del estado del sensor digital y el estado 
-    actual de la salida. Por tanto, las posibles respuestas serán: 0,0 0,1 1,0 y 1,1.
-  * Respuesta a ``outON`` y ``outOFF``: ``estadoSalida``. Es decir, el 
-    microcontrolador recibe el comando, realiza la orden solicitada y devuelve 
-    el estado en el cual quedó la salida luego de la orden.
+  * El PC SIEMPRE inicia la comunicación solicitando información al 
+    microcontrolador. Es decir, desde la aplicación del PC siempre se solicita 
+    información y el microcontrolador responde.
+  * Desde el PC se enviarán tres solicitudes: ``read``, ``outON``, ``outOFF``.
+  * Para enviar los comandos anteriores usarás los botones 
+    de la interfaz de usuario.
+  * El microcontrolador enviará los siguientes mensajes de respuesta a cada solicitud:
     
-* No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
-  ambas partes sepan que el mensaje está completo.
+    * Respuesta a ``read``: ``estadoEntrada,estadoSalida``. Donde estadoEntrada y 
+      estadoSalida serán 0 o 1 dependiendo del estado del sensor digital y el estado 
+      actual de la salida. Por tanto, las posibles respuestas serán: 0,0 0,1 1,0 y 1,1.
+    * Respuesta a ``outON`` y ``outOFF``: ``estadoSalida``. Es decir, el 
+      microcontrolador recibe el comando, realiza la orden solicitada y devuelve 
+      el estado en el cual quedó la salida luego de la orden.
+      
+  * No olvides que DEBES terminar TODOS los mensajes con el carácter NEWLINE (``\n``) para que 
+    ambas partes sepan que el mensaje está completo.
 
-RETO 2: modificación de una aplicación interactiva
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  RETO 2: modificación de una aplicación interactiva
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Acabas de llegar como recién egresado de entretenimiento digital a 
-un estudio que acaba de lanzar uno juego que hará historia. 
-El juego lo puedes clonar de `este <https://github.com/zigurous/unity-snake-tutorial>`__ 
-repositorio.
+  Acabas de llegar como recién egresado de entretenimiento digital a 
+  un estudio que acaba de lanzar uno juego que hará historia. 
+  El juego lo puedes clonar de `este <https://github.com/zigurous/unity-snake-tutorial>`__ 
+  repositorio.
 
-Tu misión: debes modificar el código del juego para que se pueda jugar 
-usando los 4 pulsadores del ESP32 y/o el teclado del computador. Lo que quieren 
-en el estudio es modificar el juego para que cuatro personas puedan 
-jugarlo interactuando con botones GIGANTES.
+  Tu misión: debes modificar el código del juego para que se pueda jugar 
+  usando los 4 pulsadores del ESP32 y/o el teclado del computador. Lo que quieren 
+  en el estudio es modificar el juego para que cuatro personas puedan 
+  jugarlo interactuando con botones GIGANTES.
 
-.. warning:: CAMBIO DE ÚLTIMA HORA
+  .. warning:: CAMBIO DE ÚLTIMA HORA
 
-  Es posible que ya tengas todo funcionando, pero tu jefe te pide 
-  que solo preguntes el estado de los pulsadores 
-  `cada 50 ms <https://docs.unity3d.com/ScriptReference/Time-deltaTime.html>`__.
+    Es posible que ya tengas todo funcionando, pero tu jefe te pide 
+    que solo preguntes el estado de los pulsadores 
+    `cada 50 ms <https://docs.unity3d.com/ScriptReference/Time-deltaTime.html>`__.
 
-.. tip:: TUTORIAL
+  .. tip:: TUTORIAL
 
-  El autor del juego tiene un video tutorial en youtube 
-  `aquí <https://youtu.be/U8gUnpeaMbQ>`__
+    El autor del juego tiene un video tutorial en youtube 
+    `aquí <https://youtu.be/U8gUnpeaMbQ>`__
 
 
-Evaluación de la unidad
---------------------------
+  Evaluación de la unidad
+  --------------------------
 
-.. warning:: FECHA MÁXIMA DE ENTREGA
+  .. warning:: FECHA MÁXIMA DE ENTREGA
 
-    jueves 22 de septiembre en la segunda sesión de clase. La evaluación
-    debe estar en el repositorio y sustentada.
+      jueves 22 de septiembre en la segunda sesión de clase. La evaluación
+      debe estar en el repositorio y sustentada.
 
-Enunciado 
-**************
+  Enunciado 
+  **************
 
-* Realiza una aplicación interactiva en Unity que te permita controlar 3 LEDs y 
-  leer el estado de 3 pulsadores.
-* La aplicación debe tener la siguiente interfaz de usuario:
+  * Realiza una aplicación interactiva en Unity que te permita controlar 3 LEDs y 
+    leer el estado de 3 pulsadores.
+  * La aplicación debe tener la siguiente interfaz de usuario:
 
-  .. image:: ../_static/evalUI.png
-    :alt: App UI
-    :align: center
-    :width: 100%
+    .. image:: ../_static/evalUI.png
+      :alt: App UI
+      :align: center
+      :width: 100%
 
-  |
+    |
 
-¿Qué debes entregar?
-***********************
+  ¿Qué debes entregar?
+  ***********************
 
-El código fuente de las aplicaciones para el microcontrolador y para Unity en 
-`este <https://classroom.github.com/a/UBJPVkq9>`__ repositorio.
+  El código fuente de las aplicaciones para el microcontrolador y para Unity en 
+  `este <https://classroom.github.com/a/UBJPVkq9>`__ repositorio.
 
 
