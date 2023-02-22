@@ -17,6 +17,19 @@ Construir aplicaciones interactivas que integren información
 del mundo exterior mediante el intercambio de información 
 codificada en ASCII.
 
+Evaluación
+---------------------------
+
+.. warning:: TODO 
+
+  Regresa en unos días a esta sección (te prometo que no será muy larga
+  la espera). PERO NO OLVIDES por favor que el trayecto de actividades 
+  está alineado con la evaluación. ¿Qué quiere decir esto? Que los 
+  ejercicios del trayecto te servirán para poder solucionar la evaluación 
+  ya sea porque te explican un concepto o porque te dan herramientas 
+  para corregir posibles errores que aparecerán en el proceso de solución 
+  de la evaluación.
+
 Trayecto de actividades
 ---------------------------
 
