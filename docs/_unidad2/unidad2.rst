@@ -685,7 +685,7 @@ Protocolo de comunicación:
 * El controlador enviará los siguientes mensajes de respuesta a cada solicitud:
   
   * Respuesta a ``read``: ``estadoContador,estadoLED``. Por ejemplo, una posible 
-    respuesta será: ``235,OFF```. Quiere decir que el contador está en 235 y el LED 
+    respuesta será: ``235,OFF``. Quiere decir que el contador está en 235 y el LED 
     está apagado.
   * Respuesta a ``outON`` y ``outOFF``: ``estadoLED``. Es decir, el 
     controlador recibe el comando, realiza la orden solicitada y devuelve 
