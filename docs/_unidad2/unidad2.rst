@@ -49,7 +49,7 @@ Los requisitos son los siguientes:
 * El controlador deberá mantener un LED funcionando a una frecuencia de 1 Hz. El 
   objetivo de este LED es que verifiques de manera visual que la aplicación en el 
   controlador NUNCA se bloquea.
-* Define de MANERA CREATIVA cómo visualizarás el estado de las tres variables en `
+* Define de MANERA CREATIVA cómo visualizarás el estado de las tres variables en 
   la aplicación del PC. Dado que el requisito aquí es ser creativo, se espera que 
   la representación de las variables que haga cada equipo sea ÚNICA.
 
@@ -60,7 +60,8 @@ Entrega
 
   Lee primero todos los pasos antes de comenzar el proceso.
 
-Vas a entregar a realizar tu entrega en `este <https://classroom.github.com/a/UQpBQWIr>`__ repositorio.
+Vas a realizar tu entrega en `este <https://classroom.github.com/a/UQpBQWIr>`__ repositorio.
+
 Sigue los siguientes pasos:
 
 #. Verifica en el administrador de credenciales de Windows que el computador de la U en el que trabajas no 
