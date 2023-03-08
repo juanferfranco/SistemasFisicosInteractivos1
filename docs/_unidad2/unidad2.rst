@@ -20,15 +20,70 @@ codificada en ASCII.
 Evaluación
 ---------------------------
 
-.. warning:: TODO 
+.. warning:: SUSTENTACIÓN 
 
-  Regresa en unos días a esta sección (te prometo que no será muy larga
-  la espera). PERO NO OLVIDES por favor que el trayecto de actividades 
-  está alineado con la evaluación. ¿Qué quiere decir esto? Que los 
-  ejercicios del trayecto te servirán para poder solucionar la evaluación 
-  ya sea porque te explican un concepto o porque te dan herramientas 
-  para corregir posibles errores que aparecerán en el proceso de solución 
-  de la evaluación.
+  No olvides que la evaluación solo se considera entregada cuando la 
+  sustentes. Antes de sustentarla DEBES entregarla, es decir, toda la información 
+  solicitada debe estar en el repositorio. Verifica con tus compañeros de equipo 
+  que todos los requisitos se cumplen antes de sustentar.
+
+Enunciado
+**********
+
+Vas a realizar un sistema de aplicaciones interactivas que se comunicarán entre ellas.
+Una aplicación correrá en el PC y la otra en un controlador. 
+Los requisitos son los siguientes:
+
+* La aplicación en el PC debe interactuar con el usuario por medio de elementos 
+  de interfaz de usuario tales como botones, cajas de texto, textos en pantalla, etc.
+  Solo debes usar la consola para depuración, no para interacción.
+* La aplicación en el PC debe leer el estado de tres variables de la aplicación en 
+  el controlador. La aplicación en el PC debe solicitar las variables y el controlador 
+  las debe reportar TODAS en el mismo mensaje. ``OJO, no por separado, en el mismo 
+  mensaje``.
+* Desde el PC se debe configurar la velocidad a la cual cambiará la variable y si 
+  debe cambiar o no. También se debe poder definir el valor inicial de la variable.
+* El controlador verificará si debe cambiar la variable y la modificará en tiempo 
+  real siempre y cuando esté habilitada para cambiar. La función de cambio será 
+  simplemente aumentar en uno el valor previo.
+* El controlador deberá mantener un LED funcionando a una frecuencia de 1 Hz. El 
+  objetivo de este LED es que verifiques de manera visual que la aplicación en el 
+  controlador NUNCA se bloquea.
+* Define de MANERA CREATIVA cómo visualizarás el estado de las tres variables en `
+  la aplicación del PC. Dado que el requisito aquí es ser creativo, se espera que 
+  la representación de las variables que haga cada equipo sea ÚNICA.
+
+Entrega
+*********
+
+.. warning:: LEE PRIMERO
+
+  Lee primero todos los pasos antes de comenzar el proceso.
+
+Vas a entregar a realizar tu entrega en `este <https://classroom.github.com/a/UQpBQWIr>`__ repositorio.
+Sigue los siguientes pasos:
+
+#. Verifica en el administrador de credenciales de Windows que el computador de la U en el que trabajas no 
+   tenga credenciales de Github de otra persona guardadas. Si es el caso elimina las credenciales.
+#. Ingresa en el navegador web a tu cuenta en Github. 
+#. Abre git bash y clona el repositorio en tu computador local. Te pedirá las credenciales y las guardará en 
+   el administrador de credenciales. No olvides borrarlas antes de irte y también cerrar la sesión en el navegador. 
+#. Descarga el archivo .gitignore que está `aquí <https://github.com/github/gitignore/blob/main/Unity.gitignore>`__.
+#. Copia la carpeta de tu proyecto terminado en Unity en la carpeta con el repositorio.
+#. En el repositorio, abre la carpeta con el proyecto de Unity y copia el archivo .gitignore allí. Asegúrate 
+   que el archivo esté en la misma carpeta donde puedes ver los directorios Library, Temp, Obj, Logs, UserSettings.
+#. Copia la carpeta con el proyecto de Arduino en el repositorio, pero verifica que lo hagas fuera de la carpeta 
+   con el proyecto de Unity.
+#. Adiciona los archivos al repositorio.
+#. Realiza el commit.
+#. Realiza el push con la entrega.
+
+Ahora crea el archivo README.md en el repositorio y escribe allí para cada aplicación (Arduino y Unity):
+
+#. ¿Cuáles son los estados y por qué definiste esos estados?
+#. ¿Cuáles son los eventos y por qué definiste esos eventos?
+#. Incluye un enlace a un video de Youtube donde muestres la aplicación funcionando. 
+   RECUERDA que es un enlace, NO el video.
 
 Trayecto de actividades
 ---------------------------
