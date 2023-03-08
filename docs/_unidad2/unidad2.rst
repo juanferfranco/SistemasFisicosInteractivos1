@@ -51,7 +51,8 @@ Los requisitos son los siguientes:
   controlador NUNCA se bloquea.
 * Define de MANERA CREATIVA cómo visualizarás el estado de las tres variables en 
   la aplicación del PC. Dado que el requisito aquí es ser creativo, se espera que 
-  la representación de las variables que haga cada equipo sea ÚNICA.
+  la representación de las variables que haga cada equipo sea ÚNICA. ``NO USES TEXTO 
+  en la interfaz de usuario para visualizar los valores``.
 
 Entrega
 *********
