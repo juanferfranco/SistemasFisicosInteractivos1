@@ -48,7 +48,7 @@ Los requisitos son los siguientes:
   real siempre y cuando esté habilitada para cambiar. La función de cambio será 
   simplemente aumentar en uno el valor previo a la velocidad expecificada. Por ejemplo,
   si la variable 1 se configura con una velocidad de cambio de 10 conteos por segundo, 
-  el controlador deberá incrementar la varibale cada 100 ms. Ten presente 
+  el controlador deberá incrementar la variable cada 100 ms. Ten presente 
   que el PC puede detener (deshabilitar) el conteo en cualquier momento. Así mismo, 
   podrá cambiar el valor de la variable.  
 * El controlador deberá mantener un LED funcionando a una frecuencia de 1 Hz. El 
