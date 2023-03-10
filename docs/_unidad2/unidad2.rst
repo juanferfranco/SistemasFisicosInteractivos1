@@ -32,6 +32,7 @@ Enunciado
 
 Vas a realizar un sistema de aplicaciones interactivas que se comunicarán entre ellas.
 Una aplicación correrá en el PC y la otra en un controlador. 
+
 Los requisitos son los siguientes:
 
 * La aplicación en el PC debe interactuar con el usuario por medio de elementos 
@@ -45,7 +46,11 @@ Los requisitos son los siguientes:
   debe cambiar o no. También se debe poder definir el valor inicial de la variable.
 * El controlador verificará si debe cambiar la variable y la modificará en tiempo 
   real siempre y cuando esté habilitada para cambiar. La función de cambio será 
-  simplemente aumentar en uno el valor previo.
+  simplemente aumentar en uno el valor previo a la velocidad expecificada. Por ejemplo,
+  si la variable 1 se configura con una velocidad de cambio de 10 conteos por segundo, 
+  el controlador deberá incrementar la varibale en un conteno cada 100 ms. Ten presente 
+  que el PC puede detener (deshabilitar) el conteo en cualquier momento. Así mismo, 
+  podrá cambiar el valor de la variable.  
 * El controlador deberá mantener un LED funcionando a una frecuencia de 1 Hz. El 
   objetivo de este LED es que verifiques de manera visual que la aplicación en el 
   controlador NUNCA se bloquea.
