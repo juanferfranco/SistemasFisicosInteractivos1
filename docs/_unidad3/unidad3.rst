@@ -18,31 +18,12 @@ protocolos seriales binarios.
 Evaluación de la unidad
 --------------------------
 
-.. warning:: FECHA MÁXIMA DE ENTREGA
+.. warning:: TODO
 
-    jueves 13 de octubre de 2022 (semana 13) en la segunda sesión de clase. La evaluación
-    debe estar en el repositorio y sustentada.
-
-Enunciado 
-**************
-
-Considera el siguiente fragmento de `este <https://youtu.be/KMhbV1p3MWk?t=16>`__ video que va desde el segundo 16 hasta el 34. 
-También puede usar como referencia `este <https://youtu.be/L4WfHT_58Dg>`__ otro video.
-Tu misión será reproducir lo que ves allí bajo estas restricciones:
-
-#. Usa Unity.
-#. Usa el sensor ADXL345 o MPU-6050 que puedes comprar `aquí <https://www.didacticaselectronicas.com/index.php/sensores/acelerometros-gyros/m%C3%B3dulo-gy-291-tarjetas-sensores-acelerometros-3-ejes-3-grados-3dof-3-dof-adxl345-detail>`__ 
-   o `aquí <https://www.didacticaselectronicas.com/index.php/sensores/acelerometros-gyros/acelerometro-y-giroscopio-mpu-6050-mpu6050-tarjetas-sensores-acelerometros-giroscopios-de-6-ejes-imu-mpu6050-mpu-6050-detail>`__.
-#. Debes usar un protocolo de comunicación BINARIO.
-
-
-¿Qué debes entregar?
-***********************
-
-El código fuente de las aplicaciones para el microcontrolador y para Unity en 
-`este <https://classroom.github.com/a/eWHjsSqp>`__ repositorio. Documentar 
-en el archivo README.md cómo funciona el proceso de integración de los valores 
-que entrega el sensor con el contenido digital de la aplicación interactiva.
+    Regresa en unos días para ver el enunciado. Por ahora concentra 
+    todas tus energías en el trayecto de actividades. Trabaja despacio y 
+    sobre todo trata de entender todo lo que propone los ejercicios 
+    del trayecto.
 
 Trayecto de Actividades
 -------------------------
@@ -56,19 +37,24 @@ Ejercicio 1: introducción a los protocolos binarios - caso de estudio
 ¿Cómo se ve un protocolo binario? Para explorar este concepto te voy a 
 mostrar una hoja de datos de un sensor comercial que usa un protocolo de 
 comunicación binario. La idea es que explores tanto como quieras, pero 
-te quiero invitar que mires con detenimiento hasta la página 5.
+te quiero invitar a que mires con detenimiento hasta la página 5.
 
-Para responder esta pregunta vamos a utilizar como ejemplo
+Para responder la pregunta vas a utilizar como ejemplo
 `este sensor <http://www.chafon.com/productdetails.aspx?pid=382>`__.
 Cuyo manual del fabricante se encuentra `aquí <https://drive.google.com/open?id=1uDtgNkUCknkj3iTkykwhthjLoTGJCcea>`__
 
+Te recuerdo la pregunta:
+
+* ¿Cómo se ve un protocolo binario?
+* ¿Puedes describir las partes de un mensaje?
+* ¿Para qué sirve cada parte del mensaje?
 
 Ejercicio 2: API de arduino para implementar comunicaciones binarias
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-En `este <https://www.arduino.cc/reference/en/language/functions/communication/serial/>`__ enlace
-vas a mirar los siguientes métodos. Te pediré que los tengas a mano porque te servirán 
-para resolver problemas.
+En `este <https://www.arduino.cc/reference/en/language/functions/communication/serial/>`__ 
+enlace vas a mirar los siguientes métodos. Te pediré que los tengas a mano porque 
+te servirán para resolver problemas.
 
 .. code-block:: cpp
 
@@ -84,7 +70,7 @@ Nota que la siguiente función no está en el repaso:
    Serial.readBytesUntil() 
 
 La razón es que en un protocolo binario usualmente no tenemos
-un carácter de fin de trama, como si ocurre con los protocolos
+un carácter de FIN DE MENSAJE, como si ocurre con los protocolos
 ASCII, donde usualmente el último carácter es el ``\n``.
 
 Ejercicio 3: ¿Qué es el endian?
@@ -105,7 +91,15 @@ o transmitir primero el byte de mayor peso (big endian). Al diseñar un protocol
 binario debes escoger una de las dos posibilidades.
 
 Ejercicio 4: transmitir números en punto flotante
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: Desempolva ScriptCommunicator
+
+    Para este ejercicio vas a necesitar una herramienta 
+    que te permita ver los bytes que estás transmitiendo 
+    sin interpretarlos como caracteres ASCII. Usa ScriptCommunicator 
+    en Windows y Linux y CoolTerm en MacOS (te soporta la arquitectura 
+    Mx).
 
 ¿Cómo transmitir un número en punto flotante?
 
@@ -153,8 +147,12 @@ transmitir a un buffer o arreglo:
     }
 
 * ¿En qué endian estamos transmitiendo el número?
-
 * Y si queremos transmitir en el endian contrario?
+
+
+.. note:: ALERTA DE SPOILER
+
+    Te dejo una posible solución a la pregunta anterior.
 
 .. code-block:: cpp
 
@@ -178,13 +176,19 @@ transmitir a un buffer o arreglo:
         }
     }
 
-Ejercicio 5: aplicación interactiva
+Ejercicio 5: envía tres números en punto flotante
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ahora te voy a pedir que practiques. La idea es que transmitas 
+dos números en puntos flotante en ambos endian.
+
+Ejercicio 6: aplicación interactiva
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Te voy a pedir dos cosas en este punto:
 
 * Que repases (de la unidad anterior o en la documentación de C# de Microsoft) 
-  para qué sirven los siguientes fragmentos de código:
+  para qué sirven los siguientes fragmentos de código y qué están haciendo:
 
 
   .. code-block:: csharp
@@ -215,16 +219,18 @@ Te voy a pedir dos cosas en este punto:
           }
       }
 
-* Inventa una aplicación en Unity que utilice TODOS los métodos anteriores. Ten presente 
-  que necesitarás inventar también la aplicación del microcontrolador.
 
+.. note:: A PRACTICAR
 
-Ejercicio 6: RETO
+    Inventa una aplicación en Unity que utilice TODOS los métodos anteriores. 
+    Ten presente que necesitarás inventar también la aplicación del microcontrolador.
+
+Ejercicio 7: RETO
 ^^^^^^^^^^^^^^^^^^^
 
-Vas a enviar 2 números en punto flotante desde un microcontrolador a una aplicación en Unity usando comunicaciones 
-binarias. Inventa una aplicación en Unity que modifique dos dimensiones de una game object usando los valores 
-recibidos.
+Vas a enviar 2 números en punto flotante desde un microcontrolador a una aplicación en 
+Unity usando comunicaciones binarias. Inventa una aplicación en Unity que modifique 
+dos dimensiones de una game object usando los valores recibidos.
 
 .. tip:: Te voy a dejar una ayuda
 
@@ -241,3 +247,8 @@ recibidos.
       Console.WriteLine(System.BitConverter.ToSingle(buffer,0));
 
 
+.. note:: PRESTA ESPECIAL ATENCIÓN
+
+    Presta especial atención System.BitConverter.ToSingle. Te pediré 
+    que busques en la documentación de Microsoft de C# qué más 
+    te ofrece System.BitConverter
