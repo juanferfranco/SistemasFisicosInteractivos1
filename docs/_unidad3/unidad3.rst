@@ -41,7 +41,7 @@ requisitos:
   La idea con este byte es que el receptor pueda verificar que la información recibida 
   no se dañó en el camino. A esta idea se le conoce como checksum. NO PIERDAS DE VISTA 
   que el mensaje reporta TODAS las variables, ya no puedes tener mensajes para cada 
-  variable. Profe ¿Cómo calculo el checksum? (internet, chatgpt, Bingchat).
+  variable. Profe ¿Cómo calculo el checksum? (Internet, Chatgpt, Bingchat).
 * Ten presente que ahora las variables son números en punto flotante y el delta de cambio 
   ya no es UNO, sino un número en punto flotante.
 * Para modificar las variables del microcontrolador, el PC deberá enviar una trama 
