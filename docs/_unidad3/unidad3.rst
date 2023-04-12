@@ -18,12 +18,58 @@ protocolos seriales binarios.
 Evaluación de la unidad
 --------------------------
 
-.. warning:: TODO
+.. warning:: SUSTENTACIÓN 
 
-    Regresa en unos días para ver el enunciado. Por ahora concentra 
-    todas tus energías en el trayecto de actividades. Trabaja despacio y 
-    sobre todo trata de entender todo lo que propone los ejercicios 
-    del trayecto.
+  No olvides que la evaluación solo se considera entregada cuando la 
+  sustentes. Antes de sustentarla, toda la información 
+  solicitada debe estar en el repositorio. Verifica con tus compañeros de equipo 
+  que todos los requisitos se cumplen antes de sustentar.
+
+Enunciado
+**********
+
+Vas a modificar el proyecto de la unidad anterior para cumplir los siguientes 
+requisitos:
+
+* Vas a utilizar un protocolo binario para comunicar la aplicación del PC y el 
+  microcontrolador.
+* Para leer las variables del microcontrolador, el PC enviará un BYTE (tu decides cuál).
+  El microcontrolador responderá la solicitud con la información de ``TODAS`` las variables.
+  ¿Qué información tendrá la respuesta? Para cada variable dirá el valor actual, si está 
+  habilitada, el intervalo de cambio y el delta del cambio. Adicionalmente, deberás 
+  incluir un byte extra al final que cambiará en función de la información que envíes. 
+  La idea con este byte es que el receptor pueda verificar que la información recibida 
+  no se dañó en el camino. A esta idea se le conoce como checksum. NO PIERDAS DE VISTA 
+  que el mensaje reporta TODAS las variables, ya no puedes tener mensajes para cada 
+  variable. Profe ¿Cómo calculo el checksum? (internet, chatgpt, Bingchat).
+* Ten presente que ahora las variables son números en punto flotante y el delta de cambio 
+  ya no es UNO, sino un número en punto flotante.
+* Para modificar las variables del microcontrolador, el PC deberá enviar una trama 
+  igual a la anterior. Es decir, en un solo mensaje ENVIAR TODA la información de las 
+  variables.
+* Vas a simular un CASO de error, es decir, un caso en el cual el checksum calculado 
+  por el PC y el microcontrolador no es el mismo. Visualiza el resultado de esta simulación 
+  de manera creativa. Puedes simular este caso usando un botón en la GUI de la aplicación o 
+  como tu quieras.
+* El microcontrolador deberá mantener un LED funcionando a una frecuencia de 0.5 Hz. El 
+  objetivo de este LED es que verifiques de manera visual que la aplicación en el 
+  microcontrolador NUNCA se bloquea.
+
+Entrega
+*********
+
+.. warning:: LEE PRIMERO
+
+  Lee primero todos los pasos antes de comenzar el proceso.
+
+* Vas a realizar tu entrega en `este <https://classroom.github.com/a/TLgo0t9g>`__ repositorio.
+* Sigue los pasos de la unidad anterior para entregar tu proyecto de Unity.
+* Ahora crea el archivo README.md en el repositorio y escribe allí para cada aplicación (Arduino y Unity):
+
+    #. ¿Cuáles son los estados y por qué definiste esos estados?
+    #. ¿Cuáles son los eventos y por qué definiste esos eventos?
+    #. Incluye un enlace a un video de Youtube donde muestres la aplicación funcionando. 
+       RECUERDA que es un enlace, NO el video.
 
 Trayecto de Actividades
 -------------------------
