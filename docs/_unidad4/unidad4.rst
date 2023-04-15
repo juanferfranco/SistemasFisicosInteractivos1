@@ -20,31 +20,53 @@ Evaluación de la Unidad 4
 
 .. warning:: FECHA MÁXIMA DE ENTREGA
 
-    jueves 3 de noviembre de 2022 (semana 16) en la segunda sesión de clase. La evaluación
-    debe estar en el repositorio y sustentada.
+    Recuerda que el curso termina en la última sesión de la semana 16.
 
 
 Enunciado
 ***********
 
 Acabas de llegar a un nuevo estudio que desarrolla EXPERIENCIAS INTERACTIVAS y te encargan 
-que DISEÑES e IMPLEMENTES una EXPERIENCIA INTERACTIVA que use un acelerómetro (al menos dos ejes) para interactuar 
-con ella.
+que DISEÑES e IMPLEMENTES una EXPERIENCIA INTERACTIVA que combine un desarrollo anterior (unidad 3) 
+con algunos de los conceptos implementados en un plugin llamado 
+`Ardity <https://github.com/DWilches/Ardity>`__. Mira, el equipo de desarrollo del estudio simplemente 
+quiere mejorar el proyecto anterior pero sin depender de un plugin de un 
+tercero. Tu misión será entonces entender los conceptos del plugin y transferirlos al desarrollo 
+de la unidad 3. En particular deberás realizar un refactoring del proyecto de la unidad 3 así:
 
-Tienes las siguientes restricciones:
 
-* El proyecto debe hacerse en Unity.
-* La aplicación debe utilizar un plugin llamado 
-  `Ardity <https://assetstore.unity.com/packages/tools/integration/ardity-arduino-unity-communication-made-easy-123819>`__ 
-  para realizar la integración.
+* El código que maneja el puerto serial debe estar en su propio Thread o hilo.
+* El thread del serial debe comunicarse con el thread del motor utilizando una queue. 
+  Debes garantizar acceso único a la queue a cada thread para evitar posibles 
+  ``condiciones de carrera``.
+* Debes gestionar excepciones: abrir un puerto serial que no esta disponible, el cable 
+  serial se desconectó.
+* La aplicación debe recuperarse de una excepción y volver a funcionar una vez se restablezcan 
+  las condiciones. Esto debe ocurrir sin necesidad de reiniciarla.
+* La mayor parte de código de manejo del puerto serial debe estar en una clase abstracta. Utiliza 
+  una clase para implementar los métodos para enviar y recibir el mensaje serial tal como 
+  lo muestra Ardity con los métodos SendToWire y ReadFromWire.
 
 ¿Qué debes entregar?
 ***********************
 
-El código fuente de las aplicaciones para el microcontrolador y para Unity en 
-`este <https://classroom.github.com/a/iTmZ3w9l>`__ repositorio y la documentación 
-de cómo integraste la información del sensor para modificar el comportamiento de la 
-aplicación. Esta documentación la debes incluir en el archivo README.md.
+* Vas a realizar tu entrega en `este <https://classroom.github.com/a/rOd7jm0I>`__ repositorio.
+* Sigue los pasos de la unidad anterior para entregar tu proyecto de Unity.
+* Ahora crea el archivo README.md en el repositorio y escribe allí para la 
+  aplicación de Arduino: 
+
+    #. ¿Cuáles son los estados y por qué definiste esos estados?
+    #. ¿Cuáles son los eventos y por qué definiste esos eventos?
+
+  Para la aplicación en Unity:
+
+    #. Muestra y explica cómo usaste el concepto de Thread
+    #. Muestra y explica cómo usaste el concepto de Queue o cola.
+    #. Muestra y explica cómo usaste la gestión de excepciones.
+
+* Incluye un enlace a un video de Youtube donde muestres la aplicación funcionando. 
+  RECUERDA que es un enlace, NO el video.
+
 
 Trayecto de actividades
 -------------------------
@@ -55,10 +77,42 @@ Ejercicios
 Ejercicio 1: caso de estudio-plugin Ardity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Para iniciar con el plugin Ardity te propondré que realices la siguiente guía de trabajo que se encuentra 
-`aquí <https://docs.google.com/presentation/d/1uHoIzJGHLZxLbkMdF1o_Ov14xSD3wP31-MQtsbOSa2E/edit?usp=sharing>`__
+Lo primero que te propondré es que pongas a funcionar el demo del plugin. Todo lo relacionado 
+con el plugin estará en `este <https://github.com/DWilches/Ardity>`__ repositorio. 
+Comienza leyendo el archivo README.md.
 
-Ejercicio 2: análisis del plugin
+Cuando te sientas listo para comenzar a experimentar ten presente que la versión de Unity 
+con la cual se realizó el proyecto fue la 2018.2. Tu estás usando la versión 2021 LTS. Abre 
+el proyecto con tu versión de Unity.
+
+¿Por dónde comienzo? Ve a la carpeta Scenes y comienza a analizar cada una de las escenas 
+DemoScene. Son en total 5. En uno de los ejercicios que vienen vamos a analizar juntos la scene 
+DemoScene_UserPoll_ReadWrite. Tu debes decidir luego cuál scene se podría ajustar mejor 
+a tu encargo y tratar de analizarla a fondo tal como lo haremos a continuación.
+
+.. warning:: TE DIGO ALGO PARA QUE NO TE FRUSTRES
+
+    Mira, esta unidad toma tiempo. Entre más frescos e interiorizados tengas los conceptos 
+    de este curso y del curso de programación orientada a objetos más rápido podrás realizar 
+    el análisis. Piensa en esta unidad como la oportunidad de realizar un ejercicio 
+    de retrieval practice y aclarar con la ayuda de tu profesor algunos vacíos conceptuales 
+    que aún tengas. Quiero insistir con algo. Esta unidad no es trivial, tendrás que analizar 
+    a fondo y ser autocrítico.
+
+Ejercicio 2: concepto de hilo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Observa y analiza `este <https://youtu.be/5wpSidCEJn4>`__ video donde te explicarán rápidamente 
+el concepto de hilo.
+
+Te voy a pedir que veas `este <https://youtu.be/nv1NUR-qjcU>`__ video corto de 15 minutos donde 
+verás aplicado el concepto de hilo y por qué es necesario.
+
+Ahora, no te voy a pedir que hagas lo siguiente ya, claro, a menos que seas una persona muy curiosa y 
+además tengas tiempo. En `este <https://learn.microsoft.com/en-us/dotnet/standard/threading/managed-threading-basics>`__ 
+sitio puedes profundizar sobre el concepto de hilo.
+
+Ejercicio 3: análisis del plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ahora, vamos a analizar más detalladamente una de las escenas demo de Ardity:
@@ -80,7 +134,8 @@ Primero, vamos a analizar rápidamente el código de arduino (para un protocolo 
         // Print a heartbeat
         if ( (millis() - last_time) >  2000)
         {
-            Serial.println("Arduino is alive!!");
+            Serial.print("Arduino is alive!!");
+            Serial.print('\n');
             last_time = millis();
         }
     
@@ -88,10 +143,12 @@ Primero, vamos a analizar rápidamente el código de arduino (para un protocolo 
         switch (Serial.read())
         {
             case 'A':
-                Serial.println("That's the first letter of the abecedarium.");
+                Serial.print("That's the first letter of the abecedarium.");
+                Serial.print('\n');
                 break;
             case 'Z':
-                Serial.println("That's the last letter of the abecedarium.");
+                Serial.print("That's the last letter of the abecedarium.");
+                Serial.print('\n');
                 break;
         }
     }
@@ -109,11 +166,12 @@ Consideraciones a tener presentes con este código:
   sin embargo, cuando usamos Serial.read() sin verificar antes que tengamos datos en el
   buffer, es muy posible que el método devuelva un -1 indicando que no había nada en el
   buffer de recepción. NO OLVIDES ESTO POR FAVOR.
-* Por último nota que todos los mensajes enviados por arduino usan el método println.
-  ¿Y esto por qué es importante? porque println enviará la información que le pasemos
-  como argumento, codificada en ASCII, y adicionará al final 2 bytes: 0x0D y 0x0A. Estos
-  bytes serán utilizados por Ardity para detectar que la cadena enviada por Arduino está completa.
-  NO OLVIDES VERIFICAR LO ANTERIOR, si no logras identificarlo habla con el profe.
+* Por último nota que todos los mensajes enviados por arduino finalizan con:: 
+    
+    Serial.print('\n');
+
+  ¿Recuerdas en la unidad 2 para qué hacemos esto? ¿Podrías desde ahora predecir que 
+  tipo de protocolo utilizará este demo (ASCII o binario)? Si tienes dudas llama a tu profe.
 
 Ahora analicemos la parte de Unity/Ardity. Para ello, carguemos una de las escenas ejemplo:
 DemoScene_UserPoll_ReadWrite
@@ -122,6 +180,8 @@ DemoScene_UserPoll_ReadWrite
    :scale: 100%
    :align: center
    :alt: scenes
+
+|
 
 Nota que la escena tiene 3 gameObjects: Main Camera, SerialController y SampleUserPolling_ReadWrite.
 
@@ -133,12 +193,16 @@ y un script. El script tiene el código como tal de la aplicación del usuario.
    :align: center
    :alt: user_code
 
+|
+
 Nota que el script expone una variable pública: serialController. Esta variable es del tipo SerialController.
 
 .. image:: ../_static/serialControllerVarCode.jpg
    :scale: 100%
    :align: center
    :alt: controller
+
+|
 
 Esa variable nos permite almacenar la referencia a un objeto tipo SerialController. ¿Donde estaría ese
 objeto? Pues cuando el gameObject SerialController es creado nota que uno de sus componentes es un objeto
@@ -149,6 +213,8 @@ de tipo SerialController:
    :align: center
    :alt: serial controller GO
 
+|
+
 Entonces desde el editor de Unity podemos arrastrar el gameObject SerialController al campo SerialController
 del gameObject SampleUserPolling_ReadWrite y cuando se despliegue la escena, automáticamente se inicializará
 la variable serialController con la referencia en memoria al objeto SerialController:
@@ -157,6 +223,8 @@ la variable serialController con la referencia en memoria al objeto SerialContro
    :scale: 100%
    :align: center
    :alt: serial controller unity editor
+
+|
 
 De esta manera logramos que el objeto SampleUserPolling_ReadWrite tenga acceso a la información
 del objeto SerialController.
@@ -233,12 +301,14 @@ Observemos ahora qué datos y qué comportamientos tendría un objeto de tipo Sa
     }
 
 Vamos a realizar una prueba. Pero antes configuremos el puerto serial en el cual está conectado
-el arduino. El arduino ya debe estar corriendo el código de muestra del sitio web del plugin.
+el arduino. El arduino ya debe estar corriendo el código que te mostré al comienzo.
 
 .. image:: ../_static/serialControllerCOM.jpg
    :scale: 100%
    :align: center
    :alt: serial controller COM
+
+|
 
 En este caso el puerto es COM4.
 
@@ -250,6 +320,8 @@ en la consola:
    :scale: 100%
    :align: center
    :alt: unity console
+
+|
 
 Una vez la aplicación funcione nota algo en el código de SampleUserPolling_ReadWrite:
 
@@ -266,6 +338,8 @@ en el editor de Unity:
    :scale: 100%
    :align: center
    :alt: remove serial controller
+
+|
 
 Corre de nuevo la aplicación.
 
@@ -323,6 +397,8 @@ que la clase tiene dos variables protegidas importantes:
    :align: center
    :alt: serial controller UML class
 
+|
+
 .. code-block:: csharp
 
    protected Thread thread;
@@ -368,12 +444,12 @@ Vamos a concentrarnos ahora en serialThread que es un objeto de la clase SerialT
     }
 
 Al ver este código no se observa por ningún lado el método RunForever, que es el código
-que ejecutará nuestro hilo. ¿Dónde está? Observe que SerialThreadLines también es un
+que ejecutará nuestro hilo. ¿Dónde está? Observa que SerialThreadLines también es un
 AbstractSerialThread. Entonces es de esperar que el método RunForever esté en la clase
 AbstractSerialThread.
 
 Por otro lado nota que para enviar la letra A usamos el método SendSerialMessage también
-sobre los datos del objeto reverenciado por serialThread del cual ya sabemos que es un
+sobre los datos del objeto referenciado por serialThread del cual ya sabemos que es un
 SerialThreadLines y un AbstractSerialThread
 
 .. code-block:: csharp
@@ -461,7 +537,7 @@ Los detalles están en RunOnce():
         }
     }
 
-Y en este punto vemos finalmente qué es lo que pasa: para enviar la letra
+Y en este punto vemos finalmente qué es lo que pasa. Para enviar la letra
 A, el código del hilo pregunta si hay mensajes en la cola. Si los hay,
 nota que el mensaje se saca de la cola y se envía:
 
@@ -513,12 +589,12 @@ hilo:
 
 .. warning::
 
-  Remarks
-  Note that while this method does not return the NewLine value, the NewLine value is removed from the input buffer.
-
   By default, the ReadLine method will block until a line is received. If this behavior is undesirable, set the
   ReadTimeout property to any non-zero value to force the ReadLine method to throw a TimeoutException if
   a line is not available on the port.
+
+  Note that while this method does not return the NewLine value, the NewLine value is removed from the input buffer.
+
 
 Por tanto, volviendo a RunOnce:
 
@@ -579,7 +655,34 @@ Mira con detenimiento el código. La siguiente línea te dará una pista.
     // to complete.
     private const int readTimeout = 100;
 
-Ejercicio 3: evaluación formativa
+Ejercicio 4: excepciones
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+¿Cómo puedes identificar la gestión de excepciones en el código? El código 
+que considera las posibles excepciones está arropado con la estructura de control 
+try catch. 
+
+Regresa al método ``RunForever``. Observa AttemptConnection. ¿Qué pasa al ejecutar 
+serialPort.Open(); si no tienes un microcontrolador conectado o el puerto serial 
+configurado no el correcto?
+
+En este punto quiero que veas un poco de documentación. ¿Cómo hago para saber 
+si un método puede generar excepciones? Eso te lo dice la documentación. Te dejo 
+un ejemplo `aquí <https://learn.microsoft.com/en-us/dotnet/api/system.io.ports.serialport.open?view=netframework-4.8.1#exceptions>`__ 
+para el método Open.
+
+Preguntas para que pienses:
+
+* Luego de ver la documentación podrías decir si ¿Es posible determinar que la excepción 
+  está ocurriendo porque el nombre del puerto no comienza por la palabra COM?
+* ¿Serial posible indicarle al usario que el puerto no puede abrirse porque otro programa 
+  ya lo tiene abierto?
+* En la scene DemoScene_UserPoll_ReadWrite ¿Qué pasa si desconectas el microcontrolador? y ¿Qué 
+  pasa si lo vuelves a conectar?
+* Explica tan detallado como puedas qué ocurre con la aplicación al desconectar y luego volver 
+  a conectar el microcontrolador.
+
+Ejercicio 5: evaluación formativa
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Crea un proyecto nuevo en Unity.
