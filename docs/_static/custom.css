@@ -1,0 +1,13 @@
+[data-theme='dark'] h1 {
+    color: #ffab40 !important;
+}
+
+[data-theme='dark'] .table {
+    background-color: #14181e !important; /* Color de fondo oscuro */
+}
+
+[data-theme='dark'] .table th.head, [data-theme='dark'] .table td {
+    color: #fff !important; /* Color de texto blanco */
+    background-color: #14181e !important; /* Color de fondo oscuro */
+}
+
