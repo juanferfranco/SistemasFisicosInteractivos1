@@ -1,11 +1,23 @@
-INTRODUCCIÓN AL CURSO 
+Introducción al curso 
 =======================
+
+Carta descriptiva
+--------------------
+
+Por favor consulta la carta descriptiva en el sistema de la Universidad. Te voy a 
+mostrar aquí los puntos más importantes de esa documento.
+
 
 Descripción del curso
 ----------------------
 
-El objeto de este curso es aprender a integrar dispositivos periféricos a 
-sistemas de cómputo para la construcción de aplicaciones interactivas.
+El objeto de este curso es aprender las técnicas de programación y comunicación que permitan a una 
+aplicación interactiva intercambiar información con un sistema de cómputo externo con la capacidad de 
+leer y/o modificar el mundo físico. Los conceptos que se explorarán serán las máquinas de estado, 
+los protocolos de comunicación ASCII y binarios, el modelo de comunicación cliente-servidor, la 
+programación con múltiples hilos, las comunicaciones seriales, la lectura de información del mundo físico, 
+el envío de información hacia el mundo físico.
+
 
 ¿Por ejemplo?
 
@@ -21,48 +33,52 @@ sistemas de cómputo para la construcción de aplicaciones interactivas.
 * `AR Snapdragon <https://youtu.be/de0HgyUBBic>`__ Spaces
 * `Haptic VR Gloves <https://youtu.be/h5WzF1ch3ww>`__
 
-Propósito del curso
----------------------
+Para qué sirve este curso 
+--------------------------
 
-El entendimiento y uso de los fundamentos, herramientas y procesos mediante los cuales es 
-posible integrar dispositivos periféricos a sistemas de cómputo con el 
-fin de lograr que una aplicación interactiva entienda y modifique su entorno físico en 
-base a unos requerimientos y metas de diseño.
+Se espera que al finalizar el curso el estudiante sea capaz de construir aplicaciones interactivas que 
+lean y/o modiquen el mundo físico. Para este fin se propondrán problemas donde sea necesario intercambiar 
+información entre una aplicación interactiva y un sistema de cómputo microcontrolado. Así mismo, se indicará la 
+técnicas de solución a utilizar. 
 
-Competencias
--------------------------------------
 
-#. Construye aplicaciones que posibilitan la interacción entre personas,
-   mediada por tecnologías digitales, utilizando lenguajes y
-   metodologías apropiadas según el contexto (Ingeniería de software).
-#. Materializa sistemas intermediados por el entretenimiento digital
-   para resolver problemas de acuerdo con requerimientos condicionados
-   por el contexto (Materialización).
+Resultado de aprendizaje general
+------------------------------------
 
-Resultados de aprendizaje
--------------------------------------
+Soluciono problemas de interacción mediante la integración de contenidos digitales y software de acuerdo con 
+un diseño previo, para la implementación de sistemas intermediados por el entretenimiento digital. 
 
-#. RA1: aplico los conceptos necesarios para el correcto diseño, implementación, 
-   funcionamiento y diagnóstico del software en la producción de sistemas de 
-   entretenimiento digital utilizando los procedimientos y herramientas adecuadas 
-   según el contexto (para la competencia 1).
-#. RA2: integro dispositivos de entrada, salida e interfaces mecánicas con sistemas de 
-   cómputo para la creación de sistemas intermediados por el entretenimiento digital 
-   (para la competencia 2).
+Competencia 
+**************
 
-Carta descriptiva del curso
------------------------------
+Materializa sistemas intermediados por el entretenimiento digital para resolver problemas  de acuerdo con 
+requerimientos condicionados por el contexto.
 
-En `este <https://drive.google.com/file/d/1RuKTTdtdDgD3W9p2v3OYsrI4IiEmhkZX/view?usp=sharing>`__ enlace 
-puedes descargar la carta descriptiva del curso.
+Resultado de aprendizaje específico
+**************************************
 
-Proyecto docente
------------------
+Integro dispositivos de entrada-salida con sistemas de cómputo para la creación de sistemas intermediados por 
+el entretenimiento digital según los requisitos definidos. El nivel al que se espera que llegue es al nivel 
+resolutivo.
 
-El proyecto docente lo puedes descargar de 
-`este <https://github.com/juanferfranco/SistemasFisicosInteractivos1/blob/main/docs/_static/FormatoPlaneacionInteractivos12023-10.xlsx>`__ 
-enlace.
+¿Cómo puedes evidenciar lo aprendido en este curso?
+-----------------------------------------------------
 
+.. warning:: EVIDENCIAS DEL APRENDIZAJE 
+
+  Para evidenciar el nivel esperados del resultado de aprendizaje específico (RAE) al que aporta este curso, 
+  tendrás que implementar aplicaciones interactivas que integren información del mundo exterior en ella.
+
+Contenidos a revisar
+-----------------------
+
+* La construcción de software para un sistema microcontrolado utilizando técnicas de programación no bloqueantes, 
+  máquinas de estado y comunicaciones seriales simples.
+* La construcción de software para una plataforma interactiva de tiempo real que integre información proveniente 
+  de un sistema microcontrolado mediante protocolos de comunicación ASCII.
+* La construcción de software para una plataforma interactiva de tiempo real que integre información proveniente de 
+  un sistema microcontrolado mediante protocolos de comunicación binarios.
+* La construcción de software para una plataforma interactiva de tiempo real utilizando múltiples hilos.
 
 Estructura y metodología del curso
 -----------------------------------
@@ -75,76 +91,145 @@ a entregar las evaluaciones con control de versión:
 #. Unidad 3: Protocolos binarios
 #. Unidad 4: Plataformas de software interactivas de tiempo real
 
-La metodología del curso es de aula invertida. En este sitio web está todo el material 
-necesario para que puedas preparar la evaluación de cada unidad. Debes utilizar 
-el tiempo autónomo para preparar el material y resolver los ejercicios y retos en clase 
-con ayuda de tus compañeros de equipo y la asesoría del profesor.
+La metodología del curso es de aula invertida. En este sitio web encontrarás las guías de trabajo 
+necesarias para que puedas desarrollar el curso. Seguiremos el marco Challenge based learning, pero ajustada a nuestro contexto,  
+Toda la información relacionada la puedes consultar `aquí <https://www.challengebasedlearning.org/framework/>`__.
+
+.. _cronograma:
 
 Cronograma
 -----------
 
-* Introducción y control de versión: semana 1
-* Unidad 1: semanas 2 a 6
-* Unidad 2: semanas 7 a 10
-* Unidad 3: semanas 11 a 13
+* Introducción al flujo de trabajo en el curso: semana 1
+* Unidad 1: semanas 2 a 5
+* Unidad 2: semanas 6 a 9
+* Unidad 3: semanas 10 a 13
 * Unidad 4: semanas 14 a 16
 
-Evaluación
------------
+Evaluación formativa
+---------------------
 
-* Control de versión. Semana 1. 5%
-* Unidad 1: 25%. Semana 5.
-* Unidad 2: 25%. Semana 9.
-* Unidad 3: 25%. Semana 13.
-* Unidad 4: 20%. Semana 16.
+Cada semana te estaré proponiendo ejercicios de evaluación formativa y recibirás 
+retroalimentación personalizada.
 
-¿Cuándo se consideran entregada una unidad?
---------------------------------------------------
+Evaluación sumativa
+---------------------
 
-Cuando cumplas TODAS las condiciones siguientes:
+En la evaluación siempre se tendrá en cuenta el PROCESO. Dicho proceso lo observaremos 
+en tu bitácora de aprendizaje. Allí deberás evidenciar tu proceso de investigación y la 
+solución a las preguntas guía. Para conseguir un 5 en la nota final de cada unidad, deberás 
+acumular 5 puntos hasta el cierre de la unidad. Cada semana hay puntos por  
+ganar así:
 
-* Incluye toda la documentación solicitada.
-* Incluye los enlaces a videos públicos en youtube donde se muestre 
-  la evaluación funcionado (unidades 1 a 4).
-* El aval de unidad entregada por parte del profesor.
+#. Introducción al flujo de trabajo en el curso: bitácora (3 puntos) + resultado (2). 5% 
+#. Unidad 1: bitácora (3 puntos) + resultado (2 puntos). 25% 
+#. Unidad 2: bitácora (3 puntos) + resultado (2 puntos). 25%
+#. Unidad 3: bitácora (3 puntos) + resultado (2 puntos). 20%
+#. Unidad 4: bitácora (2 puntos) + resultado (2 puntos). 25%
 
-.. warning:: IMPORTANTE
+.. warning:: ¿Qué pasa si no cumplo con los plazos?
 
-  No hay entregas parciales. Repito. No hay entregas parciales. Si tu trabajo está 
-  incompleto el docente simplemente no te dará el aval de entregado.
-  Recuerda que una vez tengas el aval la nota en el sistema 
-  de la unidad será 5.
+   * Nota que siempre hay puntos por la bitácora. Si no trabajas cada semana 
+     ese punto se pierde.
+   * Si no entregas el producto de cierre de proceso debes buscar al profesor 
+     a más tardar dos días hábiles, pero deberás ajustarte a la disponibilidad 
+     del profesor. En esa reunión se establecerá la penalidad por el incumplimiento.
+     Dicha penalidad puede ir hasta perder todos los puntos del producto de cierre.
+
+Asistencia
+---------------------
+
+* La sesión presencial es obligatoria.
+* La sesión de trabajo independiente es obligatoria.
+* Si no asistes debes enviar un correo al profesor a más tardar dos días 
+  hábiles con:
+  
+  * La razón de la falta y los soportes.
+  * Tendrás la semana siguiente antes de la sesión de clase para realizar 
+    el trabajo de las sesiones que faltaste.
+  * En la siguiente sesión debes mostrarle al profesor tu bitácora con 
+    los resultados de la sesión que faltaste. De no hacerlo, perderás los puntos 
+    correspondientes.
+* La sesión de trabajo independiente la programas según tu horario; sin embargo, 
+  el resultado debe aparecer en la bitácora.
+
+.. warning:: importantes
+
+   * Siempre que faltes a una sesión se reportará en el sistema de la Universidad.
+   * Faltar no significa no trabajar. Tendrás que compensar.
 
 Dedicación
 -----------
 
-Este curso es de 2 créditos con encuentros presenciales semanales de 3 hora 20 minutos y 
-2 hora 40 minutos de trabajo autónomo.
+Este curso es de 2 créditos distribuidos en dos sesiones semanales con 
+acompañamiento del docente y una sesión de trabajo independiente. La dedicación 
+en horas es de 6 horas.
 
-Evidencias de evaluación
--------------------------
+Rutina de trabajo en aula   
+---------------------------
 
-En cada unidad te indicaré las consideraciones para entregar la evaluación; sin embargo, 
-ten presente SIEMPRE este código de honor:
+Cada sesión tendrá una duración de 1 hora 40 minutos.
 
-Código de honor
-^^^^^^^^^^^^^^^^
+* Micro-sesión 1 (20 minutos): apertura. Reflexión inicial.
+   * Hágalo ahora: 15 minutos para planear la sesión y retomar el trabajo previo.
+   * Aclaraciones con el profe: 5 minutos para solicitar aclaraciones de algún 
+     asunto (asuntos rápidos) que puedan impedir el desarrollo de la planeación.
+* Micro-sesión 2 (30 minutos):
+   * 25 minutos de trabajo concentrado.
+   * 5 minutos de pausa activa.
+* Micro-sesión 3 (30 minutos):
+   * 25 minutos de trabajo concentrado.
+   * 5 minutos de pausa activa.
+* Micro-sesión 4 (20 minutos): cierre. Reflexión final.
+   * Boleto de salida (15 minutos): responder ¿Se logró el propósito de la sesión? Si se 
+     logró, reportar las conclusiones de la sesión. Si no se logró reportar qué pasó. 
+   * Aclaraciones con el profe: 5 minutos para solicitar aclaraciones de algún 
+     asunto (asuntos rápidos) y verificar con el profesor el commit en el repositorio.
 
-Para realizar el trabajo de cada unidad se espera que hagas lo siguiente:
+Rutina de trabajo independiente 
+---------------------------------
 
-* Colabora con tus compañeros cuando así se indique.
-* Trabaja de manera individual cuando la actividad así te lo
-  proponga.
-* No busques la solución a los ejercicios y proyectos porque DAÑARÍAS tu
-  proceso de aprendizaje. Recuerda, se trata de seguir un camino
-  y aprender en el recorrido.
-* ¿Entonces qué hacer si no me funciona algo? Te propongo que
-  experimentes, crea hipótesis, experimenta de nuevo, observa y concluye.
-* NO OLVIDES, este curso se trata de pensar y experimentar NO de
-  BUSCAR soluciones en Internet.
+Cada sesión tendrá una duración de 2 horas.
 
-Bitácora  
-------------------------------
+* Micro-sesión 1 (15 minutos): apertura. Reflexión inicial.
+   * Hágalo ahora: 15 minutos para planear la sesión y retomar el trabajo previo.
+* Micro-sesión 2 (30 minutos):
+   * 25 minutos de trabajo concentrado.
+   * 5 minutos de pausa activa.
+* Micro-sesión 3 (30 minutos):
+   * 25 minutos de trabajo concentrado.
+   * 5 minutos de pausa activa.
+* Micro-sesión 4 (30 minutos):
+   * 25 minutos de trabajo concentrado.
+   * 5 minutos de pausa activa.
+* Micro-sesión 5 (15 minutos): cierre. Reflexión final.
+   * Boleto de salida (15 minutos): responder ¿Se logró el propósito de la sesión? Si se 
+     logró, reportar las conclusiones de la sesión. Si no se logró reportar qué pasó. 
 
-* GitHub
-* Crea una cuenta en GitHub a menos que ya la tengas.
+Manejo de la Bitácora
+------------------------
+
+En la bitácora documentarás tu trayecto de aprendizaje. Te pido que consideres los 
+siguientes aspectos:
+
+* Al planear la sesión de trabajo indica qué pregunta guía o recurso guía 
+  estarás revisando.
+* Incluye en tu bitácora referentes, información, recursos, etc, pero SIEMPRE acompaña esto 
+  con un comentario donde reflexiones acerca de ese recurso, trata de responder la pregunta 
+  ¿Qué puedo concluir acerca de este recurso?
+* Cierra tu sesión respondiendo la pregunta ¿Qué puedo concluir acerca de la pregunta guía? 
+  Mira, es posible que aún no puedas responder la pregunta y necesites trabajar más, pero 
+  si es importante que escribas y visualices qué vas pensando acerca de la pregunta.
+* No olvides SIEMPRE preguntarte ¿Por qué? ¿Qué pasa si? ¿Cómo sería si?  
+
+Recursos y actividades guía 
+-----------------------------
+
+Material en Internet, material elaborado por el docente e inteligencias 
+artificiales generativas.
+
+Bitácora de trabajo  
+--------------------
+
+`Aquí <https://classroom.github.com/a/rdJMe43d>`__ podrás encontrar el enlace a tu bitácora 
+personal para el curso.

@@ -19,8 +19,8 @@ Créditos y horas totales del curso: 2 créditos - 96 horas totales
    :caption: Trayecto de aprendizaje
    
    Introducción al curso <_intro/intro>
-   FLujo de trabajo del curso <_intro/courseFlow>
+   Flujo de trabajo del curso <_intro/courseFlow>
    Unidad 1: Software para sistemas embebidos <_unidad1/unidad1>
    Unidad 2: Protocolos ASCII <_unidad2/unidad2>
    Unidad 3: Protocolos binarios <_unidad3/unidad3>
-   Unidad 4: Proyecto <_unidad4/unidad4>
+   Unidad 4: Programación con múltiples hilos <_unidad4/unidad4>
