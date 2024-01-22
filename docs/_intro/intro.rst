@@ -145,11 +145,11 @@ Asistencia
   hábiles con:
   
   * La razón de la falta y los soportes.
-  * Tendrás la semana siguiente antes de la sesión de clase para realizar 
-    el trabajo de las sesiones que faltaste.
   * En la siguiente sesión debes mostrarle al profesor tu bitácora con 
     los resultados de la sesión que faltaste. De no hacerlo, perderás los puntos 
-    correspondientes.
+    correspondientes. Si no hay más sesiones presenciales esa semana, deberás 
+    informar por correo electrónico al profesor que ya están listos tus pendientes, 
+    a más tardar el viernes a las 12 del medio día.
 * La sesión de trabajo independiente la programas según tu horario; sin embargo, 
   el resultado debe aparecer en la bitácora.
 
