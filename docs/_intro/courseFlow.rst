@@ -165,6 +165,12 @@ Actividad 3
 Actividad 4
 *************
 
+Vas a poner bajo control de versión el programa de p5.js y el 
+programa de micro:bit.
+
+Actividad 5
+*************
+
 .. warning::
     PREGUNTA GUÍA
 
@@ -173,7 +179,9 @@ Actividad 4
     #. Explica e implementa ¿Cómo puedes cambiar la figura que se pinta en pantalla?
     #. Explica e implementa ¿Cómo puedes cambiar las imágenes que muestra el micro:bit?
 
-    Muestras imágenes de los resultados de tus experimentos en la bitácora.
+    * Muestras imágenes de los resultados de tus experimentos en la bitácora.
+    * Realiza commits nuevos en el repositorio con los cambios al código 
+      en p5.js y para el micro:bit.
 
 Evidencias
 -------------
