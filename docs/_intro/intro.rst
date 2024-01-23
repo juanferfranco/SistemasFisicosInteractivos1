@@ -125,7 +125,7 @@ ganar así:
 #. Unidad 1: bitácora (3 puntos) + resultado (2 puntos). 25% 
 #. Unidad 2: bitácora (3 puntos) + resultado (2 puntos). 25%
 #. Unidad 3: bitácora (3 puntos) + resultado (2 puntos). 20%
-#. Unidad 4: bitácora (2 puntos) + resultado (2 puntos). 25%
+#. Unidad 4: bitácora (2 puntos) + resultado (3 puntos). 25%
 
 .. warning:: ¿Qué pasa si no cumplo con los plazos?
 
