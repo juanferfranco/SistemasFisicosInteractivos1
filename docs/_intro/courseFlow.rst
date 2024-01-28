@@ -88,9 +88,9 @@ Actividad 3
 * Explora la interfaz y gana familiaridad con el entorno.
 * Abre el archivo index.html e incluye las siguiente línea antes de la tag ``link``.
 
-    .. code-block:: javascript 
-    
-        <script src="https://unpkg.com/@gohai/p5.webserial@^1/libraries/p5.webserial.js"></script>
+.. code-block:: html
+
+    <script src="https://unpkg.com/@gohai/p5.webserial@^1/libraries/p5.webserial.js"></script>
 
 * En el archivo sketch.js copia el siguiente código
 
