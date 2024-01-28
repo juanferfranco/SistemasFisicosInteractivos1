@@ -132,7 +132,8 @@ Analiza detenidamente el siguiente ejemplo:
         pixel1.update()
         pixel2.update()    
 
-¿Cómo funciona este ejemplo?
+#. ¿Cómo funciona este ejemplo?
+#. ¿Qué relación tiene este ejemplo con las preguntas guía?
 
 Recursos guía iniciales 
 **************************
