@@ -23,10 +23,12 @@ en este caso pulsadores, denominados UP (botón A), DOWN (botón B), ARMED (LOGO
 Tiene dos actuadores o dispositivos de salida que serán un display 
 (la pantalla de LEDs) y un speaker.
 
-El controlador funciona así:
-
 .. image:: ../_static/bomb.png
   :alt: bomba
+
+|
+
+El controlador funciona así:
 
 * Inicia en modo de ``configuración``, es decir, sin hacer cuenta regresiva aún, 
   la bomba está ``desarmada``. El valor inicial del conteo regresivo es de 20 segundos.
@@ -38,7 +40,7 @@ El controlador funciona así:
   que usaste en la primera semana de clases.
 * El pulsador ARMED arma la bomba, es decir, inicia el conteo regresivo.
 * Una vez armada la bomba, comienza la cuenta regresiva que será visualizada
-  en la pantalla de LEDs y el enviada por el serial.
+  en la pantalla de LED y enviada por el serial.
 * La bomba explotará (speaker) cuando el tiempo llegue a cero. Para volver a modo 
   de configuración se tendrá que tocar el botón ARMED.
 * Una vez la bomba esté armada es posible desactivarla ingresando un código
@@ -55,14 +57,14 @@ El controlador funciona así:
 Investigación
 --------------
 
-Aún no debes comenzar a construir las aplicaciones que resuelvan el reto. Antes 
+Aún no debes comenzar a construir la aplicación que resuelvan el reto. Antes 
 de hacerlo deberás investigar los conceptos y experimentar. Para ello te propondré 
 unas pregunta guía iniciales que deberás responder en la bitácora de trabajo. En 
-el proceso te surgirán nuevas preguntas cuando piense ¿Qué pasaría si...? ¿Por qué ...?
+el proceso te surgirán nuevas preguntas ¿Qué pasaría si...? ¿Por qué ...?
 ¿Cómo sería si en vez de ... hago ...?
 
 En esta etapa debes hacer EXPERIMENTOS para responder tus preguntas. Mira, la idea es 
-que descubras la solución, no que la busques.
+que descubras la solución a tus preguntas, no que la busques.
 
 Preguntas guía iniciales 
 **************************
@@ -77,7 +79,7 @@ un experimento donde ilustres la respuesta.
 #. ¿Cómo dibujar en la pantalla de LED?
 #. ¿Cómo hacer para producir sonidos con el speaker?
 #. ¿Qué es una máquina de estados?
-#. ¿Qué son eventos los eventos en una máquina de estados?
+#. ¿Qué son eventos en una máquina de estados?
 #. ¿Qué son las acciones?
 #. ¿Cuáles son los estados, eventos y acciones en el reto propuesto?
 #. ¿Cómo es posible estructurar una aplicación usando una máquina de estados 
@@ -85,9 +87,9 @@ un experimento donde ilustres la respuesta.
 #. ¿Cuáles son los eventos que pueden ocurrir de manera simultánea en 
    el problema planteado en el reto?
 #. Construye una aplicación que muestre en la pantalla de LED dos imágenes 
-   diferentes que se alternarán cada 2 segundos, pero sin usar funciones 
-   bloqueantes como sleep. Investiga las funciones ticks_ms() y ticks_diff() 
-   de la biblioteca utime. ¿Cómo puedes generar utilizar las dos funciones 
+   diferentes que se alternarán cada 2 segundos, pero sin usar la función 
+   bloqueante sleep(). Investiga las funciones ticks_ms() y ticks_diff() 
+   de la biblioteca utime. ¿Cómo puedes utilizar las dos funciones 
    anteriores para resolver el problema de las imágenes que alternan?
 
 Actividad guía
@@ -157,14 +159,10 @@ resolver el reto.
 Compartir
 -----------
 
+Vas a evidenciar tu proceso con las siguientes evidencias que compartirás en 
+el archivo README.md de esta unidad:
 
-
-
-
-Evidencias
--------------
-
-#. Bitácoras de las sesiones de trabajo en aula e independientes.
+#. Bitácoras de las 3 sesiones de trabajo de cada semana.
 #. Documentación de cierre del resultado y archivos finales con tu solución al reto.
 #. El archivo README.md de la carpeta `Unidad1` del repositorio deberá tener dichas bitácoras.
 #. No olvides responder las preguntas guía.
