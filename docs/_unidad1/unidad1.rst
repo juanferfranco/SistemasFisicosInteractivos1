@@ -146,7 +146,282 @@ Recursos guía iniciales
 * La documentación del lenguaje de programación del micro:bit 
   la encuentras `aquí <https://microbit-micropython.readthedocs.io/en/latest/>`__.
 * En el `editor online <https://python.microbit.org/>`__ de micropython para micro:bit encontrarás una ``Referencia`` 
-  con información muy útil para experimentar. 
+  con información muy útil para experimentar.
+* Aquí les dejo una solución a un problema similar al de la bomba usando C++:
+
+.. code-block:: cpp
+
+    #include "SSD1306Wire.h"
+
+    #define BOMB_OUT 25
+    #define LED_COUNT 26
+    #define UP_BTN 13
+    #define DOWN_BTN 32
+    #define ARM_BTN 33
+
+    void taskSerial();
+    void taskButtons();
+    void taskBomb();
+
+    void setup() {
+      taskSerial();
+      taskButtons();
+      taskBomb();
+    }
+
+    bool evButtons = false;
+    uint8_t evButtonsData = 0;
+
+    void loop() {
+      taskSerial();
+      taskButtons();
+      taskBomb();
+    }
+
+    void taskSerial() {
+      enum class SerialStates {INIT, WAITING_COMMANDS};
+      static SerialStates serialState =  SerialStates::INIT;
+
+      switch (serialState) {
+        case SerialStates::INIT: {
+            Serial.begin(115200);
+            serialState = SerialStates::WAITING_COMMANDS;
+            break;
+          }
+        case SerialStates::WAITING_COMMANDS: {
+
+            if (Serial.available() > 0) {
+              int dataIn = Serial.read();
+              if (dataIn == 'u') {
+                Serial.println("UP_BTN");
+                evButtons = true;
+                evButtonsData = UP_BTN;
+              }
+              else if (dataIn == 'd') {
+                Serial.println("DOWN_BTN");
+                evButtons = true;
+                evButtonsData = DOWN_BTN;
+              }
+              else if (dataIn == 'a') {
+                Serial.println("ARM_BTN");
+                evButtons = true;
+                evButtonsData = ARM_BTN;
+              }
+
+            }
+
+            break;
+          }
+        default:
+          break;
+
+
+      }
+
+
+    }
+
+    void taskButtons() {
+      enum class ButtonsStates {INIT, WAITING_PRESS, WAITING_STABLE, WAITING_RELEASE};
+      static ButtonsStates buttonsState =  ButtonsStates::INIT;
+      static uint8_t lastButton = 0;
+      static uint32_t referenceTime;
+      const uint32_t STABLETIMEOUT = 100;
+
+      switch (buttonsState) {
+        case ButtonsStates::INIT: {
+            pinMode(UP_BTN, INPUT_PULLUP);
+            pinMode(DOWN_BTN, INPUT_PULLUP);
+            pinMode(ARM_BTN, INPUT_PULLUP);
+            buttonsState = ButtonsStates::WAITING_PRESS;
+            break;
+          }
+        case ButtonsStates::WAITING_PRESS: {
+            if (digitalRead(UP_BTN) == LOW) {
+              buttonsState = ButtonsStates::WAITING_STABLE;
+              lastButton = UP_BTN;
+              referenceTime = millis();
+            }
+            else if (digitalRead(DOWN_BTN) == LOW) {
+              buttonsState = ButtonsStates::WAITING_STABLE;
+              lastButton = DOWN_BTN;
+              referenceTime = millis();
+            }
+            else if (digitalRead(ARM_BTN) == LOW) {
+              buttonsState = ButtonsStates::WAITING_STABLE;
+              lastButton = ARM_BTN;
+              referenceTime = millis();
+            }
+            break;
+          }
+
+        case ButtonsStates::WAITING_STABLE: {
+            if (digitalRead(lastButton) == HIGH) {
+              buttonsState = ButtonsStates::WAITING_PRESS;
+            }
+            else if ( (millis() - referenceTime) >= STABLETIMEOUT ) {
+              buttonsState = ButtonsStates::WAITING_RELEASE;
+            }
+            break;
+          }
+
+        case ButtonsStates::WAITING_RELEASE: {
+            if (digitalRead(lastButton) == HIGH) {
+              buttonsState = ButtonsStates::WAITING_PRESS;
+              evButtons = true;
+              evButtonsData = lastButton;
+              printf("Btn press: %d\n", lastButton);
+            }
+
+            break;
+          }
+        default:
+          break;
+
+      }
+
+    }
+
+    void taskBomb() {
+      static SSD1306Wire display(0x3c, SDA, SCL, GEOMETRY_64_48);
+      enum class BombStates {INIT, WAITING_CONFIG, COUNTING};
+      static BombStates bombState =  BombStates::INIT;
+      static uint8_t bombCounter = 20;
+      static uint8_t secret[7] = {UP_BTN, UP_BTN, DOWN_BTN, DOWN_BTN, UP_BTN, DOWN_BTN, ARM_BTN};
+      static uint8_t password[7] = {0};
+      static uint8_t passwordCounter = 0;
+
+      static uint32_t referenceTimeBombCounter;
+      const uint32_t BOMBINTERVAL = 1000;
+      static uint32_t referenceTimeLEDBombCounter;
+      const uint32_t LEDBOMBINTERVAL = 500;
+      static uint8_t ledBombCountState = LOW;
+
+
+      switch (bombState) {
+        case BombStates::INIT: {
+            pinMode(BOMB_OUT, OUTPUT);
+            pinMode(LED_COUNT, OUTPUT);
+
+            display.init();
+            display.setContrast(255);
+            display.clear();
+
+            display.setTextAlignment(TEXT_ALIGN_LEFT);
+            display.setFont(ArialMT_Plain_16);
+            display.clear();
+            display.drawString(10, 20, String(bombCounter));
+            display.display();
+
+            digitalWrite(BOMB_OUT, LOW);
+            ledBombCountState = HIGH;
+            digitalWrite(LED_COUNT, ledBombCountState);
+
+
+            bombState = BombStates::WAITING_CONFIG;
+
+            break;
+          }
+        case BombStates::WAITING_CONFIG: {
+
+            if (evButtons == true) {
+              evButtons = false;
+
+              if (evButtonsData == UP_BTN) {
+                if (bombCounter < 60) {
+                  bombCounter++;
+                }
+                display.clear();
+                display.drawString(10, 20, String(bombCounter));
+                display.display();
+              }
+              else if (evButtonsData == DOWN_BTN) {
+                if (bombCounter > 10) {
+                  bombCounter--;
+                }
+                display.clear();
+                display.drawString(10, 20, String(bombCounter));
+                display.display();
+              }
+              else if (evButtonsData == ARM_BTN) {
+                referenceTimeBombCounter = millis();
+                referenceTimeLEDBombCounter = millis();
+                passwordCounter = 0;
+                bombState = BombStates::COUNTING;
+              }
+            }
+
+            break;
+          }
+        case BombStates::COUNTING: {
+
+            if (evButtons == true) {
+              evButtons = false;
+
+              password[passwordCounter] = evButtonsData;
+              passwordCounter++;
+
+              if (passwordCounter == 7) {
+                bool disarm = true;
+                for (int i = 0; i < 7; i++) {
+                  if (password[i] != secret[i]) {
+                    passwordCounter = 0;
+                    disarm = false;
+                    break;
+                  }
+                }
+                if (disarm == true) {
+                  bombCounter = 20;
+                  display.clear();
+                  display.drawString(10, 20, String(bombCounter));
+                  display.display();
+                  digitalWrite(BOMB_OUT, LOW);
+                  ledBombCountState = HIGH;
+                  digitalWrite(LED_COUNT, ledBombCountState);
+                  bombState = BombStates::WAITING_CONFIG;
+                }
+              }
+            }
+
+            if ( (millis() - referenceTimeLEDBombCounter) >= LEDBOMBINTERVAL ) {
+              referenceTimeLEDBombCounter = millis();
+              ledBombCountState = !ledBombCountState;
+              digitalWrite(LED_COUNT, ledBombCountState);
+            }
+
+            if ( (millis() - referenceTimeBombCounter) >= BOMBINTERVAL) {
+              referenceTimeBombCounter = millis();
+              bombCounter--;
+              if (bombCounter > 0 ) {
+                display.clear();
+                display.drawString(10, 20, String(bombCounter));
+                display.display();
+              }
+              else {
+                bombCounter = 20;
+                digitalWrite(BOMB_OUT, HIGH);
+                display.clear();
+                display.drawString(10, 20, "BOOM");
+                display.display();
+                delay(3000);
+                bombCounter = 20;
+                display.clear();
+                display.drawString(10, 20, String(bombCounter));
+                display.display();
+                digitalWrite(BOMB_OUT, LOW);
+                ledBombCountState = HIGH;
+                digitalWrite(LED_COUNT, ledBombCountState);
+                bombState = BombStates::WAITING_CONFIG;
+              }
+            }
+
+            break;
+          }
+
+        default:
+          break;
+      }
+    }
 
 Aplicación 
 -----------
