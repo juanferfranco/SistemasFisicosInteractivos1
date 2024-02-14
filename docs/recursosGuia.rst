@@ -29,4 +29,4 @@ Educational VR experiences
 
 * `VR and AI in Education: The Future of Learning | Kristen Tamm | TEDxTartuED <https://youtu.be/XGkWh4v1hCE?si=Am72M7aYvngNao68>`__.
 * Futuclass is an educational virtual reality game for learning sciences. `Youtube channel <https://www.youtube.com/@Futuclass>`__.
- 
+* Virtual Reality in Education - done right. `Youtube video <https://youtu.be/0I0qkAaAcKw?si=W-9qHNLmpXr42ip6>`__.
