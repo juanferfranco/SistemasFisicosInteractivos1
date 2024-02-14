@@ -23,3 +23,10 @@ Physical computing courses
   physicality of humans, and harnessing the wonderful expressivity and potential interplay 
   of both. It was built to complement the physical and ubiquitous computing courses at 
   the University of Washington but has proved more broadly useful.
+
+Educational VR experiences
+---------------------------
+
+* `VR and AI in Education: The Future of Learning | Kristen Tamm | TEDxTartuED <https://youtu.be/XGkWh4v1hCE?si=Am72M7aYvngNao68>`__.
+* Futuclass is an educational virtual reality game for learning sciences. `Youtube channel <https://www.youtube.com/@Futuclass>`__.
+ 
