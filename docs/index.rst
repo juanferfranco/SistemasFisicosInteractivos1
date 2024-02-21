@@ -25,3 +25,6 @@ Créditos y horas totales del curso: 2 créditos - 96 horas totales
    Unidad 3: Protocolos binarios <_unidad3/unidad3>
    Unidad 4: Programación con múltiples hilos <_unidad4/unidad4>
    RecursosGuía <recursosGuia>
+
+* `Bitácoras de los aprendices <https://classroom.github.com/classrooms/19781391-sistemas-fisicos-interactivos-1-2024-10/assignments/bitacorassfi12024-10>`__.
+
