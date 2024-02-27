@@ -26,5 +26,6 @@ Créditos y horas totales del curso: 2 créditos - 96 horas totales
    Unidad 4: Programación con múltiples hilos <_unidad4/unidad4>
    RecursosGuía <recursosGuia>
 
+* `Puntos semanales <https://docs.google.com/spreadsheets/d/1cpyV32yhQZdwzMy_mNxuXFn380BDoisckVqQ9n0NOrU/edit?usp=sharing>`__.
 * `Bitácoras de los aprendices <https://classroom.github.com/classrooms/19781391-sistemas-fisicos-interactivos-1-2024-10/assignments/bitacorassfi12024-10>`__.
 
