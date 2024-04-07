@@ -32,3 +32,9 @@ Educational VR experiences
 * Virtual Reality in Education - done right. `Youtube video <https://youtu.be/0I0qkAaAcKw?si=W-9qHNLmpXr42ip6>`__.
 * `Futuclass web site <https://futuclass.com/>`__.
  
+Web Serial
+---------------------------
+
+* Biblioteca utilizada en el curso: p5.webserial.js. `Github repo <https://github.com/gohai/p5.webserial>`__.
+* Chrome Developers. Read from and write to a serial port. `Web site <https://developer.chrome.com/docs/capabilities/serial>`__.
+* CodeLab de google: Getting started with the Web Serial API. `Web site <https://codelabs.developers.google.com/codelabs/web-serial>`__.
