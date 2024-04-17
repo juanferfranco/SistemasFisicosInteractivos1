@@ -328,79 +328,79 @@ querido profe que siempre estará más que feliz de ayudarte.
 
 .. code-block:: javascript
 
-    let port;
-    let connectBtn;
+  let port;
+  let connectBtn;
 
-    function setup() {
-      createCanvas(400, 400);
+  function setup() {
+    createCanvas(400, 400);
+    background(220);
+    port = createSerial();
+    connectBtn = createButton("Connect to Arduino");
+    connectBtn.position(80, 200);
+    connectBtn.mousePressed(connectBtnClick);
+    let sendBtn = createButton("Send");
+    sendBtn.position(220, 200);
+    sendBtn.mousePressed(sendBtnClick);
+  }
+
+  function draw() {
+    if (port.availableBytes() >= 12) {
+      let arr = port.readBytes(12);
+      print(arr);
       background(220);
-      port = createSerial();
-      connectBtn = createButton("Connect to Arduino");
-      connectBtn.position(80, 200);
-      connectBtn.mousePressed(connectBtnClick);
-      let sendBtn = createButton("Send");
-      sendBtn.position(220, 200);
-      sendBtn.mousePressed(sendBtnClick);
+      const sensors = bytesToFloats(arr);
+      sensor1 = sensors[0].toFixed(2);
+      sensor2 = sensors[1].toFixed(2);
+      sensor3 = sensors[2].toFixed(2);
+      print(sensor1);
+      print(sensor2);
+      print(sensor3);
+
+      text(sensor1, 10, height - 60);
+      text(sensor2, 10, height - 40);
+      text(sensor3, 10, height - 20);
     }
 
-    function draw() {
-      if (port.availableBytes() >= 12) {
-        let arr = port.readBytes(12);
-        print(arr);
-        background(220);
-        const sensors = bytesToFloats(arr);
-        sensor1 = sensors[0].toFixed(2);
-        sensor2 = sensors[1].toFixed(2);
-        sensor3 = sensors[2].toFixed(2);
-        print(sensor1);
-        print(sensor2);
-        print(sensor3);
+    if (!port.opened()) {
+      connectBtn.html("Connect to Arduino");
+    } else {
+      connectBtn.html("Disconnect");
+    }
+  }
 
-        text(sensor1, 10, height - 60);
-        text(sensor2, 10, height - 40);
-        text(sensor3, 10, height - 20);
-      }
+  function connectBtnClick() {
+    if (!port.opened()) {
+      port.open("MicroPython", 115200);
+    } else {
+      port.close();
+    }
+  }
 
-      if (!port.opened()) {
-        connectBtn.html("Connect to Arduino");
-      } else {
-        connectBtn.html("Disconnect");
-      }
+  function sendBtnClick() {
+    const bytes = floatsToBytes([3.1460,2.7182]);
+    port.write(bytes);
+
+  }
+
+  function floatsToBytes(floatNumbers) {
+    const buffer = new ArrayBuffer(8);
+    const view = new DataView(buffer);
+    view.setFloat32(0, floatNumbers[0], false);
+    view.setFloat32(4, floatNumbers[1], false);
+    return new Uint8Array(buffer);
+  }
+
+  function bytesToFloats(bytes) {
+    const buffer = new Uint8Array(bytes).buffer;
+    const view = new DataView(buffer);
+    const floats = [];
+
+    for (let i = 0; i < bytes.length; i += 4) {
+      floats.push(view.getFloat32(i));
     }
 
-    function connectBtnClick() {
-      if (!port.opened()) {
-        port.open("MicroPython", 115200);
-      } else {
-        port.close();
-      }
-    }
-
-    function sendBtnClick() {
-      const bytes = floatsToBytes([3.1460,2.7182]);
-      port.write(bytes);
-
-    }
-
-    function floatsToBytes(floatNumbers) {
-      const buffer = new ArrayBuffer(8);
-      const view = new DataView(buffer);
-      view.setFloat32(0, floatNumbers[0], false);
-      view.setFloat32(4, floatNumbers[1], false);
-      return new Uint8Array(buffer);
-    }
-
-    function bytesToFloats(bytes) {
-      const buffer = new Uint8Array(bytes).buffer;
-      const view = new DataView(buffer);
-      const floats = [];
-
-      for (let i = 0; i < bytes.length; i += 4) {
-        floats.push(view.getFloat32(i));
-      }
-
-      return floats;
-    }
+    return floats;
+  }
 
 .. warning:: IMPORTANTE
 
