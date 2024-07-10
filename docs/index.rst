@@ -13,19 +13,33 @@ Créditos y horas totales del curso: 2 créditos - 96 horas totales
    :alt: logo
    :scale: 50%
 
+Secciones del curso
+--------------------
 
 .. toctree::
    :maxdepth: 1
-   :caption: Trayecto de aprendizaje
+
    
    Introducción al curso <_intro/intro>
-   Flujo de trabajo del curso <_intro/courseFlow>
-   Unidad 1: Software para sistemas embebidos <_unidad1/unidad1>
-   Unidad 2: Protocolos ASCII <_unidad2/unidad2>
-   Unidad 3: Protocolos binarios <_unidad3/unidad3>
-   Unidad 4: Programación con múltiples hilos <_unidad4/unidad4>
+   Unidad 1: explorando el microcontrolador <_unidad1/unidad1>
+   Unidad 2: creando arte con p5.js <_unidad2/unidad2>
+   Unidad 3: conectando mundos (comunicación serial) <_unidad3/unidad3>
+   Unidad 4: protocolos de comunicación (ASCII y binario) <_unidad4/unidad4>
+   Unidad 5: Node.js (el puente entre dispositivos) <_unidad5/unidad5>
+   Unidad 6: interactividad en tiempo real con WebSockets <_unidad6/unidad6>
+   Unidad 7: conectando celulares a tu aplicación interactiva <_unidad7/unidad7>
+   Unidad 8: portafolio <_unidad8/unidad8>
    RecursosGuía <recursosGuia>
 
-* `Puntos semanales <https://docs.google.com/spreadsheets/d/1cpyV32yhQZdwzMy_mNxuXFn380BDoisckVqQ9n0NOrU/edit?usp=sharing>`__.
-* `Bitácoras de los aprendices <https://classroom.github.com/classrooms/19781391-sistemas-fisicos-interactivos-1-2024-10/assignments/bitacorassfi12024-10>`__.
+Mi bitácora y mis puntos
+--------------------------
 
+* `Mi bitácora <https://classroom.github.com/a/NhsL_2mc>`__
+* `¿Cómo van mis notas? <https://docs.google.com/spreadsheets/d/1fFGvoZ5BX1Bkfl4vwJTbj71nYoQVO9eHTASBFdzYBD0/edit?usp=sharing>`__
+
+Administración del curso
+-------------------------
+
+* `Notas sobre el curso <https://github.com/juanferfranco/sistemasFisicosInteractivos1>`__
+* `Bitácoras de los aprendices <https://classroom.github.com/classrooms/19781391-sistemas-fisicos-interactivos-1-2024-20/assignments/bitacorassfi12024-20>`__
+* `Bitácora inicial <https://github.com/jfUPB/sistemas-fisicos-interactivos-1-2024-20-bitacorassfi12024-20-BitacorasSFI12024-20>`__
