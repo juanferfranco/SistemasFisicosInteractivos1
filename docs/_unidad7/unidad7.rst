@@ -1,5 +1,5 @@
-Unidad 7. Comunicación interactiva
-=====================================
+Experiencia de aprendizaje 7. Comunicación interactiva
+=========================================================
 
 Introducción
 --------------

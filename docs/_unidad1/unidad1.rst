@@ -1,4 +1,4 @@
-Unidad 1. ¿Este curso para qué?
+Experiencia de aprendizaje 1. ¿Este curso para qué?
 ==============================================
 
 Introducción

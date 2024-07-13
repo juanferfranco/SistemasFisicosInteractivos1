@@ -1,4 +1,4 @@
-Unidad 4. Conectando mundos (comunicación serial)
+Experiencia de aprendizaje 4. Conectando mundos (comunicación serial)
 ====================================================
 
 Introducción

@@ -1,4 +1,4 @@
-Unidad 5. Protocolos de comunicación (ASCII y binario)
+Experiencia de aprendizaje 5. Protocolos de comunicación (ASCII y binario)
 ===================================================================
 
 Introducción

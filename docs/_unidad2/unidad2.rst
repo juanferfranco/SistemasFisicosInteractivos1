@@ -1,4 +1,4 @@
-Unidad 2. Computadores embebidos
+Experiencia de aprendizaje 2. Computadores embebidos
 ==================================
 
 Introducción

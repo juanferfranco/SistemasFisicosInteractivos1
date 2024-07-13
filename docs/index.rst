@@ -19,14 +19,14 @@ Secciones del curso
 
    
    Introducción al curso <_intro/intro>
-   Unidad 1: ¿Este curso para qué? <_unidad1/unidad1>
-   Unidad 2: computadores embebidos <_unidad2/unidad2>
-   Unidad 3: creando arte con p5.js <_unidad3/unidad3>
-   Unidad 4: conectando mundos <_unidad4/unidad4>
-   Unidad 5: protocolos de comunicación <_unidad5/unidad5>
-   Unidad 6: el puente entre dispositivos <_unidad6/unidad6>
-   Unidad 7: comunicación interactiva <_unidad7/unidad7>
-   Unidad 8: todos juntos y en tiempo real <_unidad8/unidad8>
+   Experiencia de aprendizaje 1: ¿Este curso para qué? <_unidad1/unidad1>
+   Experiencia de aprendizaje 2: computadores embebidos <_unidad2/unidad2>
+   Experiencia de aprendizaje 3: creando arte con p5.js <_unidad3/unidad3>
+   Experiencia de aprendizaje 4: conectando mundos <_unidad4/unidad4>
+   Experiencia de aprendizaje 5: protocolos de comunicación <_unidad5/unidad5>
+   Experiencia de aprendizaje 6: el puente entre dispositivos <_unidad6/unidad6>
+   Experiencia de aprendizaje 7: comunicación interactiva <_unidad7/unidad7>
+   Experiencia de aprendizaje 8: todos juntos y en tiempo real <_unidad8/unidad8>
    RecursosGuía <recursosGuia>
 
 Mi bitácora y mis puntos
