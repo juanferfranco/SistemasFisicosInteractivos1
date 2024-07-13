@@ -1,9 +1,7 @@
-Sistemas Físicos Interactivos 1 2024-10
+Sistemas Físicos Interactivos 1 2024-20
 =====================================================
 
 Docente diseñador del curso: Juan Fernando Franco Higuita
-
-Nombre del docente moderador: Juan Fernando Franco Higuita
 
 Programa: Ingeniería en Diseño de Entretenimiento Digital
 
@@ -21,14 +19,14 @@ Secciones del curso
 
    
    Introducción al curso <_intro/intro>
-   Unidad 1: explorando el microcontrolador <_unidad1/unidad1>
-   Unidad 2: creando arte con p5.js <_unidad2/unidad2>
-   Unidad 3: conectando mundos (comunicación serial) <_unidad3/unidad3>
-   Unidad 4: protocolos de comunicación (ASCII y binario) <_unidad4/unidad4>
-   Unidad 5: Node.js (el puente entre dispositivos) <_unidad5/unidad5>
-   Unidad 6: interactividad en tiempo real con WebSockets <_unidad6/unidad6>
-   Unidad 7: conectando celulares a tu aplicación interactiva <_unidad7/unidad7>
-   Unidad 8: portafolio <_unidad8/unidad8>
+   Unidad 1: ¿Este curso para qué? <_unidad1/unidad1>
+   Unidad 2: computadores embebidos <_unidad2/unidad2>
+   Unidad 3: creando arte con p5.js <_unidad3/unidad3>
+   Unidad 4: conectando mundos <_unidad4/unidad4>
+   Unidad 5: protocolos de comunicación <_unidad5/unidad5>
+   Unidad 6: el puente entre dispositivos <_unidad6/unidad6>
+   Unidad 7: comunicación interactiva <_unidad7/unidad7>
+   Unidad 8: todos juntos y en tiempo real <_unidad8/unidad8>
    RecursosGuía <recursosGuia>
 
 Mi bitácora y mis puntos
