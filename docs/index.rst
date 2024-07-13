@@ -40,6 +40,6 @@ Mi bitácora y mis puntos
 Administración del curso
 -------------------------
 
-* `Notas sobre el curso <https://github.com/juanferfranco/sistemasFisicosInteractivos1>`__
+* `Notas sobre el curso <https://github.com/juanferfranco/ObservacionesReflexionsSFI1>`__
 * `Bitácoras de los aprendices <https://classroom.github.com/classrooms/19781391-sistemas-fisicos-interactivos-1-2024-20/assignments/bitacorassfi12024-20>`__
 * `Bitácora inicial <https://github.com/jfUPB/sistemas-fisicos-interactivos-1-2024-20-bitacorassfi12024-20-BitacorasSFI12024-20>`__
