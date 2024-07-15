@@ -21,12 +21,13 @@ pueden ser una fuente de inspiración para tu vida personal.
 Investigación
 -----------------------
 
-Las actividades 1 a 4 las haremos juntos. Mientras las hacemos realizaremos una 
-exploración introductoria de algunas herramientas y conceptos. Por favor, mientras 
-hacemos esto no tomes notas. Solo disfruta del proceso y presta toda la atención 
-que puedas. Luego de este ejercicio grupal tendrás espacio para tratar de 
-realizar la memoria las actividades y preguntar en tiempo real si algo no te 
-funciona. ¿Listo? Vamos a empezar.
+Realizaremos juntos las actividades 1 a 4. Durante este tiempo, 
+exploraremos de manera introductoria algunas herramientas y conceptos. 
+Te pido que no tomes notas en este momento; simplemente disfruta del proceso 
+y presta la máxima atención posible. Después de este ejercicio grupal, 
+tendrás la oportunidad de realizar las actividades de memoria y 
+preguntar en tiempo real cualquier duda o dificultad que surja. 
+¿Listo? Vamos a empezar.
 
 Actividad 1
 *************
