@@ -194,7 +194,7 @@ Actividad 6
 Explora el sitio `p5.js <https://p5js.org/es/>`__.
 
 Ejecuta en el editor online un ejemplo del sitio. Coloca 
-en tu bitácora el enlace a este código, una imagen del resultado y un corta 
+en tu bitácora el enlace a este código, una imagen del resultado y una corta 
 explicación de cómo funciona el ejemplo.
 
 
@@ -204,7 +204,7 @@ Actividad 7
 Explora el sitio `openprocessing <https://openprocessing.org/>`__.
 
 Selecciona un ejemplo que te guste y documenta en tu bitácora cuál 
-es el ejemplo y por qué te gusta.
+es el ejemplo y cómo crees que funcione.
 
 Actividad 8
 *************
@@ -213,10 +213,18 @@ Ve al sitio del `Patrik Hübner <https://www.patrik-huebner.com/>`__.
 
 En tu bitácora:
 
-* Puedes explicar uno de los ejemplos de diseño generativo desarrollado 
+* Puedes explicar uno de los casos de diseño generativo desarrollado 
   por Patrik?
 * Explica el marco de trabajo que propone Patrik para realizar proyectos 
   de diseño generativo.
 
 Reto 
 ------
+
+En tu bitácora vas a escribir un texto donde explores los siguientes asuntos:
+
+* ¿Este curso para qué?
+* ¿Cómo crees que el diseño y arte generativo se pueda aplicar 
+  al perfil profesional que quieres desarrollar?
+* Vas a proponer conceptualmente una experiencia de diseño generativo para una marca 
+  o institución. Utiliza como referente el marco propuesto por Patrik Hübner.
