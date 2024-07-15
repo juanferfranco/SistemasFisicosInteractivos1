@@ -91,14 +91,14 @@ está inspirado en las ideas del marco Challenge based learning que puedes consu
 Cronograma
 -----------
 
-Experiencia de aprendizaje 1: ¿Este curso para qué? Semanas 1 y 2.
-Experiencia de aprendizaje 2: computadores embebidos. Semanas 3 y 4.
-Experiencia de aprendizaje 3: creando arte con p5.js. Semanas 5 y 6. 
-Experiencia de aprendizaje 4: conectando mundos. Semanas 7 y 8.
-Experiencia de aprendizaje 5: protocolos de comunicación. Semanas 9 y 10.
-Experiencia de aprendizaje 6: el puente entre dispositivos. Semanas 11 y 12.
-Experiencia de aprendizaje 7: comunicación interactiva. Semanas 13 y 14.
-Experiencia de aprendizaje 8: todos juntos y en tiempo real. Semanas 15 y 16.
+* Experiencia de aprendizaje 1: ¿Este curso para qué? Semanas 1 y 2.
+* Experiencia de aprendizaje 2: computadores embebidos. Semanas 3 y 4.
+* Experiencia de aprendizaje 3: creando arte con p5.js. Semanas 5 y 6. 
+* Experiencia de aprendizaje 4: conectando mundos. Semanas 7 y 8.
+* Experiencia de aprendizaje 5: protocolos de comunicación. Semanas 9 y 10.
+* Experiencia de aprendizaje 6: el puente entre dispositivos. Semanas 11 y 12.
+* Experiencia de aprendizaje 7: comunicación interactiva. Semanas 13 y 14.
+* Experiencia de aprendizaje 8: todos juntos y en tiempo real. Semanas 15 y 16.
 
 Evaluación 
 ------------
