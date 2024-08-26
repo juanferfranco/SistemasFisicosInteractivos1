@@ -44,7 +44,22 @@ el diagrama de estados y los vectores de prueba. Ahora, vas a implementar el có
 Reto 
 ------
 
-.. warning:: el regalo del tiempo. 
-    El reto lo publicaré la semana que viene. Por ahora, regálate tiempo para explorar y 
-    experimentar con la librería p5.js.
-   
+El reto para esta unidad será la actividad 3.
+ 
+Bitácora
+**********
+
+Crea en la carpeta de la unidad 3 y almacena el archivo sketch.js y mantén 
+bajo control de versión de tu programa. Cuando me muestres 
+funcionando el reto, me mostrarás también el historial de versiones 
+de tu programa en tu repositorio.
+
+1. Dibuja la máquina de estados que modela el comportamiento de la bomba.
+2. Enumera los estados.
+3. Enumera los eventos de cada estado.
+4. Enumera las acciones de cada estado.
+5. Define TODOS los vectores de prueba que puedas. Realiza una tabla 
+   con los vectores de prueba y el resultado esperado con cada uno.
+   Esta tabla es el CONTRATO de tu programa. Es decir, aquí estás 
+   capturando el comportamiento esperado de tu programa.
+6. Coloca en tu bitácora el código fuente final de tu programa.
