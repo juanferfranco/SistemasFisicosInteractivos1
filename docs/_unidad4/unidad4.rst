@@ -64,7 +64,7 @@ un mensaje con el número de caracteres recibidos.
 
 Ahora considera esto:
 
-Estas hablando con tu tía por celular y ella te está dice que te va a dictar una cadena de números. 
+Estas hablando con tu tía por celular y ella te dice que te va a dictar una cadena de números. 
 ¿Cómo haces para saber que tu tía ya terminó de dictarte toda la cadena de números?
 
 ¿Qué relación tiene el caso de tu tía con la siguiente línea de código?
