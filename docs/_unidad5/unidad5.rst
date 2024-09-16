@@ -262,7 +262,7 @@ Considera los siguientes pasos:
             x = accelerometer.get_x()
             y = accelerometer.get_y()
             temp = temperature()
-            data = struct.pack('>2i1f',x,y,temp)
+            data = struct.pack('>3i',x,y,temp)
             uart.write(data)
             sleep(100)
 
@@ -304,7 +304,7 @@ Considera los siguientes pasos:
             const view = new DataView(buffer);
             sensorValues[0] = view.getInt32(0);
             sensorValues[1] = view.getInt32(4);
-            sensorValues[2] = view.getFloat32(8);
+            sensorValues[2] = view.getInt32(8);
         }
     }
 
@@ -325,6 +325,10 @@ Considera los siguientes pasos:
 
 * Analiza el código y comprende cómo se empaquetan y desempaquetan los datos en formato binario.
 * Prueba la aplicación y observa cómo se actualizan los valores de los sensores en p5.js.
+* Los enteros que estamos usando son de 32 bits ¿Podrían ser de 16 bits? ¿Qué cambios debes hacer? (no olvides 
+  hacer una experimentos para comprobar tus hipótesis).
+* Y si los datos a enviar son una mezcla entre enteros y floats ¿Qué cambios harías? (no olvides 
+  hacer una experimentos para comprobar tus hipótesis).
 * Reflexiona sobre las ventajas en eficiencia y las dificultades al interpretar datos binarios.
 
 Reto
