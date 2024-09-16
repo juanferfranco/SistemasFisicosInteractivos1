@@ -341,7 +341,7 @@ experiencia interactiva y creativa.
 
 .. warning:: MUY IMPORTANTE
 
-    Las tramas que envíes del micro:bit a p5.js contener información de 
+    Las tramas que envíes del micro:bit a p5.js deben contener información de 
     múltiples sensores o dimensiones de un mismo sensor (por ejemplo, aceleración en 
     los ejes X, Y). Debes estructurar las tramas de datos de manera adecuada para 
     que p5.js pueda interpretar y utilizar los valores de manera correcta.
