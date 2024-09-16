@@ -276,51 +276,51 @@ Considera los siguientes pasos:
     let sensorLabels = ["X", "Y", "Temp"]; // Etiquetas de los sensores
 
     function setup() {
-    createCanvas(400, 400);
-    background(220);
-    port = createSerial();
-    connectBtn = createButton("Connect to micro:bit");
-    connectBtn.position(10, 10);
-    connectBtn.mousePressed(connectBtnClick);
-    textSize(32);
-    textAlign(CENTER);
+        createCanvas(400, 400);
+        background(220);
+        port = createSerial();
+        connectBtn = createButton("Connect to micro:bit");
+        connectBtn.position(10, 10);
+        connectBtn.mousePressed(connectBtnClick);
+        textSize(32);
+        textAlign(CENTER);
     }
 
     function draw() {
-    background(220);
+        background(220);
 
-    for (let i = 0; i < sensorValues.length; i++) {
-        text(
-        sensorLabels[i] + ": " + sensorValues[i],
-        width / 2,
-        height / 2 + i * 40
-        );
-    }
+        for (let i = 0; i < sensorValues.length; i++) {
+            text(
+            sensorLabels[i] + ": " + sensorValues[i],
+            width / 2,
+            height / 2 + i * 40
+            );
+        }
 
-    if (port.availableBytes() >= 12) {
-        let data = port.readBytes(12);
-        if (data) {
-            const buffer = new Uint8Array(data).buffer;
-            const view = new DataView(buffer);
-            sensorValues[0] = view.getInt32(0);
-            sensorValues[1] = view.getInt32(4);
-            sensorValues[2] = view.getInt32(8);
+        if (port.availableBytes() >= 12) {
+            let data = port.readBytes(12);
+            if (data) {
+                const buffer = new Uint8Array(data).buffer;
+                const view = new DataView(buffer);
+                sensorValues[0] = view.getInt32(0);
+                sensorValues[1] = view.getInt32(4);
+                sensorValues[2] = view.getInt32(8);
+            }
+        }
+
+        if (!port.opened()) {
+            connectBtn.html("Connect to micro:bit");
+        } else {
+            connectBtn.html("Disconnect");
         }
     }
 
-    if (!port.opened()) {
-        connectBtn.html("Connect to micro:bit");
-    } else {
-        connectBtn.html("Disconnect");
-    }
-    }
-
     function connectBtnClick() {
-    if (!port.opened()) {
-        port.open("MicroPython", 115200);
-    } else {
-        port.close();
-    }
+        if (!port.opened()) {
+            port.open("MicroPython", 115200);
+        } else {
+            port.close();
+        }
     }
 
 * Analiza el código y comprende cómo se empaquetan y desempaquetan los datos en formato binario.
