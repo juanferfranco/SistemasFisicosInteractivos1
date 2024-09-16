@@ -339,6 +339,13 @@ variar los parámetros visuales a través de los sensores del micro:bit. Utiliza
 datos de los sensores para influir en la apariencia de la visualización, creando una
 experiencia interactiva y creativa.
 
+.. warning:: MUY IMPORTANTE
+
+    Las tramas que envíes del micro:bit a p5.js contener información de 
+    múltiples sensores o dimensiones de un mismo sensor (por ejemplo, aceleración en 
+    los ejes X, Y). Debes estructurar las tramas de datos de manera adecuada para 
+    que p5.js pueda interpretar y utilizar los valores de manera correcta.
+
 * Implementa una versión en ASCII de la comunicación entre el micro:bit y p5.js.
 * Implementa una versión en binario de la comunicación entre el micro:bit y p5.js.
 * Compara las diferencias en eficiencia, velocidad y complejidad entre los dos formatos.
