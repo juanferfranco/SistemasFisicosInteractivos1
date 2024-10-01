@@ -8,7 +8,7 @@ En hora buena. Has llegado a la sexta experiencia de aprendizaje. En este punto
 ya has aprendido las técnicas básicas para integrar dispositivos externos a una 
 aplicación interactiva usando protocolos de comunicación ASCII y binarios. Ahora 
 es momento de poner a prueba lo aprendido y trasladarlo a un nuevo contexto. En 
-esta experiencias va a comunicar dos aplicaciones en tiempo real usando Node.js. 
+esta experiencia vas a comunicar dos aplicaciones en tiempo real usando Node.js. 
 Node.js será el puente entre esas dos aplicaciones, o como lo hemos llamado 
 el puente entre dispositivos. En esta experiencia las aplicaciones estarán en 
 la mismo computador pero en la siguiente experiencia estarán en computadores 
