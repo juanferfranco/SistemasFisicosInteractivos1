@@ -41,7 +41,7 @@ Para ejecutar las aplicaciones sigue estos pasos:
 * Ejecuta el comando `npm install` para instalar las dependencias.
 * Ejecuta el comando `npm start` para ejecutar el servidor.
 * Abre un navegador y escribe la dirección `http://localhost:3000/page1`.
-* Abre otra pestaña del navegador y escribe la dirección `http://localhost:3000/page2`.
+* Abre otra ventana del mismo navegador y escribe la dirección `http://localhost:3000/page2`.
 
 Una vez tengas funcionando la aplicación es momento que analices el código. Puede usar 
 chatGPT para generar una explicación detallada de cada línea de código. Profundiza en los 
